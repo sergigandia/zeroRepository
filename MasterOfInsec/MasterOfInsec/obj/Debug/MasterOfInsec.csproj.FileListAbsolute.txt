@@ -1,0 +1,12 @@
+C:\Users\sergi\documents\visual studio 2013\Projects\MasterOfInsec\MasterOfInsec\bin\Release\MasterOfInsec.exe.config
+C:\Users\sergi\documents\visual studio 2013\Projects\MasterOfInsec\MasterOfInsec\bin\Release\MasterOfInsec.exe
+C:\Users\sergi\documents\visual studio 2013\Projects\MasterOfInsec\MasterOfInsec\bin\Release\MasterOfInsec.pdb
+C:\Users\sergi\documents\visual studio 2013\Projects\MasterOfInsec\MasterOfInsec\bin\Release\LeagueSharp.Common.dll
+C:\Users\sergi\documents\visual studio 2013\Projects\MasterOfInsec\MasterOfInsec\bin\Release\LeagueSharp.dll
+C:\Users\sergi\documents\visual studio 2013\Projects\MasterOfInsec\MasterOfInsec\bin\Release\SharpDX.dll
+C:\Users\sergi\documents\visual studio 2013\Projects\MasterOfInsec\MasterOfInsec\bin\Release\SharpDX.Direct3D9.dll
+C:\Users\sergi\documents\visual studio 2013\Projects\MasterOfInsec\MasterOfInsec\bin\Release\clipper_library.dll
+C:\Users\sergi\documents\visual studio 2013\Projects\MasterOfInsec\MasterOfInsec\bin\Release\LeagueSharp.xml
+C:\Users\sergi\documents\visual studio 2013\Projects\MasterOfInsec\MasterOfInsec\obj\Debug\MasterOfInsec.csprojResolveAssemblyReference.cache
+C:\Users\sergi\documents\visual studio 2013\Projects\MasterOfInsec\MasterOfInsec\obj\Debug\MasterOfInsec.exe
+C:\Users\sergi\documents\visual studio 2013\Projects\MasterOfInsec\MasterOfInsec\obj\Debug\MasterOfInsec.pdb
