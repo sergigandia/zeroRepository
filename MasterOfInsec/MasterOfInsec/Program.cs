@@ -12,12 +12,15 @@ namespace MasterOfInsec
     {
         // Master Of Insec LEE
 
+        //combo working
+        //ignite working
+        //ward jump x
 
-        private static Obj_AI_Hero Player;
+
+        public static Obj_AI_Hero Player;
         private static Menu menu;
         private static Orbwalking.Orbwalker orb;
         public static Spell Q, W, E, R;
-        public static bool SecondQ;
         public static SpellSlot Ignite;
         public static Orbwalking.Orbwalker Orbwalker { get; internal set; }
 
@@ -41,35 +44,42 @@ namespace MasterOfInsec
             var TargetSelectorMenu = new Menu("TargetSelector", "TargetSelector");
             var comboMenu = new Menu("Combo", "Combo");
             {
-                comboMenu.AddItem(new MenuItem("Set Q range", "Set Q range").SetValue(new Slider(1100, 0, 1100)));
+                comboMenu.AddItem(new MenuItem("seth", "Q Hitchance")).SetValue(new Slider(3, 1, 4));
                 comboMenu.AddItem(new MenuItem("comboQ", "Use Q in combo").SetValue(true));
                 comboMenu.AddItem(new MenuItem("comboW", "Use W in combo").SetValue(false));
                 comboMenu.AddItem(new MenuItem("comboWLH", "Use W if low hp").SetValue(false));
                 comboMenu.AddItem(new MenuItem("Set W life %", "Set % W").SetValue(new Slider(100, 0, 100)));
                 comboMenu.AddItem(new MenuItem("comboE", "Use E in combo").SetValue(true));
                 comboMenu.AddItem(new MenuItem("comboR", "Use R to finish the enemy").SetValue(true));
-                comboMenu.AddItem(new MenuItem("Ignite", "USE ignite for kill").SetValue(true));
+                comboMenu.AddItem(new MenuItem("IgniteR", "Use R+Ignite for kill").SetValue(true));
+                comboMenu.AddItem(new MenuItem("Ignite", "Use ignite for kill").SetValue(true));
+                comboMenu.AddItem(new MenuItem("combokey", "Combo key").SetValue(new KeyBind(32, KeyBindType.Press)));
+
             }
             var InsecSettingsMenu = new Menu("Insec Settings", "Insec Settings");
             {
                 InsecSettingsMenu.AddItem(new MenuItem("Insec Mode", "Insec Mode").SetValue(true));
                 InsecSettingsMenu.AddItem(new MenuItem("Not Yet", "Not Yet").SetValue(true));
             }
-            var FleeMenu = new Menu("FleeMenu", "Flee Menu");
-            {
-                FleeMenu.AddItem(new MenuItem("Ward Jump", "Ward Jump").SetValue(new KeyBind('Z', KeyBindType.Press)));
-            }
             var LaneclearMenu = new Menu("Laneclear", "Laneclear");
             {
-                LaneclearMenu.AddItem(new MenuItem("Use Q in Laneclear", "Use Q in Laneclear").SetValue(true));
-                LaneclearMenu.AddItem(new MenuItem("Use W in Laneclear", "Use W in Laneclear").SetValue(false));
-                LaneclearMenu.AddItem(new MenuItem("Use E in Laneclear", "Use E in Laneclear").SetValue(true));
+                LaneclearMenu.AddItem(new MenuItem("QL", "Use Q in Laneclear").SetValue(true));
+                LaneclearMenu.AddItem(new MenuItem("WL", "Use W in Laneclear").SetValue(false));
+                LaneclearMenu.AddItem(new MenuItem("EL", "Use E in Laneclear").SetValue(true));
+               LaneclearMenu.AddItem(new MenuItem("laneclearkey", "LaneClear key").SetValue(new KeyBind('V', KeyBindType.Press)));
             }
             var JungleclearMenu = new Menu("Jungleclear", "Jungleclear");
             {
-                JungleclearMenu.AddItem(new MenuItem("Use Q in Laneclear", "Use Q in Laneclear").SetValue(true));
-                JungleclearMenu.AddItem(new MenuItem("Use W in Laneclear", "Use W in Laneclear").SetValue(false));
-                JungleclearMenu.AddItem(new MenuItem("Use E in Laneclear", "Use E in Laneclear").SetValue(true));
+                JungleclearMenu.AddItem(new MenuItem("QJ", "Use Q in JungleClear").SetValue(true));
+                JungleclearMenu.AddItem(new MenuItem("WJ", "Use W in JungleClear").SetValue(false));
+                JungleclearMenu.AddItem(new MenuItem("EJ", "Use E in JungleClear").SetValue(true));
+                JungleclearMenu.AddItem(new MenuItem("jungleclearkey", "JungleClear key").SetValue(new KeyBind('V', KeyBindType.Press)));
+            }
+            var ItemMenu = new Menu("Item Menu", "itemmenu");
+            {
+               ItemMenu.AddItem(new MenuItem("tiamat","Use Tiamat").SetValue(true));
+               ItemMenu.AddItem(new MenuItem("hydra", "Ravenous Hydra").SetValue(true));
+               ItemMenu.AddItem(new MenuItem("yomu", "Youmuu's Ghostblade").SetValue(true));
             }
             var DrawSettingsMenu = new Menu("Draw Settings", "Draw Settings");
             {
@@ -82,14 +92,15 @@ namespace MasterOfInsec
             }
 
             TargetSelector.AddToMenu(TargetSelectorMenu);
+            menu.AddSubMenu(orbWalkerMenu);        //ORBWALKER
+            menu.AddSubMenu(TargetSelectorMenu);   //TS
             menu.AddSubMenu(comboMenu);          //COMBO
             menu.AddSubMenu(InsecSettingsMenu);  //INSEC
+            menu.AddSubMenu(ItemMenu);
             menu.AddSubMenu(LaneclearMenu);        //LANECLEAR
             menu.AddSubMenu(JungleclearMenu);      //JUNGLECLEAR
-            menu.AddSubMenu(FleeMenu);     
+            menu.AddItem(new MenuItem("wardjump", "WardJump key").SetValue(new KeyBind('Z', KeyBindType.Press)));
             menu.AddSubMenu(DrawSettingsMenu);     //DRAWS
-            menu.AddSubMenu(TargetSelectorMenu);   //TS
-            menu.AddSubMenu(orbWalkerMenu);        //ORBWALKER
             menu.AddToMainMenu();
         }
         static void OnGameLoad(EventArgs args)
@@ -104,7 +115,7 @@ namespace MasterOfInsec
             Ignite = ObjectManager.Player.GetSpellSlot("SummonerDot");
             Q.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth, Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
             Menu();
-            Game.PrintChat("[LeeSin]Master Of Insec load good luck ;) ver 0.0.4.3");
+            Game.PrintChat("[LeeSin]Master Of Insec load good luck ;) ver 0.0.7.4.7");
             Drawing.OnDraw += Drawing_OnDraw;
             Game.OnUpdate += Game_OnGameUpdate;
 
@@ -112,81 +123,169 @@ namespace MasterOfInsec
         private static void Game_OnGameUpdate(EventArgs args)
         {
             if (Player.IsDead) return;
-              KsIgnite();
-         //     WardJump();
-            switch (orb.ActiveMode)
-            {
-                case Orbwalking.OrbwalkingMode.Mixed:
-                    break;
+         //   KsIgnite();
+            if(menu.Item("combokey").GetValue<KeyBind>().Active)
+                Combo();
+            if (menu.Item("wardjump").GetValue<KeyBind>().Active)
+                WardJump.jump();
+            if (menu.Item("jungleclearkey").GetValue<KeyBind>().Active)
+                JungleClear();
+        }
 
-                case Orbwalking.OrbwalkingMode.Combo:
-                    Combo();
-                    break;
+        private static void JungleClear()
+        {
+            var minion = MinionManager.GetMinions(Q.Range, MinionTypes.All, MinionTeam.Neutral, MinionOrderTypes.MaxHealth).FirstOrDefault();
+            var useQ = Program.menu.Item("QJ").GetValue<bool>();
+            var useW = Program.menu.Item("WJ").GetValue<bool>();
+            var useE = Program.menu.Item("EJ").GetValue<bool>();
+            if (!minion.IsValidTarget() || minion == null)
+            {
+                if (menu.Item("laneclearkey").GetValue<KeyBind>().Active)
+                    LaneClear();
+            }
+            if (Q.IsReady() && useQ)
+            {
+                if (minion.Distance(ObjectManager.Player.Position) <= Q.Range)
+                {
+                    Q.Cast(minion);
+                    if (W.IsReady() && useW)
+                    {
+                        W.Cast(Player);
+                    }
+                }
+            } 
+            if (E.IsReady() && useE)
+            {
+                if (minion.Distance(ObjectManager.Player.Position) < E.Range)
+                {
+                    E.Cast();
+                    if (Items.CanUseItem(3077) && Player.Distance(minion.Position) < 350)
+                        Items.UseItem(3077);
+                    if (Items.CanUseItem(3074) && Player.Distance(minion.Position) < 350)
+                        Items.UseItem(3074);
+                }
+            }
+        }
+        private static void LaneClear()
+        {
+            var MinionN = MinionManager.GetMinions(Q.Range, MinionTypes.All, MinionTeam.Enemy, MinionOrderTypes.MaxHealth).FirstOrDefault();
+            var useQ = Program.menu.Item("QL").GetValue<bool>();
+            var useW = Program.menu.Item("WL").GetValue<bool>();
+            var useE = Program.menu.Item("EL").GetValue<bool>();
+       
+            if (Q.IsReady() && useQ)
+            {
+                if (MinionN.Distance(ObjectManager.Player.Position) <= Q.Range)
+                {
+                    Q.Cast(MinionN);
+                    if (W.IsReady() && useW)
+                    {
+                        W.Cast(Player);
+                    }
+                }
+            }
+            if (E.IsReady() && useE)
+            {
+                if (MinionN.Distance(ObjectManager.Player.Position) < E.Range)
+                {
+                    E.Cast();
+                    if (Items.CanUseItem(3077) && Player.Distance(MinionN.Position) < 350)
+                        Items.UseItem(3077);
+                    if (Items.CanUseItem(3074) && Player.Distance(MinionN.Position) < 350)
+                        Items.UseItem(3074);
+                }
             }
 
         }
-        private static void WardJump()
+        private static HitChance HitchanceCheck(int i)
         {
-            if (menu.Item("Ward Jump").GetValue<bool>())
+            switch (i)
             {
+                case 1:
+                  return  HitChance.Low;
+                case 2:
+                  return HitChance.Medium;
+                case 3:
+                 return HitChance.High;
+                case 4:
+                   return HitChance.VeryHigh;
 
             }
-        }
-        private static InventorySlot getBestWardItem()
-        {
-            InventorySlot ward = Items.GetWardSlot();
-            if (ward == default(InventorySlot)) return null;
-            return ward;
+            return HitChance.Low;
         }
         private static void Combo()
         {
             var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
-            if (Q.IsReady() && GetBool("comboQ") && Q.IsInRange(target))
+            if (target != null)
             {
-                if (Q.Instance.Name == "BlindMonkQOne" && Player.Distance(target.Position) <= menu.Item("Set Q range").GetValue<Slider>().Value)
+                if (Q.IsReady() && GetBool("comboQ") && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "BlindMonkQOne")
                 {
-                    Q.CastIfHitchanceEquals(target, HitChance.High); // Continue like that
+                    Q.CastIfHitchanceEquals(target, HitchanceCheck(menu.Item("seth").GetValue<Slider>().Value)); // Continue like that
                 }
-                else
+                if ( GetBool("comboQ") && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "blindmonkqtwo" )
                 {
                     Q.Cast(target);
                 }
-            }
-            if (E.IsReady() && GetBool("comboE") && E.IsInRange(target))
-            {
-                E.Cast(); // 
-            }
-            if (W.IsReady() && GetBool("comboW"))
-            {
-                if (ObjectManager.Player.HealthPercent <= menu.Item("Set W life %").GetValue<Slider>().Value)
+                //work 
+                #region work
+                if (E.IsReady() && GetBool("comboE") && E.IsInRange(target))
                 {
-                    W.Cast(Player);
+                    E.Cast();
+                    if (Items.CanUseItem(3077) && Player.Distance(target.Position) < 350)
+                        Items.UseItem(3077);
+                    if (Items.CanUseItem(3074) && Player.Distance(target.Position) < 350)
+                        Items.UseItem(3074);
+                    if (Items.CanUseItem(3142) && Player.Distance(target.Position) < 350)
+                        Items.UseItem(3142);
                 }
-            }
-            if (R.IsReady() && GetBool("comboR") && R.IsKillable(target))
-            {
-                R.Cast(target);
-            }
-            if (Ignite.IsReady())
-            {
-                if (target.Health - ObjectManager.Player.GetSummonerSpellDamage(target, Damage.SummonerSpell.Ignite) <= 0)
-                 ObjectManager.Player.Spellbook.CastSpell(Ignite, target);
+                if (W.IsReady() && GetBool("comboW"))
+                {
+                    if (ObjectManager.Player.HealthPercent <= menu.Item("Set W life %").GetValue<Slider>().Value)
+                    {
+                        W.Cast(Player);
+                    }
+                }
+                //can kill
+                if (E.IsReady() && E.IsKillable(target)) // si la e mata
+                {
+                    E.Cast(target);
+                }
+                else if (R.IsReady() && GetBool("comboR") && R.IsKillable(target)) // si solo la r mata
+                {
+                    R.Cast(target);
+                }
+                else if (Ignite.IsReady() && R.IsReady() && menu.Item("IgniteR").GetValue<bool>()) // si ignite R mata
+                {
+                    double DamageRIgnite = ObjectManager.Player.GetSummonerSpellDamage(target, Damage.SummonerSpell.Ignite) + Player.GetSpellDamage(target, SpellSlot.R);
+                    if (target.Health - DamageRIgnite <= 0)
+                    {
+                        R.Cast(target);
+                        ObjectManager.Player.Spellbook.CastSpell(Ignite, target);
+                    }
+                }
+                //end can kill
+                if (Ignite.IsReady()) // ignite cuando esta bajo
+                {
+                    if (target.Health - ObjectManager.Player.GetSummonerSpellDamage(target, Damage.SummonerSpell.Ignite) <= 0)
+                        ObjectManager.Player.Spellbook.CastSpell(Ignite, target);
+                }
+                #endregion
             }
         }
 
         public static void KsIgnite()
         {
-                if (Ignite.IsReady())
-                {
-                    var igniteKillableEnemy =
-                    ObjectManager.Get<Obj_AI_Hero>()
-                        .Where(x => x.IsEnemy)
-                        .Where(x => !x.IsDead)
-                        .Where(x => x.Distance(ObjectManager.Player.Position) <= 400)
-                        .FirstOrDefault();
-                    if (igniteKillableEnemy.Health - ObjectManager.Player.GetSummonerSpellDamage(igniteKillableEnemy, Damage.SummonerSpell.Ignite) <= 0)
-                        ObjectManager.Player.Spellbook.CastSpell(Ignite, igniteKillableEnemy);
-                }
+            if (Ignite.IsReady())
+            {
+                var igniteKillableEnemy =
+                ObjectManager.Get<Obj_AI_Hero>()
+                    .Where(x => x.IsEnemy)
+                    .Where(x => !x.IsDead)
+                    .Where(x => x.Distance(ObjectManager.Player.Position) <= 400)
+                    .FirstOrDefault();
+                if (igniteKillableEnemy.Health - ObjectManager.Player.GetSummonerSpellDamage(igniteKillableEnemy, Damage.SummonerSpell.Ignite) <= 0)
+                    ObjectManager.Player.Spellbook.CastSpell(Ignite, igniteKillableEnemy);
+            }
         }
 
         public static float GetComboDamage(Obj_AI_Hero target)
@@ -198,17 +297,12 @@ namespace MasterOfInsec
             double damage = Player.GetAutoAttackDamage(target);
 
             if (Q.IsReady())
-                damage += Player.GetSpellDamage(target, SpellSlot.Q)*2;
-
-            if (W.IsReady())
-                damage += Player.GetSpellDamage(target, SpellSlot.W);
-
+                damage += Player.GetSpellDamage(target, SpellSlot.Q) * 2;
+            damage += Player.GetAutoAttackDamage(target) * 4;
             if (E.IsReady())
                 damage += Player.GetSpellDamage(target, SpellSlot.E);
-
             if (R.IsReady())
                 damage += Player.GetSpellDamage(target, SpellSlot.R);
-
             if (Ignite.IsReady())
                 damage += Player.GetSummonerSpellDamage(target, Damage.SummonerSpell.Ignite);
 
@@ -219,7 +313,7 @@ namespace MasterOfInsec
             if (Player.IsDead) return;
             if (menu.Item("Draw Q Range").GetValue<bool>())
             {
-                Render.Circle.DrawCircle(Player.Position, menu.Item("Set Q range").GetValue<Slider>().Value, System.Drawing.Color.Green);
+                Render.Circle.DrawCircle(Player.Position, Q.Range, System.Drawing.Color.Green);
             }
             if (menu.Item("Draw W Range").GetValue<bool>())
             {
@@ -234,17 +328,27 @@ namespace MasterOfInsec
                 Render.Circle.DrawCircle(Player.Position, 375f, System.Drawing.Color.Green);
             }
             //draw % de vida
-            if(menu.Item("DrawKilleableText").GetValue<bool>())
+            if (menu.Item("DrawKilleableText").GetValue<bool>())
             {
-                var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
-              if(target.Health<=GetComboDamage(Player))
-              {
-                  var wts = Drawing.WorldToScreen(target.Position);
-                  Drawing.DrawText(wts[0] - 35, wts[1] + 10, System.Drawing.Color.White, "Killeable");
-              }
+              //  var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
+                foreach (Obj_AI_Hero target in ObjectManager.Get<Obj_AI_Hero>().Where(x => x.IsEnemy).Where(x => !x.IsDead).Where(x => x.IsVisible).ToList())
+                {
+                    if (target.Health <= GetComboDamage(Player))
+                    {
+                        if (target.Health <= GetComboDamage(Player) - 300)
+                        {
+                            var wts = Drawing.WorldToScreen(target.Position);
+                            Drawing.DrawText(wts[0] - 35, wts[1] + 10, System.Drawing.Color.Yellow, "Finish Him");
+                        }
+                        else
+                        {
+                            var wts = Drawing.WorldToScreen(target.Position);
+                            Drawing.DrawText(wts[0] - 35, wts[1] + 10, System.Drawing.Color.Yellow, "Killeable");
+                        }
+                    }
+                }
             }
         }
-
         public static T GetValue<T>(string name)
         {
             return menu.Item(name).GetValue<T>();
