@@ -122,6 +122,7 @@ namespace MasterOfInsec
         }
         private static void Game_OnGameUpdate(EventArgs args)
         {
+            Q.MinHitChance = HitchanceCheck(menu.Item("seth").GetValue<Slider>().Value);
             if (Player.IsDead) return;
          //   KsIgnite();
             if(menu.Item("combokey").GetValue<KeyBind>().Active)
