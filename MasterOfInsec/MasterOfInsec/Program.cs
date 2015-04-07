@@ -127,7 +127,7 @@ namespace MasterOfInsec
             Q.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth, Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
             RInsec.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth, Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
             Menu();
-            Game.PrintChat("[LeeSin]Master Of Insec load good luck ;) ver 0.0.7.5.7");
+            Game.PrintChat("[LeeSin]Master Of Insec load good luck ;) ver 0.0.8.0.0");
             Drawing.OnDraw += Drawing_OnDraw;
             Game.OnUpdate += Game_OnGameUpdate;
 
