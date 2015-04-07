@@ -433,19 +433,19 @@ namespace MasterOfInsec
             if (Player.IsDead) return;
             if (menu.Item("Draw Q Range").GetValue<bool>())
             {
-                Render.Circle.DrawCircle(Player.Position, Q.Range, System.Drawing.Color.Green);
+                Drawing.DrawCircle(Player.Position, Q.Range, System.Drawing.Color.Green);
             }
             if (menu.Item("Draw W Range").GetValue<bool>())
             {
-                Render.Circle.DrawCircle(Player.Position, 700f, System.Drawing.Color.Green);
+                Drawing.DrawCircle(Player.Position, 700f, System.Drawing.Color.Green);
             }
             if (menu.Item("Draw E Range").GetValue<bool>())
             {
-                Render.Circle.DrawCircle(Player.Position, 430f, System.Drawing.Color.Green);
+                Drawing.DrawCircle(Player.Position, 430f, System.Drawing.Color.Green);
             }
             if (menu.Item("Draw R Range").GetValue<bool>())
             {
-                Render.Circle.DrawCircle(Player.Position, 375f, System.Drawing.Color.Green);
+                Drawing.DrawCircle(Player.Position, 375f, System.Drawing.Color.Green);
             }
             //draw % de vida
             if (menu.Item("DrawKilleableText").GetValue<bool>())
