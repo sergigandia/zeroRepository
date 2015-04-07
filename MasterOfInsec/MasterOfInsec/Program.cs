@@ -16,14 +16,13 @@ namespace MasterOfInsec
         //ignite working
         //ward jump x
 
-
+        public  static Map map;
         public static Obj_AI_Hero Player;
         private static Menu menu;
         private static Orbwalking.Orbwalker orb;
-        public static Spell Q, W, E, R;
+        public static Spell Q, W, E, R,RInsec,QHarrash;
         public static SpellSlot Ignite;
         public static Orbwalking.Orbwalker Orbwalker { get; internal set; }
-
         public static Orbwalking.OrbwalkingMode OrbwalkerMode
         {
             get { return Orbwalker.ActiveMode; }
@@ -56,10 +55,17 @@ namespace MasterOfInsec
                 comboMenu.AddItem(new MenuItem("combokey", "Combo key").SetValue(new KeyBind(32, KeyBindType.Press)));
 
             }
+            var HarrashMenu = new Menu("Harrash", "Harrash");
+            {
+                HarrashMenu.AddItem(new MenuItem("QH", "Use Q in Harrash").SetValue(true));
+                HarrashMenu.AddItem(new MenuItem("WH", "Use W for go out").SetValue(false));
+                HarrashMenu.AddItem(new MenuItem("EH", "Use E in Harrash").SetValue(true));
+                HarrashMenu.AddItem(new MenuItem("Harrash key", "Harrash key").SetValue(new KeyBind('C', KeyBindType.Press)));
+            }
             var InsecSettingsMenu = new Menu("Insec Settings", "Insec Settings");
             {
-                InsecSettingsMenu.AddItem(new MenuItem("Insec Mode", "Insec Mode").SetValue(true));
                 InsecSettingsMenu.AddItem(new MenuItem("Not Yet", "Not Yet").SetValue(true));
+                InsecSettingsMenu.AddItem(new MenuItem("inseckey", "Insec key").SetValue(new KeyBind('T', KeyBindType.Press)));
             }
             var LaneclearMenu = new Menu("Laneclear", "Laneclear");
             {
@@ -83,7 +89,7 @@ namespace MasterOfInsec
             }
             var DrawSettingsMenu = new Menu("Draw Settings", "Draw Settings");
             {
-                //    DrawSettingsMenu.AddItem(new MenuItem("Draw Insec Line", "Draw Insec Line").SetValue(true));
+                DrawSettingsMenu.AddItem(new MenuItem("DrawInsec", "Draw Insec Line").SetValue(true));
                 DrawSettingsMenu.AddItem(new MenuItem("DrawKilleableText", "Draw Killeable Text").SetValue(true));
                 DrawSettingsMenu.AddItem(new MenuItem("Draw Q Range", "Draw Q Range").SetValue(true));
                 DrawSettingsMenu.AddItem(new MenuItem("Draw W Range", "Draw W Range").SetValue(true));
@@ -94,7 +100,8 @@ namespace MasterOfInsec
             TargetSelector.AddToMenu(TargetSelectorMenu);
             menu.AddSubMenu(orbWalkerMenu);        //ORBWALKER
             menu.AddSubMenu(TargetSelectorMenu);   //TS
-            menu.AddSubMenu(comboMenu);          //COMBO
+            menu.AddSubMenu(comboMenu);//COMBO
+            menu.AddSubMenu(HarrashMenu);  //Harrash
             menu.AddSubMenu(InsecSettingsMenu);  //INSEC
             menu.AddSubMenu(ItemMenu);
             menu.AddSubMenu(LaneclearMenu);        //LANECLEAR
@@ -106,16 +113,21 @@ namespace MasterOfInsec
         static void OnGameLoad(EventArgs args)
         {
             // if (Player.ChampionName == "LeeSin") return;
+            map = new Map();
             Player = ObjectManager.Player;
             //   Ignite = new Spell(SpellSlot.Summoner1, 1100);
             Q = new Spell(SpellSlot.Q, 1100);
+            QHarrash = new Spell(SpellSlot.Q,700);
             W = new Spell(SpellSlot.W, 700);
             E = new Spell(SpellSlot.E, 430);
             R = new Spell(SpellSlot.R, 375);
+            RInsec = new Spell(SpellSlot.R, 375);
             Ignite = ObjectManager.Player.GetSpellSlot("SummonerDot");
+            QHarrash.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth, Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
             Q.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth, Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
+            RInsec.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth, Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
             Menu();
-            Game.PrintChat("[LeeSin]Master Of Insec load good luck ;) ver 0.0.7.4.7");
+            Game.PrintChat("[LeeSin]Master Of Insec load good luck ;) ver 0.0.7.5.7");
             Drawing.OnDraw += Drawing_OnDraw;
             Game.OnUpdate += Game_OnGameUpdate;
 
@@ -129,10 +141,112 @@ namespace MasterOfInsec
                 Combo();
             if (menu.Item("wardjump").GetValue<KeyBind>().Active)
                 WardJump.jump();
-            if (menu.Item("jungleclearkey").GetValue<KeyBind>().Active)
+           if (menu.Item("jungleclearkey").GetValue<KeyBind>().Active)
                 JungleClear();
+            if (menu.Item("Harrash key").GetValue<KeyBind>().Active)
+            {
+                Harrash();
+            }
+            if (menu.Item("inseckey").GetValue<KeyBind>().Active)
+            {
+                Insec();
+            }
+            else
+            {
+                oldPositionbool = true;
+                HarrashComplete = false;
+            }
         }
+        static bool oldPositionbool;
+        static bool HarrashComplete;
+        static Vector3 oldPosition;
+        static bool da;
+        public static Vector3 Insecpos(Obj_AI_Hero ts)
+        {
+            return Game.CursorPos.Extend(ts.Position, Game.CursorPos.Distance(ts.Position) + 250);
+        }
+        private static void Insec()
+        {
+            if (!R.IsReady())
+            {
+                da = false;
+                return;
+            }
 
+                       var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
+                       if (target != null)
+                       {
+                           
+                           if (Q.IsReady() && GetBool("comboQ") && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "BlindMonkQOne")
+                           {
+                               Q.CastIfHitchanceEquals(target, HitchanceCheck(menu.Item("seth").GetValue<Slider>().Value)); // Continue like that
+                           }
+                           if (GetBool("comboQ") && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "blindmonkqtwo")
+                           {
+                               Q.Cast();
+                   
+                           }
+                           if (Player.Distance(WardJump.getward(target)) <= 600 && W.IsReady())
+                           {
+                               WardJump.InsecJump(WardJump.Insecpos(target).To2D());
+                               da = true;
+                           }
+                           if (da)
+                           {
+                            //   Orbwalker.ForceTarget(target);
+                              // Player.
+                              // ObjectManager.Player.movet
+
+                               R.Cast(target);
+                               da = false;
+                           }
+
+
+                       }
+        }
+        private static void Harrash()
+        {
+            if (oldPositionbool)
+            {
+                 oldPosition = Player.Position;
+                oldPositionbool = false;
+            }
+            var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
+            if (target != null)
+            {
+                if (QHarrash.IsReady() && GetBool("QH") && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "BlindMonkQOne")
+                {
+                    QHarrash.CastIfHitchanceEquals(target, HitchanceCheck(menu.Item("seth").GetValue<Slider>().Value)); // Continue like that
+                }
+                if (GetBool("QH") && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "blindmonkqtwo")
+                {
+                    QHarrash.Cast(target);
+                }
+                if (E.IsReady() && GetBool("EH") && E.IsInRange(target))
+                {
+                    E.Cast();
+                    if (Items.CanUseItem(3077) && Player.Distance(target.Position) < 350)
+                        Items.UseItem(3077);
+                    if (Items.CanUseItem(3074) && Player.Distance(target.Position) < 350)
+                        Items.UseItem(3074);
+                    if (Items.CanUseItem(3142) && Player.Distance(target.Position) < 350)
+                        Items.UseItem(3142);
+                    HarrashComplete = true;
+                }
+                if (GetBool("WH") &&HarrashComplete)
+                {
+                    if (WardJump.Harrasjump(oldPosition))
+                    {
+                        HarrashComplete = false;
+                        oldPositionbool = true;
+                    }
+                     
+                }
+            //    oldPositionbool = true;
+              
+
+            }
+        }
         private static void JungleClear()
         {
             var minion = MinionManager.GetMinions(Q.Range, MinionTypes.All, MinionTeam.Neutral, MinionOrderTypes.MaxHealth).FirstOrDefault();
@@ -197,6 +311,7 @@ namespace MasterOfInsec
                 }
             }
 
+
         }
         private static HitChance HitchanceCheck(int i)
         {
@@ -225,7 +340,7 @@ namespace MasterOfInsec
                 }
                 if ( GetBool("comboQ") && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "blindmonkqtwo" )
                 {
-                    Q.Cast(target);
+                    Q.Cast();
                 }
                 //work 
                 #region work
@@ -311,6 +426,7 @@ namespace MasterOfInsec
         }
         private static void Drawing_OnDraw(EventArgs args)
         {
+
             if (Player.IsDead) return;
             if (menu.Item("Draw Q Range").GetValue<bool>())
             {
@@ -331,7 +447,6 @@ namespace MasterOfInsec
             //draw % de vida
             if (menu.Item("DrawKilleableText").GetValue<bool>())
             {
-              //  var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
                 foreach (Obj_AI_Hero target in ObjectManager.Get<Obj_AI_Hero>().Where(x => x.IsEnemy).Where(x => !x.IsDead).Where(x => x.IsVisible).ToList())
                 {
                     if (target.Health <= GetComboDamage(Player))
@@ -349,6 +464,14 @@ namespace MasterOfInsec
                     }
                 }
             }
+                  if (menu.Item("inseckey").GetValue<KeyBind>().Active && menu.Item("DrawInsec").GetValue<bool>())
+                  {
+                        var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
+                        var wts = Drawing.WorldToScreen(target.Position);
+                        var wtsx = Drawing.WorldToScreen(Game.CursorPos); 
+                        Drawing.DrawLine(wts[0],wts[1],wtsx[0],wtsx[1],5f,System.Drawing.Color.Red);
+                        Render.Circle.DrawCircle(Insecpos(target), 110, System.Drawing.Color.Blue, 5);
+                  }
         }
         public static T GetValue<T>(string name)
         {
