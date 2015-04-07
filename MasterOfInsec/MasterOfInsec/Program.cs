@@ -423,6 +423,10 @@ namespace MasterOfInsec
 
             return damage;
         }
+        public static Vector3 InsecFinishPos(Obj_AI_Hero ts)
+        {
+            return Game.CursorPos.Extend(ts.Position, Game.CursorPos.Distance(ts.Position) - R.Range*2);
+        }
         private static void Drawing_OnDraw(EventArgs args)
         {
 
@@ -467,7 +471,7 @@ namespace MasterOfInsec
                   {
                         var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
                         var wts = Drawing.WorldToScreen(target.Position);
-                        var wtsx = Drawing.WorldToScreen(Game.CursorPos); 
+                        var wtsx = Drawing.WorldToScreen(InsecFinishPos(target)); 
                         Drawing.DrawLine(wts[0],wts[1],wtsx[0],wtsx[1],5f,System.Drawing.Color.Red);
                         Render.Circle.DrawCircle(Insecpos(target), 110, System.Drawing.Color.Blue, 5);
                   }
