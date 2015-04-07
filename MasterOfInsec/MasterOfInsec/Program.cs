@@ -64,7 +64,6 @@ namespace MasterOfInsec
             }
             var InsecSettingsMenu = new Menu("Insec Settings", "Insec Settings");
             {
-                InsecSettingsMenu.AddItem(new MenuItem("Not Yet", "Not Yet").SetValue(true));
                 InsecSettingsMenu.AddItem(new MenuItem("inseckey", "Insec key").SetValue(new KeyBind('T', KeyBindType.Press)));
             }
             var LaneclearMenu = new Menu("Laneclear", "Laneclear");
