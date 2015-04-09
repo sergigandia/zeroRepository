@@ -13,6 +13,7 @@ namespace MasterOfInsec
     {
        public static Vector3 posforward;
        public static float LastPlaced;
+       public static Vector3 wardPosition;
        public static float lastwardjump = 0;
        private static Obj_AI_Hero Player { get { return ObjectManager.Player; } }
        public static InventorySlot getBestWardItem()
@@ -87,11 +88,13 @@ namespace MasterOfInsec
        }
        public static bool jump()
        {
+           Player.IssueOrder(GameObjectOrder.MoveTo, Program.Player.Position.Extend(Game.CursorPos, 150));
+         //  Player.IssueOrder(GameObjectOrder.AutoAttack,)
            #region ward ya existe
            if (Program.W.IsReady())
            {
                foreach (Obj_AI_Minion ward in ObjectManager.Get<Obj_AI_Minion>().Where(ward =>
-                    ward.Name.ToLower().Contains("ward") && ward.Distance(Game.CursorPos) < 250))
+                    ward.Name.ToLower().Contains("ward") && ward.Distance(Game.CursorPos) < 250).Where(ward =>Program.W.IsInRange(ward, Program.W.Range)))
                {
                    if (ward != null)
                    {
@@ -138,12 +141,15 @@ namespace MasterOfInsec
                Vector3 delta = cursorPos - myPos;
                delta.Normalize();
 
-               Vector3 wardPosition = myPos + delta * (600 - 5);
+              wardPosition = myPos + delta * (600 - 5);
+
                InventorySlot invSlot = getBestWardItem();
+               if (invSlot == null) return false;
                Items.UseItem((int)invSlot.Id, wardPosition);
+               Program.W.Cast(wardPosition);
                LastPlaced = Environment.TickCount;
-               return true;
-           }
+      
+               }
            return false;
        }
        public static int getJumpWardId()
@@ -225,6 +231,7 @@ namespace MasterOfInsec
                    putWard(pos);
                    lastwardjump = Environment.TickCount + 1000;
                }
+
            }
 
        }

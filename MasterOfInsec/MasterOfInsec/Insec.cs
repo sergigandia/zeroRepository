@@ -1,0 +1,82 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using LeagueSharp;
+using LeagueSharp.Common;
+using SharpDX;
+
+namespace MasterOfInsec
+{
+    public static class Insec
+    {
+        private static bool da;
+        public static string InsecMode = "Normal";
+        public static string Steps = "One";
+        public static void updateInsec()
+        {
+            if (!Program.R.IsReady()) return;
+            var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
+                InsecQMode(target);
+
+
+        }
+        public static void InsecQMode(Obj_AI_Hero target)
+        {
+            if (target != null)
+            {
+                if (Steps == "One") //First hit q
+                {
+                    if (Program.Q.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "BlindMonkQOne")
+                    {
+                        Program.Q.CastIfHitchanceEquals(target, Program.HitchanceCheck(Program.menu.Item("seth").GetValue<Slider>().Value)); // Continue like that
+                        Steps = "Two";
+                    }
+                }
+                else if (Steps == "Two") // hit second q
+                {
+                    if (ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "blindmonkqtwo")
+                    {
+                        if (Program.Q.Cast())
+                        {
+                            Steps = "Three";
+                        }
+                        else
+                        {
+                            Steps = "One";
+                        }
+
+                    }
+                    else
+                    {
+                    }
+                }
+                else if (Steps == "Three") // hit w
+                {
+                    if (Program.Player.Distance(WardJump.getward(target)) <= 600 && Program.W.IsReady())
+                    {
+                        WardJump.InsecJump(WardJump.Insecpos(target).To2D());
+                        Steps = "Four";
+                    }
+                }
+                else if (Steps == "Four")  //go to the ward
+                {
+                    WardJump.InsecJump(WardJump.Insecpos(target).To2D());
+                    if(!Program.Player.IsDashing())
+                    Steps = "Five";
+                }
+                else if (Steps == "Five") // and hit the kcik
+                {
+                        Program.R.CastOnUnit(target);// it dont hit anything
+
+                }
+            }
+        }
+        public static void ResetInsecStats()
+        {
+            Steps = "One";
+        }
+    }
+}
+

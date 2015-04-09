@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Insec.cs" />
     <Compile Include="map.cs" />
     <Compile Include="Polygon.cs" />
     <Compile Include="Program.cs" />
