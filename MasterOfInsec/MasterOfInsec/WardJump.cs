@@ -86,31 +86,37 @@ namespace MasterOfInsec
            }
            return false;
        }
-       //----------------------------------------------------jump------------------------------------------------------
-
        public static bool jump()
        {
-    //       float LastPlaced = new float();
-           Player.IssueOrder(GameObjectOrder.MoveTo, Player.Position.Extend(Game.CursorPos, 150));
-
+           Player.IssueOrder(GameObjectOrder.MoveTo, Program.Player.Position.Extend(Game.CursorPos, 150));
+         //  Player.IssueOrder(GameObjectOrder.AutoAttack,)
            #region ward ya existe
            if (Program.W.IsReady())
            {
                foreach (Obj_AI_Minion ward in ObjectManager.Get<Obj_AI_Minion>().Where(ward =>
-                       ward.Name.ToLower().Contains("ward") && ward.Distance(Game.CursorPos) < 250).Where(ward => Program.W.IsInRange(ward, Program.W.Range)))
+                    ward.Name.ToLower().Contains("ward") && ward.Distance(Game.CursorPos) < 250).Where(ward =>Program.W.IsInRange(ward, Program.W.Range)))
                {
-                   Program.W.CastOnUnit(LastWard());
-                   Program.W.Cast();
+                   if (ward != null)
+                   {
+                       Program.W.CastOnUnit(ward);
+                       Program.W.Cast();
+                       return true;
+
+                   }
+               
                }
 
-               foreach (Obj_AI_Hero hero in ObjectManager.Get<Obj_AI_Hero>().Where(hero => hero.Distance(Game.CursorPos) < 250 && !hero.IsDead && !hero.IsMe))
+               foreach (
+                   Obj_AI_Hero hero in ObjectManager.Get<Obj_AI_Hero>().Where(hero => hero.Distance(Game.CursorPos) < 250 && !hero.IsDead))
                {
                    if (hero != null)
                    {
                        Program.W.CastOnUnit(hero);
                        Program.W.Cast();
                        return true;
+
                    }
+             
                }
 
                foreach (Obj_AI_Minion minion in ObjectManager.Get<Obj_AI_Minion>().Where(minion =>
@@ -122,10 +128,10 @@ namespace MasterOfInsec
                        Program.W.Cast();
                        return true;
                    }
+
                }
            }
            #endregion
-
            if (Program.W.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.W).Name == "BlindMonkWOne")
            {
                if (Environment.TickCount <= LastPlaced + 3000) return false;
@@ -135,61 +141,17 @@ namespace MasterOfInsec
                Vector3 delta = cursorPos - myPos;
                delta.Normalize();
 
-               var wardPosition = myPos + delta * (600 - 5);
-               // i dont see why xD
-               InventorySlot invSlot = Items.GetWardSlot();
+              wardPosition = myPos + delta * (600 - 5);
 
+               InventorySlot invSlot = getBestWardItem();
                if (invSlot == null) return false;
-
                Items.UseItem((int)invSlot.Id, wardPosition);
+               Program.W.Cast(wardPosition);
                LastPlaced = Environment.TickCount;
-               Utility.DelayAction.Add(100, () => Program.W.CastOnUnit(LastWard()));
-           }
-
+      //here i think need to put forw
+               }
            return false;
        }
-
-       //----------------------------------------LastWard--------------------------------------------
-
-       static Obj_AI_Minion LastWard()
-       {
-           if (!ObjectManager.Get<Obj_AI_Minion>().Where(ward => ward.IsAlly && ward.Name.ToLower().Contains("ward") && Geometry.Distance(Player.ServerPosition, ward.ServerPosition) <= Program.W.Range).Any()) return null;
-
-           Dictionary<Obj_AI_Minion, float> Distances = new Dictionary<Obj_AI_Minion, float>();
-
-           int i = new int();
-           i = 0;
-
-           foreach (Obj_AI_Minion Ward in ObjectManager.Get<Obj_AI_Minion>().Where(ward => ward.IsAlly && ward.Name.ToLower().Contains("ward") && Geometry.Distance(Player.ServerPosition, ward.ServerPosition) <= Program.W.Range))
-           {
-               if (i != 0 && Geometry.Distance(Player.ServerPosition, Ward.ServerPosition) >= Distances.FirstOrDefault().Value)//If the new ward is at a greater distance, we remove the last ward from the dictionary.
-               {
-                   Distances.Remove(Distances.FirstOrDefault().Key);
-                   Distances.Add(Ward, Geometry.Distance(Player.ServerPosition, Ward.ServerPosition));//Here, we add the new ward to the dictionary.
-               }
-               else if (i != 0 && Geometry.Distance(Player.ServerPosition, Ward.ServerPosition) <= Distances.FirstOrDefault().Value)
-               {
-
-               }
-               else
-               {
-                   Distances.Add(Ward, Geometry.Distance(Player.ServerPosition, Ward.ServerPosition));//First ward.
-               }
-
-               Render.Circle.DrawCircle(Ward.Position, Program.W.Range / 10, System.Drawing.Color.Red);
-               i += 1;
-               Render.Circle.DrawCircle(Ward.Position, Program.W.Range / 10, System.Drawing.Color.Red);
-           }
-
-           if (Distances.LastOrDefault().Key.IsValid)
-           {
-               return Distances.LastOrDefault().Key;
-           }
-           else
-           {
-               return null;
-           }
-       } 
        public static int getJumpWardId()
        {
            int[] wardIds = { 3340, 3350, 3205, 3207, 2049, 2045, 2044, 3361, 3154, 3362, 3160, 2043 };
