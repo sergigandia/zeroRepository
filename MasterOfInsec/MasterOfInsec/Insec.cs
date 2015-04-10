@@ -73,6 +73,22 @@ namespace MasterOfInsec
                 }
             }
         }
+        public static Vector3  GetInsecPos(Obj_AI_Hero target)
+        {
+          if( Program.menu.Item("Mode").GetValue<StringList>().SelectedIndex==0)
+          {
+return WardJump.Insecpos(target);
+          }
+          else if( Program.menu.Item("Mode").GetValue<StringList>().SelectedIndex==1)
+            {
+                return WardJump.InsecposTower(target);
+            }
+          else if ( Program.menu.Item("Mode").GetValue<StringList>().SelectedIndex==2)
+          {
+              return WardJump.InsecposToAlly(target);
+          }
+              return WardJump.Insecpos(target);
+        }
         public static void ResetInsecStats()
         {
             Steps = "One";

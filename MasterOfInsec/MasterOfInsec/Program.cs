@@ -64,6 +64,7 @@ namespace MasterOfInsec
             }
             var InsecSettingsMenu = new Menu("Insec Settings", "Insec Settings");
             {
+//                InsecSettingsMenu.AddItem(new MenuItem("Mode", "Mode").SetValue(new StringList(new[] { "Insec to Tower", "Insec to Ally", "Insec to Mouse" }, 1))); 
                 InsecSettingsMenu.AddItem(new MenuItem("inseckey", "Insec key").SetValue(new KeyBind('T', KeyBindType.Press)));
             }
             var LaneclearMenu = new Menu("Laneclear", "Laneclear");
@@ -126,7 +127,7 @@ namespace MasterOfInsec
             Q.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth, Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
             RInsec.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth, Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
             Menu();
-            Game.PrintChat("[LeeSin]Master Of Insec load good luck ;) ver 0.0.8.0.1");
+            Game.PrintChat("[LeeSin]Master Of Insec load good luck ;) ver 0.0.9.0.0");
             Drawing.OnDraw += Drawing_OnDraw;
             Obj_AI_Base.OnProcessSpellCast += Oncast;
             Game.OnUpdate += Game_OnGameUpdate;
