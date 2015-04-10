@@ -42,10 +42,6 @@ namespace MasterOfInsec
                         {
                             Steps = "Three";
                         }
-                        else
-                        {
-                            Steps = "One";
-                        }
 
                     }
                     else
@@ -70,6 +66,10 @@ namespace MasterOfInsec
                 {
                         Program.R.CastOnUnit(target);// it dont hit anything
 
+                }
+                else
+                {
+                    Steps = "One";
                 }
             }
         }
