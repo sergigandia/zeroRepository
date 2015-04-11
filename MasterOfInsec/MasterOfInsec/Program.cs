@@ -223,7 +223,7 @@ if (args.SData.Name == R.ChargedSpellName && MasterOfInsec.Insec.Steps == "five"
                 if (Q.CanCast(target))
                 {
 
-                    Utility.DelayAction.Add(500, () => Q.Cast());
+                    Utility.DelayAction.Add(1250, () => Q.Cast());
       steps = "One";
       StarComboa = false;
                 }
