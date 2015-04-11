@@ -40,7 +40,7 @@ namespace MasterOfInsec
                     {
                         if (Program.Q.Cast())
                         {
-                            if (WardJump.getBestWardItem() == null)               Steps = "Flash";
+                            if (WardJump.getBestWardItem() == null && Program.menu.Item("useflash").GetValue<bool>())               Steps = "Flash";
                             else                                                  Steps = "Three";
                                
                         }

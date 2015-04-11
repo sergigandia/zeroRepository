@@ -67,6 +67,7 @@ namespace MasterOfInsec
             {
 //                InsecSettingsMenu.AddItem(new MenuItem("Mode", "Mode").SetValue(new StringList(new[] { "Insec to Tower", "Insec to Ally", "Insec to Mouse" }, 1))); 
                 InsecSettingsMenu.AddItem(new MenuItem("inseckey", "Insec key").SetValue(new KeyBind('T', KeyBindType.Press)));
+                InsecSettingsMenu.AddItem(new MenuItem("useflash", "Use flash if not ward").SetValue(true));
             }
             var LaneclearMenu = new Menu("Laneclear", "Laneclear");
             {
@@ -183,9 +184,12 @@ if (args.SData.Name == R.ChargedSpellName && MasterOfInsec.Insec.Steps == "five"
         static bool StarComboa;
         public static void StarCombo()
         {
+            Player.IssueOrder(GameObjectOrder.MoveTo, Player.Position.Extend(Game.CursorPos, 150));
             var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
-            //if(!StarComboa)
-             //  if (!R.IsReady() || !Q.IsReady()|| !E.IsReady() || target==null) return;
+            if (!StarComboa)
+            {
+                if (!R.IsReady() || !Q.IsReady() || !E.IsReady() || target == null) return;
+            }
                StarComboa = true;
             if (steps == "One") //First hit q
             {
@@ -514,7 +518,7 @@ return  ObjectManager.Get<Obj_AI_Hero>()
             }
             var targets = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
             var wtse = Drawing.WorldToScreen(targets.Position);
-            Drawing.DrawText(wtse[0] - 35, wtse[1], System.Drawing.Color.Yellow, steps);
+        //    Drawing.DrawText(wtse[0] - 35, wtse[1], System.Drawing.Color.Yellow, steps);
                   if (menu.Item("inseckey").GetValue<KeyBind>().Active && menu.Item("DrawInsec").GetValue<bool>())
                   {
                         var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
