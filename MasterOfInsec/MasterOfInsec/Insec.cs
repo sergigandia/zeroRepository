@@ -40,7 +40,9 @@ namespace MasterOfInsec
                     {
                         if (Program.Q.Cast())
                         {
-                            Steps = "Three";
+                            if (WardJump.getBestWardItem() == null)               Steps = "Flash";
+                            else                                                  Steps = "Three";
+                               
                         }
 
                     }
@@ -61,6 +63,17 @@ namespace MasterOfInsec
                     WardJump.InsecJump(WardJump.Insecpos(target).To2D());
                     if(!Program.Player.IsDashing())
                     Steps = "Five";
+                }
+                else if (Steps == "Flash") // hit w
+                {
+                  // Game.PrintChat("Flashing!");
+                    if (WardJump.Insecpos(target).Distance(Program.Player.Position) < 400)
+                    {
+                        ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), WardJump.Insecpos(target));
+                        Steps = "Five";
+                    }
+
+
                 }
                 else if (Steps == "Five") // and hit the kcik
                 {
