@@ -218,12 +218,14 @@ if (args.SData.Name == R.ChargedSpellName && MasterOfInsec.Insec.Steps == "five"
                     steps = "Four";
                 }
             }
-            else if (steps == "Four") // hit second q
+        else if (steps == "Four") // hit second q
             {
                 if (Q.CanCast(target))
                 {
 
-                    Utility.DelayAction.Add(500, () => CastQ());
+                    Utility.DelayAction.Add(500, () => Q.Cast());
+      steps = "One";
+      StarComboa = false;
                 }
             }
             else
