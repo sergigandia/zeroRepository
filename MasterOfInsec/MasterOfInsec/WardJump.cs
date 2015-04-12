@@ -95,7 +95,7 @@ namespace MasterOfInsec
            IEnumerable<Obj_AI_Minion> Wards = ObjectManager.Get<Obj_AI_Minion>().Where(ward => ward.Distance(Game.CursorPos) < 150 && !ward.IsDead);//Wards and minions
            IEnumerable<Obj_AI_Hero> Heros = ObjectManager.Get<Obj_AI_Hero>().Where(hero => hero.Distance(Game.CursorPos) < 150 && !hero.IsDead && !hero.IsMe);
 
-           SecondWTime = Convert.ToInt32( Math.Round(Game.Ping + Program.E.Instance.SData.SpellTotalTime + 100, MidpointRounding.AwayFromZero) );
+           SecondWTime = Convert.ToInt32( Math.Round(Game.Ping + Program.W.Instance.SData.SpellTotalTime + 100, MidpointRounding.AwayFromZero) );
 
            #region ward ya existe
            if (Program.W.IsReady() && Wards.Any() || Heros.Any())
@@ -117,7 +117,7 @@ namespace MasterOfInsec
                }
            }
            #endregion
-
+           
            if (Program.W.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.W).Name == "BlindMonkWOne")
            {
                if (Environment.TickCount <= LastPlaced + 3000) return false;
