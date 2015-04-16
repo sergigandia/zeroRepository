@@ -67,6 +67,7 @@ namespace MasterOfInsec
             {
 //                InsecSettingsMenu.AddItem(new MenuItem("Mode", "Mode").SetValue(new StringList(new[] { "Insec to Tower", "Insec to Ally", "Insec to Mouse" }, 1))); 
                 InsecSettingsMenu.AddItem(new MenuItem("inseckey", "Insec key").SetValue(new KeyBind('T', KeyBindType.Press)));
+                InsecSettingsMenu.AddItem(new MenuItem("InstaFlashRkey", "InstaFlash R key[Not working wait one push more]").SetValue(new KeyBind('G', KeyBindType.Press)));
                 InsecSettingsMenu.AddItem(new MenuItem("useflash", "Use flash if not ward").SetValue(true));
                 InsecSettingsMenu.AddItem(new MenuItem("infoRetarders", "How to use: hold the key until the insec finish!"));
             }
@@ -130,7 +131,7 @@ namespace MasterOfInsec
             Q.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth, Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
             RInsec.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth, Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
             Menu();
-            Game.PrintChat("[LeeSin]Master Of Insec load good luck ;) ver 0.0.9.8.1");
+            Game.PrintChat("[LeeSin]Master Of Insec load good luck ;) ver 0.9.9.1");
             Drawing.OnDraw += Drawing_OnDraw;
             Obj_AI_Base.OnProcessSpellCast += Oncast;
             Game.OnUpdate += Game_OnGameUpdate;
@@ -164,6 +165,10 @@ if (args.SData.Name == R.ChargedSpellName && MasterOfInsec.Insec.Steps == "five"
             else
             {
                 steps = "One";
+            }
+            if (menu.Item("InstaFlashRkey").GetValue<KeyBind>().Active)
+            {
+                MasterOfInsec.Insec.updateInsecFlash();
             }
             if (menu.Item("inseckey").GetValue<KeyBind>().Active)
             {
@@ -522,6 +527,15 @@ return  ObjectManager.Get<Obj_AI_Hero>()
             var targets = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
             var wtse = Drawing.WorldToScreen(targets.Position);
         //    Drawing.DrawText(wtse[0] - 35, wtse[1], System.Drawing.Color.Yellow, steps);
+            if (menu.Item("InstaFlashRkey").GetValue<KeyBind>().Active && menu.Item("DrawInsec").GetValue<bool>())
+            {
+                var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
+                var wtsx = Drawing.WorldToScreen(InsecFinishPos(target));
+                var wts = Drawing.WorldToScreen(target.Position);
+                var wtssx = Drawing.WorldToScreen(target.Position);
+                Drawing.DrawLine(wts[0], wts[1], wtsx[0], wtsx[1], 5f, System.Drawing.Color.Red);
+                Render.Circle.DrawCircle(Insecpos(target), 110, System.Drawing.Color.Blue, 5);
+            }
                   if (menu.Item("inseckey").GetValue<KeyBind>().Active && menu.Item("DrawInsec").GetValue<bool>())
                   {
                         var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);

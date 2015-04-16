@@ -22,7 +22,11 @@ namespace MasterOfInsec
             var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
             InsecQMode(target);
         }
-
+        public static void updateInsecFlash()
+        {
+            var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
+            InsecFlashR(target);
+        }
         public static string fiveornot()
         {
             return !Program.Player.IsDashing() ? Steps = "Five" : Steps;
@@ -36,7 +40,7 @@ namespace MasterOfInsec
                 {
                     if (Program.Q.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "BlindMonkQOne")
                     {
-                        Program.Q.CastIfHitchanceEquals(target, Program.HitchanceCheck(Program.menu.Item("seth").GetValue<Slider>().Value)); // Continue like that
+                        if(Program.Q.CastIfHitchanceEquals(target, Program.HitchanceCheck(Program.menu.Item("seth").GetValue<Slider>().Value))) // Continue like that
                         Steps = "Two";
                     }
                 }
@@ -100,7 +104,17 @@ namespace MasterOfInsec
 
             return WardJump.Insecpos(target);
         }
+        public static void InsecFlashR(Obj_AI_Hero target)
+        {
+         //   Program.Player.IssueOrder(GameObjectOrder.MoveTo, Program.Player.Position.Extend(Game.CursorPos, 150));
+            if(MasterOfInsec.Program.R.IsReady())
+            if (WardJump.Insecpos(target).Distance(Program.Player.Position) < 400)
+            {
+                Program.R.CastOnUnit(target);
+                ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), WardJump.Insecpos(target));
+            }
 
+        }
         public static void ResetInsecStats()
         {
             Steps = "One";
