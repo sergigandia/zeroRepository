@@ -15,7 +15,8 @@ namespace MasterOfInsec
         private static bool da;
         public static string InsecMode = "Normal";
         public static string Steps = "One";
-
+        public static Obj_AI_Hero insecAlly;
+        public static Obj_AI_Hero insecEnemy;
         public static void updateInsec()
         {
             if (!Program.R.IsReady()) return;
@@ -91,27 +92,27 @@ namespace MasterOfInsec
         {
             if (Program.menu.Item("Mode").GetValue<StringList>().SelectedIndex == 0)
             {
-                return WardJump.Insecpos(target);
+                return WardJump.InsecposTower(target); // insec torre
             }
             else if (Program.menu.Item("Mode").GetValue<StringList>().SelectedIndex == 1)
             {
-                return WardJump.InsecposTower(target);
+                return WardJump.InsecposToAlly(insecEnemy,insecAlly); //insec ally  
             }
             else if (Program.menu.Item("Mode").GetValue<StringList>().SelectedIndex == 2)
             {
-                return WardJump.InsecposToAlly(target);
-            }
+                return WardJump.Insecpos(target); // insec normal
+             }
 
             return WardJump.Insecpos(target);
         }
         public static void InsecFlashR(Obj_AI_Hero target)
         {
-         //   Program.Player.IssueOrder(GameObjectOrder.MoveTo, Program.Player.Position.Extend(Game.CursorPos, 150));
+           Program.Player.IssueOrder(GameObjectOrder.MoveTo, Program.Player.Position.Extend(Game.CursorPos, 150));
             if(MasterOfInsec.Program.R.IsReady())
-            if (WardJump.Insecpos(target).Distance(Program.Player.Position) < 400)
+            if (WardJump.Insecpos(target).Distance(Program.Player.Position) < 375)
             {
                 Program.R.CastOnUnit(target);
-                ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), WardJump.Insecpos(target));
+                Utility.DelayAction.Add(Game.Ping + 125, () => ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), WardJump.Insecpos(target)));
             }
 
         }

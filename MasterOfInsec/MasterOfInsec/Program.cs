@@ -15,7 +15,7 @@ namespace MasterOfInsec
         //combo working
         //ignite working
         //ward jump x
-
+        private static Obj_AI_Hero allytarget;
         public  static Map map;
         public static Obj_AI_Hero Player;
         public static Menu menu;
@@ -65,7 +65,7 @@ namespace MasterOfInsec
             }
             var InsecSettingsMenu = new Menu("Insec Settings", "Insec Settings");
             {
-//                InsecSettingsMenu.AddItem(new MenuItem("Mode", "Mode").SetValue(new StringList(new[] { "Insec to Tower", "Insec to Ally", "Insec to Mouse" }, 1))); 
+                InsecSettingsMenu.AddItem(new MenuItem("Mode", "Mode").SetValue(new StringList(new[] { "Insec to Tower", "Insec to Ally", "Insec to Mouse" }, 1))); 
                 InsecSettingsMenu.AddItem(new MenuItem("inseckey", "Insec key").SetValue(new KeyBind('T', KeyBindType.Press)));
                 InsecSettingsMenu.AddItem(new MenuItem("InstaFlashRkey", "InstaFlash R key[Not working wait one push more]").SetValue(new KeyBind('G', KeyBindType.Press)));
                 InsecSettingsMenu.AddItem(new MenuItem("useflash", "Use flash if not ward").SetValue(true));
@@ -116,7 +116,8 @@ namespace MasterOfInsec
         }
         static void OnGameLoad(EventArgs args)
         {
-            // if (Player.ChampionName == "LeeSin") return;
+        //    Game.PrintChat(Player.ChampionName);
+        //    if (Player.ChampionName != "LeeSin") return;
             map = new Map();
             Player = ObjectManager.Player;
             //   Ignite = new Spell(SpellSlot.Summoner1, 1100);
@@ -131,11 +132,52 @@ namespace MasterOfInsec
             Q.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth, Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
             RInsec.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth, Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
             Menu();
-            Game.PrintChat("[LeeSin]Master Of Insec load good luck ;) ver 0.9.9.1");
+            Game.PrintChat("[LeeSin]Master Of Insec load good luck ;) ver 0.9.9.2");
             Drawing.OnDraw += Drawing_OnDraw;
+            Game.OnWndProc += GameOnOnWndProc;
             Obj_AI_Base.OnProcessSpellCast += Oncast;
+            Orbwalking.AfterAttack += afterAttack; 
             Game.OnUpdate += Game_OnGameUpdate;
 
+        }
+        static int charges=0;
+       static Obj_AI_Hero trys;
+        private static void GameOnOnWndProc(WndEventArgs args)
+        {
+            if (args.Msg != (uint)WindowsMessages.WM_LBUTTONDOWN)
+            {
+                return;
+            }
+            trys = HeroManager.Allies
+                     .FindAll(hero => hero.Distance(Game.CursorPos, true) < 40000) // 200 * 200
+                     .OrderBy(h => h.Distance(Game.CursorPos, true)).FirstOrDefault();
+                if(trys!=null)
+                {
+                    Insec.insecAlly = HeroManager.Allies
+                     .FindAll(hero => hero.Distance(Game.CursorPos, true) < 40000) // 200 * 200
+                     .OrderBy(h => h.Distance(Game.CursorPos, true)).FirstOrDefault();
+                }
+                trys = HeroManager.Enemies
+                    .FindAll(hero => hero.IsValidTarget() && hero.Distance(Game.CursorPos, true) < 40000) // 200 * 200
+                    .OrderBy(h => h.Distance(Game.CursorPos, true)).FirstOrDefault();
+                if (trys != null)
+                {
+                    Insec.insecEnemy = HeroManager.Enemies
+                      .FindAll(hero => hero.IsValidTarget() && hero.Distance(Game.CursorPos, true) < 40000) // 200 * 200
+                      .OrderBy(h => h.Distance(Game.CursorPos, true)).FirstOrDefault();
+                }
+        }
+        private static void afterAttack(AttackableUnit unit, AttackableUnit target)
+        {
+            if(step=="AA")
+            {
+                charges+=1;
+                if(charges==2)
+                {
+                    charges = 0;
+                    step = step2;
+                }
+            }
         }
         public static void Oncast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
 {
@@ -302,40 +344,77 @@ return  ObjectManager.Get<Obj_AI_Hero>()
 
             }
         }
+        static string step="WOne", step2;
+        static bool hit=false;
         private static void JungleClear()
         {
             var minion = MinionManager.GetMinions(Q.Range, MinionTypes.All, MinionTeam.Neutral, MinionOrderTypes.MaxHealth).FirstOrDefault();
             var useQ = Program.menu.Item("QJ").GetValue<bool>();
             var useW = Program.menu.Item("WJ").GetValue<bool>();
             var useE = Program.menu.Item("EJ").GetValue<bool>();
+            if(minion==null && W.IsReady())
+            {
+                step = "WOne";
+            }
+         switch(step)
+         {
+             case "WOne":
+                 if (W.IsReady() && useW ) // falta el valor de WOne
+                 {
+                     W.Cast(Player);
+                     step = "AA";
+                     step2 = "WTwo";
+                 }
+                 break;
+             case "WTwo":
+                 if (W.IsReady() && useW ) // falta el valor de WOne
+                 {
+                     W.Cast(Player);
+                     step = "AA";
+                     step2 = "QOne";
+                 }
+                 break;
+             case "QOne":
+                 if (Q.IsReady() && useQ)
+                 {
+                     if (minion.Distance(ObjectManager.Player.Position) <= Q.Range)
+                     {
+                         if (Program.Q.CastIfHitchanceEquals(minion,HitChance.High)) // Continue like that
+                             step = "AA";
+                            step2 = "QTwo";
+                     }
+                 } 
+                 break;
+             case "QTwo":
+                 if (Q.IsReady() && useQ)
+                 {
+                     Q.Cast();
+                     step = "AA";
+                     step2 = "EOne";
+                 }
+                 break;
+             case "EOne":
+                 if (minion.Distance(ObjectManager.Player.Position) < E.Range)
+                 {
+                     E.Cast();
+                     if (Items.CanUseItem(3077) && Player.Distance(minion.Position) < 350)
+                         Items.UseItem(3077);
+                     if (Items.CanUseItem(3074) && Player.Distance(minion.Position) < 350)
+                         Items.UseItem(3074);
+                     step = "AA";
+                     step2 = "WOne";
+                 }
+                 break;
+             case "AA":
+                 break;
+         }
+
             if (!minion.IsValidTarget() || minion == null)
             {
                 if (menu.Item("laneclearkey").GetValue<KeyBind>().Active)
                     LaneClear();
             }
-            if (Q.IsReady() && useQ)
-            {
-                if (minion.Distance(ObjectManager.Player.Position) <= Q.Range)
-                {
-                    Q.Cast(minion);
-                    if (W.IsReady() && useW)
-                    {
-                        W.Cast(Player);
-                    }
-                }
-            } 
-            if (E.IsReady() && useE)
-            {
-                if (minion.Distance(ObjectManager.Player.Position) < E.Range)
-                {
-                    Player.IssueOrder(GameObjectOrder.AutoAttack, minion);
-                    E.Cast();
-                    if (Items.CanUseItem(3077) && Player.Distance(minion.Position) < 350)
-                        Items.UseItem(3077);
-                    if (Items.CanUseItem(3074) && Player.Distance(minion.Position) < 350)
-                        Items.UseItem(3074);
-                }
-            }
+            //SKill Q + AA+Q2+AA
         }
         private static void LaneClear()
         {
@@ -484,9 +563,13 @@ return  ObjectManager.Get<Obj_AI_Hero>()
         {
             return Game.CursorPos.Extend(ts.Position, Game.CursorPos.Distance(ts.Position) - R.Range*2);
         }
+        private static void RenderCircles()
+        {
+           Render.Circle.DrawCircle(Insec.insecAlly.Position, 110, System.Drawing.Color.Blue, 5);
+           Render.Circle.DrawCircle(Insec.insecEnemy.Position, 110, System.Drawing.Color.Red, 5);
+        }
         private static void Drawing_OnDraw(EventArgs args)
         {
-
             if (Player.IsDead) return;
             if (menu.Item("Draw Q Range").GetValue<bool>())
             {
@@ -524,9 +607,7 @@ return  ObjectManager.Get<Obj_AI_Hero>()
                     }
                 }
             }
-            var targets = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
-            var wtse = Drawing.WorldToScreen(targets.Position);
-        //    Drawing.DrawText(wtse[0] - 35, wtse[1], System.Drawing.Color.Yellow, steps);
+            RenderCircles();
             if (menu.Item("InstaFlashRkey").GetValue<KeyBind>().Active && menu.Item("DrawInsec").GetValue<bool>())
             {
                 var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
@@ -539,11 +620,41 @@ return  ObjectManager.Get<Obj_AI_Hero>()
                   if (menu.Item("inseckey").GetValue<KeyBind>().Active && menu.Item("DrawInsec").GetValue<bool>())
                   {
                         var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
-                        var wtsx = Drawing.WorldToScreen(InsecFinishPos(target));
-                        var wts = Drawing.WorldToScreen(target.Position);
-                        var wtssx = Drawing.WorldToScreen(target.Position);           
-                        Drawing.DrawLine(wts[0],wts[1],wtsx[0],wtsx[1],5f,System.Drawing.Color.Red);
-                        Render.Circle.DrawCircle(Insecpos(target), 110, System.Drawing.Color.Blue, 5);
+                        if (Program.menu.Item("Mode").GetValue<StringList>().SelectedIndex == 0)
+                        {
+                            //insec to tower
+                            if (WardJump.getNearTower(target) == null)
+                            {
+                            //    Drawing.DrawText(wtsp[0]-35, wtsp[1]+10, System.Drawing.Color.Yellow, "Not Enemy on range.");
+                             Game.PrintChat("not enemy on range");
+                            }
+                            else
+                            {
+                                var wts = Drawing.WorldToScreen(target.Position);
+                                var wtssxt = Drawing.WorldToScreen(WardJump.getNearTower(target).Position);
+                                Drawing.DrawLine(wts[0], wts[1], wtssxt[0], wtssxt[1], 5f, System.Drawing.Color.Red);
+                                Render.Circle.DrawCircle(WardJump.getNearTower(target).Position, 110, System.Drawing.Color.Green, 5);
+                            //    Render.Circle.DrawCircle(WardJump.InsecposToAlly(target), 110, System.Drawing.Color.Green, 5);
+                            }
+                        }
+                        if (Program.menu.Item("Mode").GetValue<StringList>().SelectedIndex == 1)
+                        {
+                            //insec to ally
+                            var wts = Drawing.WorldToScreen(Insec.insecAlly.Position);
+                            var wtssxt = Drawing.WorldToScreen(WardJump.InsecposToAlly(Insec.insecEnemy,Insec.insecAlly));
+                            Drawing.DrawLine(wtssxt[0], wtssxt[1], wts[0], wts[1], 5f, System.Drawing.Color.Red);
+                            Render.Circle.DrawCircle(Insec.insecAlly.Position, 110, System.Drawing.Color.Blue, 5);
+                            Render.Circle.DrawCircle(WardJump.InsecposToAlly(Insec.insecEnemy, Insec.insecAlly), 110, System.Drawing.Color.Yellow, 5);
+                        }
+                        else if (Program.menu.Item("Mode").GetValue<StringList>().SelectedIndex == 2)
+                        {
+                            //insec to mouse
+                            var wtsx = Drawing.WorldToScreen(InsecFinishPos(target));
+                            var wts = Drawing.WorldToScreen(target.Position);
+                            var wtssx = Drawing.WorldToScreen(target.Position);
+                            Drawing.DrawLine(wts[0], wts[1], wtsx[0], wtsx[1], 5f, System.Drawing.Color.Red);
+                            Render.Circle.DrawCircle(WardJump.Insecpos(target), 110, System.Drawing.Color.Blue, 5);
+                        }
                   }
         }
         public static T GetValue<T>(string name)

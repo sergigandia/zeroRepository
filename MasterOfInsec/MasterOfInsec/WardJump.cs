@@ -227,19 +227,30 @@ namespace MasterOfInsec
            float dist2 = Vector2.DistanceSquared(pos1, pos2);
            return (dist2 <= distance * distance) ? true : false;
        }
+       public static Obj_AI_Turret getNearTower(Obj_AI_Hero ts)
+       {
+           return  ObjectManager.Get<Obj_AI_Turret>().Where(tur => tur.IsAlly && tur.Health > 0 && !tur.IsMe).OrderBy(tur => tur.Distance(Player.ServerPosition)).First();
+       }
        public static Vector3 Insecpos(Obj_AI_Hero ts)
        {
            return Game.CursorPos.Extend(ts.Position, Game.CursorPos.Distance(ts.Position) + 250);
        }
        public static Vector3 InsecposTower(Obj_AI_Hero target)
        {
-            Obj_AI_Turret turret = ObjectManager.Get<Obj_AI_Turret>().Where(tur => tur.IsAlly && tur.Health > 0 && !tur.IsMe).OrderBy(tur => tur.Distance(Player.ServerPosition)).First();
-            return target.Position + Vector3.Normalize(turret.Position - target.Position) * (600);
+           Obj_AI_Turret turret = ObjectManager.Get<Obj_AI_Turret>().Where(tur => tur.IsAlly && tur.Health > 0 && !tur.IsMe).OrderBy(tur => tur.Distance(Player.ServerPosition)).Where(tur => tur.Distance(target.Position) <= 1500).First();
+           return target.Position + Vector3.Normalize(turret.Position - target.Position) + 100;
+
        }
-       public static Vector3 InsecposToAlly(Obj_AI_Hero target)
+       public static Obj_AI_Hero InsecgetAlly(Obj_AI_Hero target)
        {
-           Obj_AI_Hero hero = ObjectManager.Get<Obj_AI_Hero>().Where(tur => tur.IsAlly && tur.Health > 0 && !tur.IsMe).OrderBy(tur => tur.Distance(Player.ServerPosition)).First();
-           return target.Position + Vector3.Normalize(hero.Position - target.Position) * (600);
+
+           return HeroManager.Allies
+                    .FindAll(hero => hero.Distance(Game.CursorPos, true) < 40000) // 200 * 200
+                    .OrderBy(h => h.Distance(Game.CursorPos, true)).FirstOrDefault();
+       }
+       public static Vector3 InsecposToAlly(Obj_AI_Hero target,Obj_AI_Hero ally)
+       {
+           return target.Position + Vector3.Normalize(ally.Position - target.Position)+100;
        }
        public static Vector3 getward(Obj_AI_Hero target)
        {
