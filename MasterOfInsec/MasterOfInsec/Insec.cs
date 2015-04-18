@@ -101,7 +101,7 @@ namespace MasterOfInsec
             else if (Program.menu.Item("Mode").GetValue<StringList>().SelectedIndex == 2)
             {
                 return WardJump.Insecpos(target); // insec normal
-             }
+            }
 
             return WardJump.Insecpos(target);
         }

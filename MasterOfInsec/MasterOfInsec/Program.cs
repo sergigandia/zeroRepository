@@ -607,7 +607,6 @@ return  ObjectManager.Get<Obj_AI_Hero>()
                     }
                 }
             }
-            RenderCircles();
             if (menu.Item("InstaFlashRkey").GetValue<KeyBind>().Active && menu.Item("DrawInsec").GetValue<bool>())
             {
                 var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
@@ -640,6 +639,7 @@ return  ObjectManager.Get<Obj_AI_Hero>()
                         if (Program.menu.Item("Mode").GetValue<StringList>().SelectedIndex == 1)
                         {
                             //insec to ally
+                            RenderCircles();
                             var wts = Drawing.WorldToScreen(Insec.insecAlly.Position);
                             var wtssxt = Drawing.WorldToScreen(WardJump.InsecposToAlly(Insec.insecEnemy,Insec.insecAlly));
                             Drawing.DrawLine(wtssxt[0], wtssxt[1], wts[0], wts[1], 5f, System.Drawing.Color.Red);

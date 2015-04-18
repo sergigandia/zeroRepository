@@ -250,7 +250,7 @@ namespace MasterOfInsec
        }
        public static Vector3 InsecposToAlly(Obj_AI_Hero target,Obj_AI_Hero ally)
        {
-           return target.Position + Vector3.Normalize(ally.Position - target.Position)+100;
+           return ally.Position.Extend(target.Position ,ally.Position.Distance(target.Position))+100;
        }
        public static Vector3 getward(Obj_AI_Hero target)
        {
