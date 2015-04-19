@@ -641,7 +641,7 @@ return  ObjectManager.Get<Obj_AI_Hero>()
                             //insec to ally
                             RenderCircles();
                             var wts = Drawing.WorldToScreen(Insec.insecAlly.Position);
-                            var wtssxt = Drawing.WorldToScreen(WardJump.InsecposToAlly(Insec.insecEnemy,Insec.insecAlly));
+                            var wtssxt = Drawing.WorldToScreen(Insec.insecEnemy.Position);
                             Drawing.DrawLine(wtssxt[0], wtssxt[1], wts[0], wts[1], 5f, System.Drawing.Color.Red);
                             Render.Circle.DrawCircle(Insec.insecAlly.Position, 110, System.Drawing.Color.Blue, 5);
                             Render.Circle.DrawCircle(WardJump.InsecposToAlly(Insec.insecEnemy, Insec.insecAlly), 110, System.Drawing.Color.Yellow, 5);
