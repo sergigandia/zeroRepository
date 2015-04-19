@@ -1,0 +1,13 @@
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\MasterOfInsec\MasterRecall\MasterRecall\bin\Release\MasterRecall.exe.config
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\MasterOfInsec\MasterRecall\MasterRecall\bin\Release\MasterRecall.exe
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\MasterOfInsec\MasterRecall\MasterRecall\bin\Release\MasterRecall.pdb
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\MasterOfInsec\MasterRecall\MasterRecall\bin\Release\LeagueSharp.Common.dll
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\MasterOfInsec\MasterRecall\MasterRecall\bin\Release\LeagueSharp.dll
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\MasterOfInsec\MasterRecall\MasterRecall\bin\Release\SharpDX.dll
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\MasterOfInsec\MasterRecall\MasterRecall\bin\Release\SharpDX.Direct3D9.dll
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\MasterOfInsec\MasterRecall\MasterRecall\bin\Release\clipper_library.dll
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\MasterOfInsec\MasterRecall\MasterRecall\bin\Release\LeagueSharp.Sandbox.dll
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\MasterOfInsec\MasterRecall\MasterRecall\bin\Release\LeagueSharp.xml
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\MasterOfInsec\MasterRecall\MasterRecall\obj\Debug\MasterRecallOfTheDie.csprojResolveAssemblyReference.cache
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\MasterOfInsec\MasterRecall\MasterRecall\obj\Debug\MasterRecall.exe
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\MasterOfInsec\MasterRecall\MasterRecall\obj\Debug\MasterRecall.pdb
