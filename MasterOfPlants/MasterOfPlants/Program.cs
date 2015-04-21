@@ -18,7 +18,7 @@ namespace MasterOfPlants
        
         public Program()
         {
-            menu = new Menu("Master Of Plants","MasterOfPlants",true);
+            menu = new Menu("Master Of Thorns", "MasterOfPlants", true);
             name = "[Zyra]Master Of Plants";
             version = "0.1.0.0";
         }
@@ -75,8 +75,8 @@ namespace MasterOfPlants
             }
             var FleeMenu = new Menu("Flee", "Flee");
             {
-                UltimateSettingsMenu.AddItem(new MenuItem("fleekey", "Flee key").SetValue(new KeyBind('Z', KeyBindType.Press)));
-                UltimateSettingsMenu.AddItem(new MenuItem("flee", "Only use e for flee"));
+                FleeMenu.AddItem(new MenuItem("fleekey", "Flee key").SetValue(new KeyBind('Z', KeyBindType.Press)));
+                FleeMenu.AddItem(new MenuItem("flee", "Only use e for flee"));
             }
             var LaneclearMenu = new Menu("Laneclear", "Laneclear");
             {
@@ -115,6 +115,7 @@ namespace MasterOfPlants
             menu.AddSubMenu(comboRMenu);
             menu.AddSubMenu(HarrashMenu);  //Harrash
             menu.AddSubMenu(UltimateSettingsMenu);  //Ultimate
+            menu.AddSubMenu(FleeMenu); 
             menu.AddSubMenu(ItemMenu);
             menu.AddSubMenu(LaneclearMenu);        //LANECLEAR
             menu.AddSubMenu(JungleclearMenu);      //JUNGLECLEAR
