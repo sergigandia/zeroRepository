@@ -36,7 +36,7 @@ namespace MasterOfPlants
         public void laneClear()
         {
             var minion = MinionManager.GetMinions(skills.getQ().Range, MinionTypes.All, MinionTeam.Enemy, MinionOrderTypes.MaxHealth).FirstOrDefault();
-            skills.rCast(minion);
+            
             skills.eCast(minion);
             if (skills.getE().IsReady())
                 skills.wCast(minion);
@@ -50,7 +50,7 @@ namespace MasterOfPlants
           //  var useQ = p.getMenu().Item("QJ").GetValue<bool>();
           //  var useW =p.getMenu().Item("WJ").GetValue<bool>();
           //  var useE =p.getMenu().Item("EJ").GetValue<bool>();
-            skills.rCast(minion);
+            
             skills.eCast(minion);
             if (skills.getE().IsReady())
                 skills.wCast(minion);
@@ -64,12 +64,12 @@ namespace MasterOfPlants
             if (skills.getQ().IsReady())
             skills.wCast(target);
         }
-        public void Flee(Obj_AI_Hero target)
+        public void flee(Obj_AI_Hero target)
         {
             p.getPlayer().IssueOrder(GameObjectOrder.MoveTo, p.getPlayer().Position.Extend(Game.CursorPos, 150));
             skills.eCast(target);
         }
-        public void OnlyR(Obj_AI_Hero target)
+        public void onlyR(Obj_AI_Hero target)
         {
            p.getPlayer().IssueOrder(GameObjectOrder.MoveTo, p.getPlayer().Position.Extend(Game.CursorPos, 150));
             skills.rCast(target);

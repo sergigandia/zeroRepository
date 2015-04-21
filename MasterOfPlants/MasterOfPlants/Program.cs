@@ -111,7 +111,7 @@ namespace MasterOfPlants
             TargetSelector.AddToMenu(TargetSelectorMenu);
             menu.AddSubMenu(orbWalkerMenu);        //ORBWALKER
             menu.AddSubMenu(TargetSelectorMenu);   //TS
-            menu.AddSubMenu(comboMenu);//COMBO
+            menu.AddSubMenu(comboMenu); //COMBO
             menu.AddSubMenu(comboRMenu);
             menu.AddSubMenu(HarrashMenu);  //Harrash
             menu.AddSubMenu(UltimateSettingsMenu);  //Ultimate
@@ -155,8 +155,8 @@ namespace MasterOfPlants
         {
             if (getMenu().Item("combokey").GetValue<KeyBind>().Active)  base.combo(base.getTarget());
             if (getMenu().Item("rcombokey").GetValue<KeyBind>().Active) base.rCombo(base.getTarget());
-            if (getMenu().Item("fleekey").GetValue<KeyBind>().Active) base.Flee(base.getTarget());
-            if (getMenu().Item("Ultimate Key").GetValue<KeyBind>().Active) base.OnlyR(base.getTarget());
+            if (getMenu().Item("fleekey").GetValue<KeyBind>().Active) base.flee(base.getTarget());
+            if (getMenu().Item("Ultimate Key").GetValue<KeyBind>().Active) base.onlyR(base.getTarget());
             if (getMenu().Item("jungleclearkey").GetValue<KeyBind>().Active) base.jungleClear();
             if (getMenu().Item("Harrash key").GetValue<KeyBind>().Active) base.harrash(base.getTarget());                   
         }
