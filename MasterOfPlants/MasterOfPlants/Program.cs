@@ -7,10 +7,11 @@ using LeagueSharp;
 using LeagueSharp.Common;
 using SharpDX;
 using System.Drawing;
-namespace MasterOfPlants
+
+namespace MasterOfThorns
 {
     class Program : Modes
-    {
+    {        
         private Menu menu;
         private String name;
         private String version;
@@ -20,7 +21,7 @@ namespace MasterOfPlants
         {
             menu = new Menu("Master Of Thorns", "MasterOfPlants", true);
             name = "[Zyra]Master Of Plants";
-            version = "0.1.0.0";
+            version = "0.1.0.2";
         }
 
         public Obj_AI_Hero getPlayer()
@@ -47,65 +48,73 @@ namespace MasterOfPlants
             var TargetSelectorMenu = new Menu("TargetSelector", "TargetSelector");
             var comboMenu = new Menu("Combo", "Combo");
             {
-                comboMenu.AddItem(new MenuItem("seth", "Q Hitchance")).SetValue(new Slider(3, 1, 4));
-                comboMenu.AddItem(new MenuItem("comboQ", "Use Q in combo").SetValue(true));
-                comboMenu.AddItem(new MenuItem("comboW", "Use W in combo").SetValue(false));
-                comboMenu.AddItem(new MenuItem("comboE", "Use E in combo").SetValue(true));
+                
+                comboMenu.AddItem(new MenuItem("QC", "Use Q in combo").SetValue(true));
+                comboMenu.AddItem(new MenuItem("WC", "Use W in combo").SetValue(true));
+                comboMenu.AddItem(new MenuItem("EC", "Use E in combo").SetValue(true));
                 comboMenu.AddItem(new MenuItem("comboR", "Use R to finish the enemy").SetValue(true));
                 comboMenu.AddItem(new MenuItem("Ignite", "Use ignite for kill").SetValue(true));
                 comboMenu.AddItem(new MenuItem("combokey", "Combo key").SetValue(new KeyBind(32, KeyBindType.Press)));
             }
-            var comboRMenu = new Menu("RCombokey", "RCombo"); // R+E+W+Q+W
+            var settingMenu = new Menu("setting", "HitChance settings");
             {
-                comboRMenu.AddItem(new MenuItem("QH", "Use Q in Harrash").SetValue(true));
-                comboRMenu.AddItem(new MenuItem("WH", "Use W for go out").SetValue(false));
+                comboMenu.AddItem(new MenuItem("seth", "E hitchance")).SetValue(new Slider(3, 1, 4));
+                comboMenu.AddItem(new MenuItem("sethQ", "Q hitchance")).SetValue(new Slider(3, 1, 4));
+                comboMenu.AddItem(new MenuItem("sethW", "W hitchance")).SetValue(new Slider(3, 1, 4));
+                comboMenu.AddItem(new MenuItem("sethR", "R hitchance")).SetValue(new Slider(3, 1, 4));
+                comboMenu.AddItem(new MenuItem("sethR", "Passive hitchance")).SetValue(new Slider(3, 1, 4));
+            }
+            var comboRMenu = new Menu("RCombokey", "Burst Combo"); 
+            {
+                comboRMenu.AddItem(new MenuItem("QrC", "Use Q in combo with R").SetValue(true));
+                comboRMenu.AddItem(new MenuItem("ErC", "Use E in combo with R").SetValue(true));
                 comboRMenu.AddItem(new MenuItem("rcombokey", "RCombo key").SetValue(new KeyBind('X', KeyBindType.Press)));
             }
-            var HarrashMenu = new Menu("Harrash", "Harrash");
+            var harrashMenu = new Menu("Harrash", "Harrash");
             {
-                HarrashMenu.AddItem(new MenuItem("QH", "Use Q in Harrash").SetValue(true));
-                HarrashMenu.AddItem(new MenuItem("WH", "Use W for go out").SetValue(false));
-                HarrashMenu.AddItem(new MenuItem("Harrash key", "Harrash key").SetValue(new KeyBind('C', KeyBindType.Press)));
+                harrashMenu.AddItem(new MenuItem("QH", "Use Q in Harrash").SetValue(true));
+                harrashMenu.AddItem(new MenuItem("WH", "Use W for go out").SetValue(true));
+                harrashMenu.AddItem(new MenuItem("Harrash key", "Harrash key").SetValue(new KeyBind('C', KeyBindType.Press)));
             }
-            var UltimateSettingsMenu = new Menu("Ultimate Settings", "Ultimate Settings");
+            var ultimateSettingsMenu = new Menu("Ultimate Settings", "Ultimate Settings");
             {
-                UltimateSettingsMenu.AddItem(new MenuItem("seth", "Q Hitchance")).SetValue(new Slider(1, 1, 5));
-                UltimateSettingsMenu.AddItem(new MenuItem("Ultimate Key", "Ultimate key").SetValue(new KeyBind('T', KeyBindType.Press)));
-            //    UltimateSettingsMenu.AddItem(new MenuItem("useflash", "Use flash").SetValue(true));
+                ultimateSettingsMenu.AddItem(new MenuItem("minEnemys", "Min. enemys to hit")).SetValue(new Slider(1, 1, 5));
+                ultimateSettingsMenu.AddItem(new MenuItem("Ultimate Key", "Ultimate key").SetValue(new KeyBind('T', KeyBindType.Press)));
+            //  UltimateSettingsMenu.AddItem(new MenuItem("useflash", "Use flash").SetValue(true));
             }
-            var FleeMenu = new Menu("Flee", "Flee");
+            var fleeMenu = new Menu("Flee", "Flee");
             {
-                FleeMenu.AddItem(new MenuItem("fleekey", "Flee key").SetValue(new KeyBind('Z', KeyBindType.Press)));
-                FleeMenu.AddItem(new MenuItem("flee", "Only use e for flee"));
+                fleeMenu.AddItem(new MenuItem("fleekey", "Flee key").SetValue(new KeyBind('Z', KeyBindType.Press)));
+                fleeMenu.AddItem(new MenuItem("flee", "Flee only use e"));
             }
-            var LaneclearMenu = new Menu("Laneclear", "Laneclear");
+            var laneclearMenu = new Menu("Laneclear", "Laneclear");
             {
-                LaneclearMenu.AddItem(new MenuItem("QL", "Use Q in Laneclear").SetValue(true));
-                LaneclearMenu.AddItem(new MenuItem("WL", "Use W in Laneclear").SetValue(false));
-                LaneclearMenu.AddItem(new MenuItem("EL", "Use E in Laneclear").SetValue(true));
-                LaneclearMenu.AddItem(new MenuItem("laneclearkey", "LaneClear key").SetValue(new KeyBind('V', KeyBindType.Press)));
+                laneclearMenu.AddItem(new MenuItem("QL", "Use Q in Laneclear").SetValue(true));
+                laneclearMenu.AddItem(new MenuItem("WL", "Use W in Laneclear").SetValue(true));
+                laneclearMenu.AddItem(new MenuItem("EL", "Use E in Laneclear").SetValue(true));
+                laneclearMenu.AddItem(new MenuItem("laneclearkey", "LaneClear key").SetValue(new KeyBind('V', KeyBindType.Press)));
             }
-            var JungleclearMenu = new Menu("Jungleclear", "Jungleclear");
+            var jungleclearMenu = new Menu("Jungleclear", "Jungleclear");
             {
-                JungleclearMenu.AddItem(new MenuItem("QJ", "Use Q in JungleClear").SetValue(true));
-                JungleclearMenu.AddItem(new MenuItem("WJ", "Use W in JungleClear").SetValue(false));
-                JungleclearMenu.AddItem(new MenuItem("EJ", "Use E in JungleClear").SetValue(true));
-                JungleclearMenu.AddItem(new MenuItem("jungleclearkey", "JungleClear key").SetValue(new KeyBind('V', KeyBindType.Press)));
+                jungleclearMenu.AddItem(new MenuItem("QJ", "Use Q in JungleClear").SetValue(true));
+                jungleclearMenu.AddItem(new MenuItem("WJ", "Use W in JungleClear").SetValue(true));
+                jungleclearMenu.AddItem(new MenuItem("EJ", "Use E in JungleClear").SetValue(true));
+                jungleclearMenu.AddItem(new MenuItem("jungleclearkey", "JungleClear key").SetValue(new KeyBind('V', KeyBindType.Press)));
             }
-            var ItemMenu = new Menu("Item Menu", "itemmenu");
+     /*       var itemMenu = new Menu("Item Menu", "Itemmenu");
             {
-                ItemMenu.AddItem(new MenuItem("Zhonias", "zhonias").SetValue(true));
-                ItemMenu.AddItem(new MenuItem("xxxx", "xxxx").SetValue(true));
-                ItemMenu.AddItem(new MenuItem("xxxx", "xxxx").SetValue(true));
+                itemMenu.AddItem(new MenuItem("Zhonias", "Zhonias").SetValue(true));
+             //   ItemMenu.AddItem(new MenuItem("xxxx", "xxxx").SetValue(true));
+             //   ItemMenu.AddItem(new MenuItem("xxxx", "xxxx").SetValue(true));
             }
-            var DrawSettingsMenu = new Menu("Draw Settings", "Draw Settings");
+       */     var drawSettingsMenu = new Menu("Draw Settings", "Draw Settings");
             {
-                DrawSettingsMenu.AddItem(new MenuItem("DrawUltimate", "DrawUltimate").SetValue(true));
-                DrawSettingsMenu.AddItem(new MenuItem("DrawKilleableText", "Draw Killeable Text").SetValue(true));
-                DrawSettingsMenu.AddItem(new MenuItem("Draw Q Range", "Draw Q Range").SetValue(true));
-                DrawSettingsMenu.AddItem(new MenuItem("Draw W Range", "Draw W Range").SetValue(true));
-                DrawSettingsMenu.AddItem(new MenuItem("Draw E Range", "Draw E Range").SetValue(true));
-                DrawSettingsMenu.AddItem(new MenuItem("Draw R Range", "Draw R Range").SetValue(true));
+                drawSettingsMenu.AddItem(new MenuItem("DrawUltimate", "DrawUltimate").SetValue(true));
+                drawSettingsMenu.AddItem(new MenuItem("DrawKilleableText", "Draw Killeable Text").SetValue(true));
+                drawSettingsMenu.AddItem(new MenuItem("Draw Q Range", "Draw Q Range").SetValue(true));
+                drawSettingsMenu.AddItem(new MenuItem("Draw W Range", "Draw W Range").SetValue(true));
+                drawSettingsMenu.AddItem(new MenuItem("Draw E Range", "Draw E Range").SetValue(true));
+                drawSettingsMenu.AddItem(new MenuItem("Draw R Range", "Draw R Range").SetValue(true));
             }
 
             TargetSelector.AddToMenu(TargetSelectorMenu);
@@ -113,13 +122,13 @@ namespace MasterOfPlants
             menu.AddSubMenu(TargetSelectorMenu);   //TS
             menu.AddSubMenu(comboMenu); //COMBO
             menu.AddSubMenu(comboRMenu);
-            menu.AddSubMenu(HarrashMenu);  //Harrash
-            menu.AddSubMenu(UltimateSettingsMenu);  //Ultimate
-            menu.AddSubMenu(FleeMenu); 
-            menu.AddSubMenu(ItemMenu);
-            menu.AddSubMenu(LaneclearMenu);        //LANECLEAR
-            menu.AddSubMenu(JungleclearMenu);      //JUNGLECLEAR
-            menu.AddSubMenu(DrawSettingsMenu);     //DRAWS
+            menu.AddSubMenu(harrashMenu);  //Harrash
+            menu.AddSubMenu(ultimateSettingsMenu);  //Ultimate
+            menu.AddSubMenu(fleeMenu); 
+           // menu.AddSubMenu(itemMenu);
+            menu.AddSubMenu(laneclearMenu);        //LANECLEAR
+            menu.AddSubMenu(jungleclearMenu);      //JUNGLECLEAR
+            menu.AddSubMenu(drawSettingsMenu);     //DRAWS
             menu.AddToMainMenu();
         }
 
@@ -144,10 +153,11 @@ namespace MasterOfPlants
             Drawing.OnDraw += draw;
             Game.OnUpdate += update;
         }
-
+    
         public void update(EventArgs args)
         {
             if (getPlayer().IsDead) return;
+            if (base.zyraZombie())  base.getSkills().passiveCast(getMenu().Item("sethQ").GetValue<Slider>().Value);     
             updateModes();
         }
 
@@ -157,17 +167,18 @@ namespace MasterOfPlants
             if (getMenu().Item("rcombokey").GetValue<KeyBind>().Active) base.rCombo(base.getTarget());
             if (getMenu().Item("fleekey").GetValue<KeyBind>().Active) base.flee(base.getTarget());
             if (getMenu().Item("Ultimate Key").GetValue<KeyBind>().Active) base.onlyR(base.getTarget());
+            if (getMenu().Item("laneclearkey").GetValue<KeyBind>().Active) base.laneClear();
+        //    if (getMenu().Item("Zhonias").GetValue<KeyBind>().Active) base.items();
             if (getMenu().Item("jungleclearkey").GetValue<KeyBind>().Active) base.jungleClear();
-            if (getMenu().Item("Harrash key").GetValue<KeyBind>().Active) base.harrash(base.getTarget());                   
+            if (getMenu().Item("Harrash key").GetValue<KeyBind>().Active) base.harrash(base.getTarget());
+            base.getSkills().igniteCast(base.getTarget());
         }
 
         static void Main(string[] args)
         {
             Program p = new Program();
-            p.load(p); // que el program es heredado
+            p.load(p); 
             CustomEvents.Game.OnGameLoad += p.load;
         }
-
-
     }
 }
