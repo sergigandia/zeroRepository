@@ -232,20 +232,27 @@ namespace MasterOfThorns
             }
             else if (useQ && useW && useE)
             {
-                skills.eCast(getTarget(), min);
+                    skills.eCast(target,min);
+            if (skills.getE().IsReady())
+            skills.wCast(target,w);
+            skills.qCast(target,q);
+           if(skills.getQ().IsReady())
+           skills.wCast(target,w);
+            /*    skills.eCast(getTarget(), min);
                 if (skills.getE().IsReady() && skills.getE().IsInRange(getTarget()))
                     skills.wCast(getTarget(), w);
                 
-                    Utility.DelayAction.Add(delay, () => skills.qCast(getTarget(), q));
+                 
+                     skills.qCast(getTarget(), q);
+                    if (skills.getQ().IsReady() && skills.getQ().IsInRange(getTarget()))  
+                       skills.wCast(getTarget(),w);  */
+                  
+                //        Utility.DelayAction.Add(delay, () => skills.wCast(getTarget(),w));         
+                //    skills.wCast(getTarget(),w);
+                   // Utility.DelayAction.Add(delay, () => skills.qCast(getTarget(),q));
+                 //   if (skills.getQ().IsReady() && skills.getQ().IsInRange(getTarget()))                    
+                //        Utility.DelayAction.Add(delay, () => skills.wCast(getTarget(),w));         
                 
-                    if (skills.getQ().IsReady() && skills.getQ().IsInRange(getTarget()))                    
-                        Utility.DelayAction.Add(delay, () => skills.wCast(getTarget(),w));         
-                {
-                    skills.wCast(getTarget(),w);
-                    Utility.DelayAction.Add(delay, () => skills.qCast(getTarget(),q));
-                    if (skills.getQ().IsReady() && skills.getQ().IsInRange(getTarget()))                    
-                        Utility.DelayAction.Add(delay, () => skills.wCast(getTarget(),w));         
-                }
             }
             else
                 return;
