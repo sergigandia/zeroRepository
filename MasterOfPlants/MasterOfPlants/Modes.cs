@@ -50,7 +50,7 @@ namespace MasterOfThorns
             int min = p.getMenu().Item("seth").GetValue<Slider>().Value;
             int w = p.getMenu().Item("sethW").GetValue<Slider>().Value;
             int q = p.getMenu().Item("sethQ").GetValue<Slider>().Value;
-            Game.PrintChat("q: " + q + " w: " + w + " e: " + min);
+       //     Game.PrintChat("q: " + q + " w: " + w + " e: " + min);
             //    if (!useQ && !useW && !useE) return;
             if (useQ && !useW && !useE)  skills.qCast(minion,q);
             else if (!useQ && useW && !useE) skills.wCast(minion,w);
@@ -96,7 +96,7 @@ namespace MasterOfThorns
             int min = p.getMenu().Item("seth").GetValue<Slider>().Value;
             int q = p.getMenu().Item("sethQ").GetValue<Slider>().Value;
             int w = p.getMenu().Item("sethW").GetValue<Slider>().Value;
-            Game.PrintChat("min: " + min);
+         //    Game.PrintChat("min: " + min);
         //    if (!useQ && !useW && !useE) return;
             if (useQ && !useW && !useE) skills.qCast(minion,q);
             else if (!useQ && useW && !useE) skills.wCast(minion,w);
@@ -121,7 +121,7 @@ namespace MasterOfThorns
             }
             else if (useQ && useW && useE)
             {
-                Game.PrintChat("juhngle: ");
+            //    Game.PrintChat("juhngle: ");
                 skills.eCast(minion, min);
                 if (skills.getE().IsReady() && skills.getE().IsInRange(minion))
                 {
