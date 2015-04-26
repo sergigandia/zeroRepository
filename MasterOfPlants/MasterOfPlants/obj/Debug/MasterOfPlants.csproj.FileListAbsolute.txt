@@ -1,12 +1,20 @@
 D:\Github\zeroRepository\MasterOfPlants\MasterOfPlants\bin\Release\MasterOfPlants.exe.config
 D:\Github\zeroRepository\MasterOfPlants\MasterOfPlants\bin\Release\MasterOfPlants.exe
 D:\Github\zeroRepository\MasterOfPlants\MasterOfPlants\bin\Release\MasterOfPlants.pdb
-D:\Github\zeroRepository\MasterOfPlants\MasterOfPlants\bin\Release\LeagueSharp.Common.dll
-D:\Github\zeroRepository\MasterOfPlants\MasterOfPlants\bin\Release\LeagueSharp.dll
-D:\Github\zeroRepository\MasterOfPlants\MasterOfPlants\bin\Release\SharpDX.dll
 D:\Github\zeroRepository\MasterOfPlants\MasterOfPlants\bin\Release\SharpDX.Direct3D9.dll
 D:\Github\zeroRepository\MasterOfPlants\MasterOfPlants\bin\Release\clipper_library.dll
 D:\Github\zeroRepository\MasterOfPlants\MasterOfPlants\bin\Release\LeagueSharp.Sandbox.dll
 D:\Github\zeroRepository\MasterOfPlants\MasterOfPlants\bin\Release\LeagueSharp.xml
 D:\Github\zeroRepository\MasterOfPlants\MasterOfPlants\obj\Debug\MasterOfPlants.exe
 D:\Github\zeroRepository\MasterOfPlants\MasterOfPlants\obj\Debug\MasterOfPlants.pdb
+C:\Users\Adri\Documents\Nueva carpeta\zeroRepository\MasterOfPlants\MasterOfPlants\bin\Release\MasterOfPlants.exe.config
+C:\Users\Adri\Documents\Nueva carpeta\zeroRepository\MasterOfPlants\MasterOfPlants\obj\Debug\MasterOfPlants.exe
+C:\Users\Adri\Documents\Nueva carpeta\zeroRepository\MasterOfPlants\MasterOfPlants\obj\Debug\MasterOfPlants.pdb
+C:\Users\Adri\Documents\Nueva carpeta\zeroRepository\MasterOfPlants\MasterOfPlants\obj\Debug\MasterOfPlants.csprojResolveAssemblyReference.cache
+C:\Users\Adri\Documents\Nueva carpeta\zeroRepository\MasterOfPlants\MasterOfPlants\bin\Release\MasterOfPlants.exe
+C:\Users\Adri\Documents\Nueva carpeta\zeroRepository\MasterOfPlants\MasterOfPlants\bin\Release\MasterOfPlants.pdb
+C:\Users\Adri\Documents\Nueva carpeta\zeroRepository\MasterOfPlants\MasterOfPlants\bin\Release\SharpDX.Direct3D9.dll
+C:\Users\Adri\Documents\Nueva carpeta\zeroRepository\MasterOfPlants\MasterOfPlants\bin\Release\clipper_library.dll
+C:\Users\Adri\Documents\Nueva carpeta\zeroRepository\MasterOfPlants\MasterOfPlants\bin\Release\LeagueSharp.Sandbox.dll
+C:\Users\Adri\Documents\Nueva carpeta\zeroRepository\MasterOfPlants\MasterOfPlants\bin\Release\LeagueSharp.xml
+D:\Github\zeroRepository\MasterOfPlants\MasterOfPlants\obj\Debug\MasterOfPlants.csprojResolveAssemblyReference.cache

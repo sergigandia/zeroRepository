@@ -240,7 +240,12 @@ namespace MasterOfThorns
                 
                     if (skills.getQ().IsReady() && skills.getQ().IsInRange(getTarget()))                    
                         Utility.DelayAction.Add(delay, () => skills.wCast(getTarget(),w));         
-               
+                {
+                    skills.wCast(getTarget(),w);
+                    Utility.DelayAction.Add(delay, () => skills.qCast(getTarget(),q));
+                    if (skills.getQ().IsReady() && skills.getQ().IsInRange(getTarget()))                    
+                        Utility.DelayAction.Add(delay, () => skills.wCast(getTarget(),w));         
+                }
             }
             else
                 return;
