@@ -7,11 +7,11 @@ using LeagueSharp;
 using LeagueSharp.Common;
 using SharpDX;
 
-namespace MasterOfPlants
+namespace MasterOfThorns
 {
-    class Skills : Program
+    class Skills
     {
-        private Spell Q, W, E, R;
+        private Spell Q, W, E, R, passive;
         private SpellSlot ignite;
 
         public Skills()
@@ -20,10 +20,12 @@ namespace MasterOfPlants
             W = new Spell(SpellSlot.W, 850);  // circle
             E = new Spell(SpellSlot.E, 1100); // line
             R = new Spell(SpellSlot.R, 700); // circle
+            passive = new Spell(SpellSlot.Q, 1470);
             Q.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth, Q.Instance.SData.MissileSpeed, false, SkillshotType.SkillshotCircle);
             W.SetSkillshot(W.Instance.SData.SpellCastTime, W.Instance.SData.LineWidth, W.Instance.SData.MissileSpeed,false, SkillshotType.SkillshotCircle);
             E.SetSkillshot(E.Instance.SData.SpellCastTime, E.Instance.SData.LineWidth, E.Instance.SData.MissileSpeed, false, SkillshotType.SkillshotLine);
             E.SetSkillshot(R.Instance.SData.SpellCastTime, R.Instance.SData.LineWidth, R.Instance.SData.MissileSpeed, false, SkillshotType.SkillshotCircle);
+            passive.SetSkillshot(passive.Instance.SData.SpellCastTime, passive.Instance.SData.LineWidth, passive.Instance.SData.MissileSpeed, false, SkillshotType.SkillshotLine);
             ignite = ObjectManager.Player.GetSpellSlot("SummonerDot");
         }
 
@@ -31,6 +33,10 @@ namespace MasterOfPlants
         {
             return Q;
         }
+       public Spell getpassive()
+       {
+           return passive;
+       }
        public Spell getW()
        {
            return W;
@@ -43,7 +49,8 @@ namespace MasterOfPlants
        {
            return R;
        }
-       public HitChance HitchanceCheck(int i)
+
+       public HitChance hitchanceCheck(int i)
        {
            switch (i)
            {
@@ -58,48 +65,99 @@ namespace MasterOfPlants
            }
            return HitChance.Low;
        }
-       public bool qCast(Obj_AI_Base target)
+
+       public bool qCast(Obj_AI_Base target, int hitChance)
        {
            if (target == null) return false;
-           if (Q.IsReady())
+           HitChance hit = hitchanceCheck(hitChance);  
+           if (Q.IsReady() && Q.IsInRange(target))
            {
-               Q.CastIfHitchanceEquals(target, HitChance.High);
+               Q.CastIfHitchanceEquals(target, hit);
                return true;
            }
            return false;
 
        }
-       public bool wCast(Obj_AI_Base target)
+
+       public bool passiveCast(int hitChance)
        {
-                      if (target == null) return false;
-           if (W.IsReady())
+           HitChance hit = hitchanceCheck(hitChance);  
+           if (!passive.IsReady())
+               return false;
+           var target = TargetSelector.GetTarget(passive.Range, TargetSelector.DamageType.Magical);
+           if (!target.IsValidTarget(E.Range))
+               return false;
+           passive.CastIfHitchanceEquals(target, hit);
+           return true;
+       }
+
+       public bool wCast(Obj_AI_Base target, int hitChance)
+       {
+           
+           if (target == null) return false;
+           HitChance hit = hitchanceCheck(hitChance);
+           if (W.IsReady() && W.IsInRange(target))
            {
-               W.CastIfHitchanceEquals(target, HitChance.High);
+               W.CastIfHitchanceEquals(target, hit);
+               return true;
+               /*
+               if (ObjectManager.Player.Spellbook.GetSpell(SpellSlot.W).Ammo.ToString() == "2")
+               {
+                   Game.PrintChat("Dentro de 2 wCast");
+                   W.CastIfHitchanceEquals(target, HitChance.High);
+                   Utility.DelayAction.Add(400, () => W.CastIfHitchanceEquals(target, HitChance.High));
+                   return true;
+               }
+               else if (ObjectManager.Player.Spellbook.GetSpell(SpellSlot.W).Ammo.ToString() == "1")
+               {
+                   Game.PrintChat("Dentro de 1 wCast");
+                   W.CastIfHitchanceEquals(target, HitChance.High);
+                   return true;
+               }
+             * */
+           }
+           return false;
+       }
+
+       public bool eCast(Obj_AI_Base target, int hitChance)
+       {
+             if (target == null) return false;
+             if (E.IsReady() && E.IsInRange(target))
+           {
+               HitChance hit = hitchanceCheck(hitChance);              
+               E.CastIfHitchanceEquals(target, hit);
+               return true;
+           }
+           return false;
+        }
+
+       public bool rCast(Obj_AI_Base target, int hitChance)
+       {
+           if (target == null) return false;
+           HitChance hit = hitchanceCheck(hitChance);  
+           if (R.IsReady() && R.IsInRange(target))
+           {
+               R.CastIfHitchanceEquals(target, hit);
                return true;
            }
            return false;
        }
-       public bool eCast(Obj_AI_Base target)
-        {
-                      if (target == null) return false;
-           if (E.IsReady())
+
+       public bool rCastHit(Obj_AI_Base target , int min)
+       {
+           if (target == null) return false;
+           if (R.IsReady() && R.IsInRange(target))
            {
-               E.CastIfHitchanceEquals(target, HitChance.High);
-               return true;
+               if (R.CastIfWillHit(target, min))
+               {
+                   R.CastIfHitchanceEquals(target, HitChance.VeryHigh);
+                   return true;
+               }
            }
            return false;
-        }
-       public bool rCast(Obj_AI_Base target)
-        {
-               if (target == null) return false;
-           if (R.IsReady())
-           {
-               R.CastIfHitchanceEquals(target, HitChance.High);
-               return true;
-           }
-           return false;
-        }
-       public bool IgniteCast(Obj_AI_Base target)
+       }
+
+       public bool igniteCast(Obj_AI_Base target)
         {
             if (ignite.IsReady() && target.Health - ObjectManager.Player.GetSummonerSpellDamage(target, Damage.SummonerSpell.Ignite) <= 0)
             {
