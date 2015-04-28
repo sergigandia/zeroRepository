@@ -65,7 +65,7 @@ namespace MasterOfInsec
             }
             var InsecSettingsMenu = new Menu("Insec Settings", "Insec Settings");
             {
-                InsecSettingsMenu.AddItem(new MenuItem("Mode", "Mode").SetValue(new StringList(new[] { "Insec to Tower", "Insec to Ally(not working fixing)", "Insec to Mouse" }, 3))); 
+                InsecSettingsMenu.AddItem(new MenuItem("Mode", "Mode").SetValue(new StringList(new[] { "Insec to Tower", "Insec to Ally", "Insec to Mouse" }, 1))); 
                 InsecSettingsMenu.AddItem(new MenuItem("inseckey", "Insec key").SetValue(new KeyBind('T', KeyBindType.Press)));
                 InsecSettingsMenu.AddItem(new MenuItem("InstaFlashRkey", "InstaFlash R key[Not working wait one push more]").SetValue(new KeyBind('G', KeyBindType.Press)));
                 InsecSettingsMenu.AddItem(new MenuItem("useflash", "Use flash if not ward").SetValue(true));

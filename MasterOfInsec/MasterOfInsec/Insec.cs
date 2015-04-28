@@ -76,21 +76,36 @@ namespace MasterOfInsec
                 {
                     if (Program.Player.Distance(WardJump.getward(target)) <= 600 && Program.W.IsReady())
                     {
-                        Utility.DelayAction.Add(SecondQTime, () => WardJump.InsecJump(WardJump.Insecpos(target).To2D()));
+                        Utility.DelayAction.Add(SecondQTime, () => WardJump.InsecJump(GetInsecPos(target).To2D()));
                         Steps = "Four";
                     }
                 }
                 else if (Steps == "Four")  //go to the ward
                 {
-                    Utility.DelayAction.Add(Game.Ping + 100, () => WardJump.InsecJump(WardJump.Insecpos(target).To2D()));
+                    Utility.DelayAction.Add(Game.Ping + 100, () => WardJump.InsecJump(GetInsecPos(target).To2D()));
                     Utility.DelayAction.Add(Game.Ping + 110, () => fiveornot());
                 }
                 else if (Steps == "Flash") // hit w
                 {
                     if (WardJump.Insecpos(target).Distance(Program.Player.Position) < 400)
                     {
-                        ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), WardJump.Insecpos(target));
+                        ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), GetInsecPos(target));
                         Steps = "Five";
+                    }
+                }
+                    else if(Steps == "TrickR") //truco de flash
+                {
+                    if (WardJump.Insecpos(target).Distance(Program.Player.Position) < 375)
+                    {
+                        Program.R.CastOnUnit(target);
+                        Steps = "TrickFlash";
+                    }
+                }
+                else if (Steps == "TrickFlash") //truco de flash
+                {
+                    if (WardJump.Insecpos(target).Distance(Program.Player.Position) < 375)
+                    {
+                        Utility.DelayAction.Add(Game.Ping + 125, () => ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), GetInsecPos(target)));
                     }
                 }
                 else if (Steps == "Five") // and hit the kick
