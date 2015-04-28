@@ -65,7 +65,7 @@ namespace MasterOfInsec
             }
             var InsecSettingsMenu = new Menu("Insec Settings", "Insec Settings");
             {
-                InsecSettingsMenu.AddItem(new MenuItem("Mode", "Mode").SetValue(new StringList(new[] { "Insec to Tower", "Insec to Ally", "Insec to Mouse" }, 1))); 
+                InsecSettingsMenu.AddItem(new MenuItem("Mode", "Mode").SetValue(new StringList(new[] { "Insec to Tower", "Insec to Ally(not working fixing)", "Insec to Mouse" }, 3))); 
                 InsecSettingsMenu.AddItem(new MenuItem("inseckey", "Insec key").SetValue(new KeyBind('T', KeyBindType.Press)));
                 InsecSettingsMenu.AddItem(new MenuItem("InstaFlashRkey", "InstaFlash R key[Not working wait one push more]").SetValue(new KeyBind('G', KeyBindType.Press)));
                 InsecSettingsMenu.AddItem(new MenuItem("useflash", "Use flash if not ward").SetValue(true));
@@ -132,7 +132,7 @@ namespace MasterOfInsec
             Q.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth, Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
             RInsec.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth, Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
             Menu();
-            Game.PrintChat("[LeeSin]Master Of Insec load good luck ;) ver 0.9.9.2");
+            Game.PrintChat("[LeeSin]Master Of Insec load good luck ;) ver 0.9.9.4");
             Drawing.OnDraw += Drawing_OnDraw;
             Game.OnWndProc += GameOnOnWndProc;
             Obj_AI_Base.OnProcessSpellCast += Oncast;

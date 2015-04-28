@@ -134,10 +134,9 @@ namespace MasterOfThorns
        public bool rCast(Obj_AI_Base target, int hitChance)
        {
            if (target == null) return false;
-           HitChance hit = hitchanceCheck(hitChance);  
            if (R.IsReady() && R.IsInRange(target))
            {
-               R.CastIfHitchanceEquals(target, hit);
+               R.CastIfHitchanceEquals(target, hitchanceCheck(hitChance));
                return true;
            }
            return false;
@@ -148,11 +147,7 @@ namespace MasterOfThorns
            if (target == null) return false;
            if (R.IsReady() && R.IsInRange(target))
            {
-               if (R.CastIfWillHit(target, min))
-               {
-                   R.CastIfHitchanceEquals(target, HitChance.VeryHigh);
-                   return true;
-               }
+               R.CastIfWillHit(target, min);
            }
            return false;
        }

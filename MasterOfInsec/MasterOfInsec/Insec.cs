@@ -13,6 +13,7 @@ namespace MasterOfInsec
     {
         public static int SecondQTime = new int();
         private static bool da;
+        private static bool beforeall;
         public static string InsecMode = "Normal";
         public static string Steps = "One";
         public static Obj_AI_Hero insecAlly;
@@ -35,6 +36,18 @@ namespace MasterOfInsec
 
         public static void InsecQMode(Obj_AI_Hero target)
         {
+            if(beforeall==false)
+            {
+                if (Program.Q.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "BlindMonkQOne")
+                {
+                    Steps = "One";
+                }
+                else if (Program.Q.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "blindmonkqtwo")
+                {
+                    Steps = "Two";
+                }
+                beforeall = true;
+            }
             if (target.IsValidTarget(Program.Q.Range))
             {
                 if (Steps == "One") //First hit q
@@ -118,6 +131,7 @@ namespace MasterOfInsec
         }
         public static void ResetInsecStats()
         {
+            beforeall = false;
             Steps = "One";
         }
     }

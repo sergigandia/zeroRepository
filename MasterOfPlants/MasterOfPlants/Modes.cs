@@ -197,10 +197,19 @@ namespace MasterOfThorns
             {
                 p.getPlayer().IssueOrder(GameObjectOrder.MoveTo, p.getPlayer().Position.Extend(Game.CursorPos, 150));
                 var min = p.getMenu().Item("minEnemys").GetValue<Slider>().Value;
-                skills.rCastHit(target, min);
+                skills.rCastHit(target,min);
             }
         }
+        public void Eplant(int min , int w)
+        {
+            skills.eCast(getTarget(), min);
+            if (skills.getE().IsReady())
+                skills.wCast(target, w);
+        }
+        public void Qplant(int q , int w)
+        {
 
+        }
         public void combo(Obj_AI_Hero target)
         {         
             var useQ = p.getMenu().Item("QC").GetValue<bool>();
@@ -237,7 +246,7 @@ namespace MasterOfThorns
             skills.wCast(target,w);
             skills.qCast(target,q);
            if(skills.getQ().IsReady())
-           skills.wCast(target,w);
+             skills.wCast(target,w);
             /*    skills.eCast(getTarget(), min);
                 if (skills.getE().IsReady() && skills.getE().IsInRange(getTarget()))
                     skills.wCast(getTarget(), w);
