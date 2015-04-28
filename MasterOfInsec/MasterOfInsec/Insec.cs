@@ -54,7 +54,7 @@ namespace MasterOfInsec
                 {
                     if (Program.Q.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "BlindMonkQOne")
                     {
-                        if(Program.Q.CastIfHitchanceEquals(target, Program.HitchanceCheck(Program.menu.Item("seth").GetValue<Slider>().Value))) // Continue like that
+                        if(Program.Q.CastIfHitchanceEquals(target, Program.HitchanceCheck(Program.menu.Item("seth").GetValue<Slider>().Value))) 
                         Steps = "Two";
                     }
                 }
@@ -65,8 +65,16 @@ namespace MasterOfInsec
                         SecondQTime = Convert.ToInt32(Math.Round(Game.Ping + Program.Q.Instance.SData.SpellTotalTime, MidpointRounding.AwayFromZero));
                         if (Program.Q.Cast())
                         {
-                            if (!WardJump.getBestWardItem().IsValidSlot() && Program.menu.Item("useflash").GetValue<bool>()) Steps = "Flash";
-                            else Steps = "Three";
+                            if (!WardJump.getBestWardItem().IsValidSlot() && Program.menu.Item("useflash").GetValue<bool>())
+                            {
+                                
+                                //Steps = "TrickR";
+                                Steps = "Flash";
+                            }
+                            else
+                            {
+                                Steps = "Three";
+                            }
                         }
 
                     }
@@ -97,8 +105,10 @@ namespace MasterOfInsec
                 {
                     if (WardJump.Insecpos(target).Distance(Program.Player.Position) < 375)
                     {
-                        Program.R.CastOnUnit(target);
-                        Steps = "TrickFlash";
+                        if (Program.R.CastOnUnit(target))
+                        {
+                            Steps = "TrickFlash";
+                        }
                     }
                 }
                 else if (Steps == "TrickFlash") //truco de flash
@@ -106,11 +116,13 @@ namespace MasterOfInsec
                     if (WardJump.Insecpos(target).Distance(Program.Player.Position) < 375)
                     {
                         Utility.DelayAction.Add(Game.Ping + 125, () => ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), GetInsecPos(target)));
+                        Steps = "One";
                     }
                 }
                 else if (Steps == "Five") // and hit the kick
                 {
                     Utility.DelayAction.Add(Convert.ToInt32(Math.Round(Game.Ping + Program.W.Instance.SData.SpellTotalTime, MidpointRounding.AwayFromZero)), () => Program.R.CastOnUnit(target));// it dont hit anything
+                    Steps = "One";
                 }
                 else { Steps = "One"; }
             }
@@ -121,6 +133,7 @@ namespace MasterOfInsec
             if (Program.menu.Item("Mode").GetValue<StringList>().SelectedIndex == 0)
             {
                 return WardJump.InsecposTower(target); // insec torre
+              //  Game.PrintChat("");
             }
             else if (Program.menu.Item("Mode").GetValue<StringList>().SelectedIndex == 1)
             {
