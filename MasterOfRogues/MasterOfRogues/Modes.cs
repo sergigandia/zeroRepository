@@ -176,8 +176,11 @@ namespace MasterOfPlants
                 skills.qCast(target);
                 skills.eCast(target);
                 skills.qCast(target);
-                if(useR)
-                skills.rCast(target);
+                if (useR)
+                {
+                    if (p.getMenu().Item("Rcharges").GetValue<Slider>().Value == ObjectManager.Player.Buffs.FirstOrDefault(b => b.DisplayName == "RyzePassiveStack").Count)
+                    skills.rCast(target);
+                }
             }
             else
                 return;

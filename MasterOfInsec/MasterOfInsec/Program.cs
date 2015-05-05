@@ -22,6 +22,7 @@ namespace MasterOfInsec
         private static Orbwalking.Orbwalker orb;
         public static Spell Q, W, E, R,RInsec,QHarrash;
         public static SpellSlot Ignite;
+        public static SpellSlot Smite;
         public static Orbwalking.Orbwalker Orbwalker { get; internal set; }
         public static Orbwalking.OrbwalkingMode OrbwalkerMode
         {
@@ -127,7 +128,8 @@ namespace MasterOfInsec
             E = new Spell(SpellSlot.E, 430);
             R = new Spell(SpellSlot.R, 375);
             RInsec = new Spell(SpellSlot.R, 375);
-            Ignite = ObjectManager.Player.GetSpellSlot("SummonerDot");
+            Smite = ObjectManager.Player.GetSpellSlot("SummonerDot");
+            Ignite = ObjectManager.Player.GetSpellSlot("summonersmite");
             QHarrash.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth, Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
             Q.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth, Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
             RInsec.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth, Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
@@ -359,19 +361,28 @@ return  ObjectManager.Get<Obj_AI_Hero>()
          switch(step)
          {
              case "WOne":
-                 if (W.IsReady() && useW ) // falta el valor de WOne
+                 if (W.IsReady() && useW  && W.IsInRange(minion)) // falta el valor de WOne
                  {
                      W.Cast(Player);
                      step = "AA";
                      step2 = "WTwo";
+                 }
+                 else
+                 {
+                     step = "WTwo";
                  }
                  break;
              case "WTwo":
                  if (W.IsReady() && useW ) // falta el valor de WOne
                  {
                      W.Cast(Player);
+                     Player.Spellbook.CastSpell(Smite, minion);
                      step = "AA";
                      step2 = "QOne";
+                 }
+                 else
+                 {
+                     step = "QOne";
                  }
                  break;
              case "QOne":
@@ -383,7 +394,11 @@ return  ObjectManager.Get<Obj_AI_Hero>()
                              step = "AA";
                             step2 = "QTwo";
                      }
-                 } 
+                 }
+                 else
+                 {
+                     step = "QTwo";
+                 }
                  break;
              case "QTwo":
                  if (Q.IsReady() && useQ)
@@ -391,6 +406,10 @@ return  ObjectManager.Get<Obj_AI_Hero>()
                      Q.Cast();
                      step = "AA";
                      step2 = "EOne";
+                 }
+                 else
+                 {
+                     step = "EOne";
                  }
                  break;
              case "EOne":
@@ -403,6 +422,10 @@ return  ObjectManager.Get<Obj_AI_Hero>()
                          Items.UseItem(3074);
                      step = "AA";
                      step2 = "WOne";
+                 }
+                 else
+                 {
+                     step = "WOne";
                  }
                  break;
              case "AA":
