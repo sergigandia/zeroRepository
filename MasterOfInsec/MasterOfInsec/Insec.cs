@@ -20,6 +20,8 @@ namespace MasterOfInsec
         public static Obj_AI_Hero insecEnemy;
         public static void updateInsec()
         {
+            if(Program.menu.Item("OrbwalkInsec").GetValue<bool>())
+            Program.Player.IssueOrder(GameObjectOrder.MoveTo, Program.Player.Position.Extend(Game.CursorPos, 150));
             if (!Program.R.IsReady()) return;
             var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
             InsecQMode(target);

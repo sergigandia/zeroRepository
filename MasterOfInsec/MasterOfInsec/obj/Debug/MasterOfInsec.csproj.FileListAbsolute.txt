@@ -10,3 +10,4 @@ D:\Github\zeroRepository\MasterOfInsec\MasterOfInsec\bin\Release\LeagueSharp.San
 D:\Github\zeroRepository\MasterOfInsec\MasterOfInsec\bin\Release\LeagueSharp.xml
 D:\Github\zeroRepository\MasterOfInsec\MasterOfInsec\obj\Debug\MasterOfInsec.exe
 D:\Github\zeroRepository\MasterOfInsec\MasterOfInsec\obj\Debug\MasterOfInsec.pdb
+D:\Github\zeroRepository\MasterOfInsec\MasterOfInsec\obj\Debug\MasterOfInsec.csprojResolveAssemblyReference.cache

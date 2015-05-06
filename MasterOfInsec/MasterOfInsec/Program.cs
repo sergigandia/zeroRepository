@@ -68,7 +68,9 @@ namespace MasterOfInsec
             {
                 InsecSettingsMenu.AddItem(new MenuItem("Mode", "Mode").SetValue(new StringList(new[] { "Insec to Tower", "Insec to Ally", "Insec to Mouse" }, 1))); 
                 InsecSettingsMenu.AddItem(new MenuItem("inseckey", "Insec key").SetValue(new KeyBind('T', KeyBindType.Press)));
-                InsecSettingsMenu.AddItem(new MenuItem("InstaFlashRkey", "InstaFlash R key[Not working wait one push more]").SetValue(new KeyBind('G', KeyBindType.Press)));
+                InsecSettingsMenu.AddItem(new MenuItem("useflash", "Use flash if not ward").SetValue(true));
+                InsecSettingsMenu.AddItem(new MenuItem("OrbwalkInsec", "orbwalk on insec mode").SetValue(true));
+                InsecSettingsMenu.AddItem(new MenuItem("InstaFlashRkey", "InstaFlash R key").SetValue(new KeyBind('G', KeyBindType.Press)));
                 InsecSettingsMenu.AddItem(new MenuItem("useflash", "Use flash if not ward").SetValue(true));
                 InsecSettingsMenu.AddItem(new MenuItem("infoRetarders", "How to use: hold the key until the insec finish!"));
             }
