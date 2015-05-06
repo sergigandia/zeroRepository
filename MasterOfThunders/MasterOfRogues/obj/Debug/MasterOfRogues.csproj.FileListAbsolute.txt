@@ -1,0 +1,12 @@
+D:\Github\LeagueSharp\MasterOfThunders\MasterOfRogues\bin\Release\MasterOfRogues.exe.config
+D:\Github\LeagueSharp\MasterOfThunders\MasterOfRogues\bin\Release\MasterOfRogues.exe
+D:\Github\LeagueSharp\MasterOfThunders\MasterOfRogues\bin\Release\MasterOfRogues.pdb
+D:\Github\LeagueSharp\MasterOfThunders\MasterOfRogues\bin\Release\LeagueSharp.Common.dll
+D:\Github\LeagueSharp\MasterOfThunders\MasterOfRogues\bin\Release\LeagueSharp.dll
+D:\Github\LeagueSharp\MasterOfThunders\MasterOfRogues\bin\Release\SharpDX.dll
+D:\Github\LeagueSharp\MasterOfThunders\MasterOfRogues\bin\Release\SharpDX.Direct3D9.dll
+D:\Github\LeagueSharp\MasterOfThunders\MasterOfRogues\bin\Release\clipper_library.dll
+D:\Github\LeagueSharp\MasterOfThunders\MasterOfRogues\bin\Release\LeagueSharp.Sandbox.dll
+D:\Github\LeagueSharp\MasterOfThunders\MasterOfRogues\obj\Debug\MasterOfRogues.csprojResolveAssemblyReference.cache
+D:\Github\LeagueSharp\MasterOfThunders\MasterOfRogues\obj\Debug\MasterOfRogues.exe
+D:\Github\LeagueSharp\MasterOfThunders\MasterOfRogues\obj\Debug\MasterOfRogues.pdb

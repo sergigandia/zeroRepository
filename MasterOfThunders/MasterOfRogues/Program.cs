@@ -50,7 +50,7 @@ namespace MasterOfPlants
                 comboMenu.AddItem(new MenuItem("seth", "Q Hitchance")).SetValue(new Slider(3, 1, 4));
                 comboMenu.AddItem(new MenuItem("setcharges", "Set R charges")).SetValue(new Slider(4, 0, 5));
                 comboMenu.AddItem(new MenuItem("QC", "Use Q in combo").SetValue(true));
-                comboMenu.AddItem(new MenuItem("WC", "Use W in combo").SetValue(false));
+                comboMenu.AddItem(new MenuItem("WC", "Use W in combo").SetValue(true));
                 comboMenu.AddItem(new MenuItem("EC", "Use E in combo").SetValue(true));
                 comboMenu.AddItem(new MenuItem("RC", "Use R in combo").SetValue(true));
 
@@ -75,7 +75,7 @@ namespace MasterOfPlants
             var JungleclearMenu = new Menu("Jungleclear", "Jungleclear");
             {
                 JungleclearMenu.AddItem(new MenuItem("QJ", "Use Q in JungleClear").SetValue(true));
-                JungleclearMenu.AddItem(new MenuItem("WJ", "Use W in JungleClear").SetValue(false));
+                JungleclearMenu.AddItem(new MenuItem("WJ", "Use W in JungleClear").SetValue(true));
                 JungleclearMenu.AddItem(new MenuItem("EJ", "Use E in JungleClear").SetValue(true));
                 JungleclearMenu.AddItem(new MenuItem("RJ", "Use R in JungleClear").SetValue(true));
                 JungleclearMenu.AddItem(new MenuItem("jungleclearkey", "JungleClear key").SetValue(new KeyBind('V', KeyBindType.Press)));

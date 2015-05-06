@@ -25,6 +25,14 @@ namespace MasterOfPlants
             return target;
         }
         //combos
+        public int getPassiveBuff
+        {
+            get
+            {
+                var data = ObjectManager.Player.Buffs.FirstOrDefault(b => b.DisplayName == "RyzePassiveStack");
+                return data != null ? data.Count : 0;
+            }
+        }
         public void laneClear()
         {
             var minion = MinionManager.GetMinions(skills.getQ().Range, MinionTypes.All, MinionTeam.Enemy, MinionOrderTypes.MaxHealth).FirstOrDefault();
@@ -57,12 +65,17 @@ namespace MasterOfPlants
                 skills.qCast(minion);
                 skills.wCast(minion);
                 skills.eCast(minion);
+
             }
             else
                 return;
-            if (useR)
+              if(useR)
             {
-                skills.rCast(minion);
+                if (p.getMenu().Item("setcharges").GetValue<Slider>().Value == getPassiveBuff)
+                {
+           //         Utils.ShowNotification(getPassiveBuff.ToString() ,System.Drawing.Color.Blue,100,true);
+                    skills.rCast(minion);
+                }
             }
         }
         public void jungleClear()
@@ -99,9 +112,13 @@ namespace MasterOfPlants
             }
             else
                 return;
-            if(useR)
+            if (useR)
             {
-                skills.rCast(minion);
+                if (p.getMenu().Item("setcharges").GetValue<Slider>().Value == getPassiveBuff)
+                {
+                 //   Utils.ShowNotification(getPassiveBuff.ToString(), System.Drawing.Color.Blue, 100, true);
+                    skills.rCast(minion);
+                }
             }
         }
         public void harrash(Obj_AI_Hero target)
@@ -176,14 +193,18 @@ namespace MasterOfPlants
                 skills.qCast(target);
                 skills.eCast(target);
                 skills.qCast(target);
-                if (useR)
-                {
-                    if (p.getMenu().Item("Rcharges").GetValue<Slider>().Value == ObjectManager.Player.Buffs.FirstOrDefault(b => b.DisplayName == "RyzePassiveStack").Count)
-                    skills.rCast(target);
-                }
+        
             }
             else
                 return;
+            if (useR)
+            {
+                if (p.getMenu().Item("setcharges").GetValue<Slider>().Value == getPassiveBuff)
+                {
+              //      Utils.ShowNotification(getPassiveBuff.ToString(), System.Drawing.Color.Blue, 100, true);
+                    skills.rCast(target);
+                }
+            }
         }
 
     }
