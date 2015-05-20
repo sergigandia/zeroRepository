@@ -84,7 +84,7 @@ namespace MasterOfInsec
             var JungleclearMenu = new Menu("Jungleclear", "Jungleclear");
             {
                 JungleclearMenu.AddItem(new MenuItem("QJ", "Use Q in JungleClear").SetValue(true));
-                JungleclearMenu.AddItem(new MenuItem("WJ", "Use W in JungleClear").SetValue(false));
+                JungleclearMenu.AddItem(new MenuItem("WJ", "Use W in JungleClear").SetValue(true));
                 JungleclearMenu.AddItem(new MenuItem("EJ", "Use E in JungleClear").SetValue(true));
                 JungleclearMenu.AddItem(new MenuItem("jungleclearkey", "JungleClear key").SetValue(new KeyBind('V', KeyBindType.Press)));
             }
@@ -120,7 +120,7 @@ namespace MasterOfInsec
         static void OnGameLoad(EventArgs args)
         {
         //    Game.PrintChat(Player.ChampionName);
-        //    if (Player.ChampionName != "LeeSin") return;
+            if (Player.ChampionName != "Lee Sin") return;
             map = new Map();
             Player = ObjectManager.Player;
             //   Ignite = new Spell(SpellSlot.Summoner1, 1100);
@@ -356,10 +356,17 @@ return  ObjectManager.Get<Obj_AI_Hero>()
             var useQ = Program.menu.Item("QJ").GetValue<bool>();
             var useW = Program.menu.Item("WJ").GetValue<bool>();
             var useE = Program.menu.Item("EJ").GetValue<bool>();
-            if(minion==null && W.IsReady())
-            {
+
+           if(minion!=null){
+            if (!(Q.IsReady() || W.IsReady()) && E.IsReady())
+                step = "EOne";
+            else if (!(E.IsReady() || W.IsReady()) && Q.IsReady())
+                step = "QOne";
+            else if (!(E.IsReady() || Q.IsReady()) && W.IsReady())
                 step = "WOne";
-            }
+           }
+
+       
          switch(step)
          {
              case "WOne":
