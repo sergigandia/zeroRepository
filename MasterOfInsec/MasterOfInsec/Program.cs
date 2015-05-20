@@ -120,7 +120,7 @@ namespace MasterOfInsec
         static void OnGameLoad(EventArgs args)
         {
         //    Game.PrintChat(Player.ChampionName);
-            if (Player.ChampionName != "Lee Sin") return;
+    //        if (Player.ChampionName != "Lee Sin") return;
             map = new Map();
             Player = ObjectManager.Player;
             //   Ignite = new Spell(SpellSlot.Summoner1, 1100);
