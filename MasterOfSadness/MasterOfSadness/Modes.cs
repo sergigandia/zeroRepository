@@ -193,8 +193,8 @@ namespace MasterOfSadness
             }
             else if (useQ && useW && useE && useR)
             {
-                skills.rCast(target, useRpC);
-                if (!skills.getR().IsReady())
+                skills.rCast(target, useRpC, useQr);
+                if (!skills.getR().IsReady() || !skills.WillHitEnemys(ObjectManager.Player,550,useRpC))
                 {
                     if (skills.getQ().IsReady())
                         skills.qCast(target, hit);

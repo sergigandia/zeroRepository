@@ -127,13 +127,29 @@ namespace MasterOfSadness
            }
             return false;
         }
-        public bool rCast(Obj_AI_Base target, int min)
+    public bool WillHitEnemys(Obj_AI_Base zone , int Range , int min)
         {
-            
-            if (target == null) return false;           
-
+        int i =0;
+    //    this.min = min;
+        foreach(Obj_AI_Hero b in ObjectManager.Get<Obj_AI_Hero>())
+        {
+            if(b.IsEnemy && !b.IsDead && b.Distance(zone)< Range)
+            {
+                i++;
+            }
+        }
+        this.min = i;
+        if (i>= min)
+            return true;
+        else
+            return false;
+        }
+    public int min;
+        public bool rCast(Obj_AI_Base target, int min , bool useQMinion)
+        {
+            if (target == null) return false;
             Obj_AI_Base minion = ObjectManager.Get<Obj_AI_Base>().Where(x => x.IsEnemy && Q.CanCast(x) &&
-                                    Q.IsInRange(x) && x.Distance(target) < 500).FirstOrDefault<Obj_AI_Base>();
+                                    Q.IsInRange(x) && WillHitEnemys(x,500,min)).FirstOrDefault<Obj_AI_Base>();
 
 
             miniondraw = minion;
@@ -144,15 +160,15 @@ namespace MasterOfSadness
                 {              
                     if (Q.IsReady())
                         Q.CastIfHitchanceEquals(target, HitChance.High);
-                        if(!ObjectManager.Player.IsDashing() && R.CanCast(target) && R.IsInRange(target))
+                        if(!ObjectManager.Player.IsDashing() && R.CanCast(target) && R.IsInRange(target) && WillHitEnemys(target,550,min))
                             R.Cast(target);
                         return true;
                 }
-                else if (Q.CanCast(minion))
+                else if (Q.CanCast(minion) && useQMinion)
                 {                                 
                     if (Q.IsReady())
                         Q.CastIfHitchanceEquals(minion, HitChance.High);
-                    if (!ObjectManager.Player.IsDashing() && R.CanCast(target) && R.IsInRange(target))
+                    if (!ObjectManager.Player.IsDashing() && R.CanCast(target) && R.IsInRange(target) && WillHitEnemys(target, 550, min))
                           R.Cast(target);
                         return true;
                 }
@@ -161,9 +177,13 @@ namespace MasterOfSadness
             }
             else
             {
-                R.Cast(target);
-                return true;
-            }                      
+                if (WillHitEnemys(target, 550, min))
+                {
+                    R.Cast(target);
+                    return true;
+                }
+            }
+            return false;      
         }
       
         public bool IgniteCast(Obj_AI_Hero target)

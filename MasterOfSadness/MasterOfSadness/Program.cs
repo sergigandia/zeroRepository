@@ -59,7 +59,7 @@ namespace MasterOfSadness
             {
                 rMenu.AddItem(new MenuItem("RC", "Use R in combo").SetValue(true));
                 rMenu.AddItem(new MenuItem("RqC", "Use Q in minion to engage with R").SetValue(true));
-                rMenu.AddItem(new MenuItem("RcC", "Number of enemies on R")).SetValue(new Slider(1, 1, 5));
+                rMenu.AddItem(new MenuItem("RcC", "Number of enemies on R  >=")).SetValue(new Slider(1, 1, 5));
             //    comboMenu.AddItem(new MenuItem("RcC", "Use flash for put your self on r range")).SetValue(true);
             }
             var HarrashMenu = new Menu("Harrash", "Harrash");
@@ -97,6 +97,7 @@ namespace MasterOfSadness
                 DrawSettingsMenu.AddItem(new MenuItem("Draw W Range", "Draw W Range").SetValue(true));
                 DrawSettingsMenu.AddItem(new MenuItem("Draw E Range", "Draw E Range").SetValue(true));
                 DrawSettingsMenu.AddItem(new MenuItem("Draw R Range", "Draw R Range").SetValue(true));
+                DrawSettingsMenu.AddItem(new MenuItem("Draw Special", "Draw Special").SetValue(true));
             }
 
             TargetSelector.AddToMenu(targetSelectorMenu);
@@ -123,13 +124,17 @@ namespace MasterOfSadness
                 Render.Circle.DrawCircle(getPlayer().Position, 350f, System.Drawing.Color.Purple, 2);     
             if (menu.Item("Draw R Range").GetValue<bool>())
                 Render.Circle.DrawCircle(getPlayer().Position, 550f, System.Drawing.Color.Purple, 2);
-            var players = Drawing.WorldToScreen(player.Position);
-            var minion = Drawing.WorldToScreen(base.getSkills().miniondraw.Position);
-
-            if (!base.getSkills().miniondraw.IsDead) { 
-                Render.Circle.DrawCircle(base.getSkills().miniondraw.Position, 100, System.Drawing.Color.Azure, 1);
-                Render.Circle.DrawCircle(base.getSkills().miniondraw.Position, 500, System.Drawing.Color.Red, 1);
-            }    
+            if (menu.Item("Draw Special").GetValue<bool>())
+            {
+                var players = Drawing.WorldToScreen(player.Position);
+                Drawing.DrawText(players[0] - 35, players[1] + 10, System.Drawing.Color.Yellow, "Number of enemys R : " + base.getSkills().min);
+                var minion = Drawing.WorldToScreen(base.getSkills().miniondraw.Position);
+                if (!base.getSkills().miniondraw.IsDead)
+                {
+                    Render.Circle.DrawCircle(base.getSkills().miniondraw.Position, 100, System.Drawing.Color.Azure, 1);
+                    Render.Circle.DrawCircle(base.getSkills().miniondraw.Position, 500, System.Drawing.Color.Red, 1);
+                }
+            }
             /*     foreach (BuffInstance b in ObjectManager.Player.Buffs)
             {
                 Drawing.DrawText(players[0] - 35, players[1] + 10+x*10,System.Drawing.Color.Yellow, "value : " + b.DisplayName);
@@ -160,6 +165,10 @@ namespace MasterOfSadness
              if (getMenu().Item("jungleclearkey").GetValue<KeyBind>().Active) base.jungleClear(); 
             if (getMenu().Item("laneclearkey").GetValue<KeyBind>().Active) base.laneClear();
             if (getMenu().Item("Harrash key").GetValue<KeyBind>().Active) base.harrash(base.getTarget());
+            if (!getMenu().Item("combokey").GetValue<KeyBind>().Active)
+            {
+                base.getSkills().min=0;
+            }
             if (!getMenu().Item("combokey").GetValue<KeyBind>().Active && !getMenu().Item("jungleclearkey").GetValue<KeyBind>().Active
                 && !getMenu().Item("laneclearkey").GetValue<KeyBind>().Active && !getMenu().Item("Harrash key").GetValue<KeyBind>().Active)
             { base.getSkills().wDeCast(); }
