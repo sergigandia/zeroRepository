@@ -688,8 +688,8 @@ return  ObjectManager.Get<Obj_AI_Hero>()
                             Render.Circle.DrawCircle(WardJump.Insecpos(target), 110, System.Drawing.Color.Blue, 5);
                         }
                   }
-                  var wtsss = Drawing.WorldToScreen(Player.Position);
-                  Drawing.DrawText(wtsss[0] - 35, wtsss[1] + 10, System.Drawing.Color.Yellow, "step : " + Insec.Steps);
+               //   var wtsss = Drawing.WorldToScreen(Player.Position);
+              //    Drawing.DrawText(wtsss[0] - 35, wtsss[1] + 10, System.Drawing.Color.Yellow, "step : " + Insec.Steps);
         }
         public static T GetValue<T>(string name)
         {
