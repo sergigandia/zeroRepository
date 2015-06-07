@@ -79,12 +79,43 @@ namespace MasterOfWind
            return false;
 
        }
-        public bool wCast(Obj_AI_Base  target)
+        public bool wCast(Vector3 position)
        {
-           if (target == null) return false;
-      //wall not coded
-           return false;
+           W.Cast(position);
+           return true;
        }
+        public bool EturretCheck(Obj_AI_Base target,bool dashCheck)
+        {
+
+            if (dashCheck)
+            {
+                var dashVec = ObjectManager.Player.ServerPosition + Vector3.Normalize(target.ServerPosition - ObjectManager.Player.ServerPosition) * 475;
+                return !dashVec.UnderTurret(true);
+            }
+            return true;
+        }
+        public bool eCast(Obj_AI_Base target, bool y)
+        {
+            if (target == null) return false;
+            if (y == true)
+            {
+                if (E.IsReady() && E.IsInRange(target) && E.IsKillable(target))
+                {
+                    E.Cast(target);
+                    return true;
+                }
+            }
+            else
+            {
+
+                if (E.IsReady() && E.IsInRange(target))
+                {
+                    E.Cast(target);
+                    return true;
+                }
+            }
+            return false;
+        }
         public bool eCast(Obj_AI_Base  target)
         {
                       if (target == null) return false;
@@ -99,10 +130,26 @@ namespace MasterOfWind
         {
             return target.HasBuffOfType(BuffType.Knockup) || target.HasBuffOfType(BuffType.Knockback);
         }
-        public  bool rCast(Obj_AI_Base  target)
+        public bool WillHitEnemys(int min)
+        {
+            int i = 0;
+            //    this.min = min;
+            foreach (Obj_AI_Hero b in ObjectManager.Get<Obj_AI_Hero>())
+            {
+                if (b.IsEnemy && !b.IsDead && R.IsInRange(b) && canCastR(b))
+                {
+                    i++;
+                }
+            }
+            if (i >= min)
+                return true;
+            else
+                return false;
+        }
+        public  bool rCast(Obj_AI_Base  target,int enemysOnAir)
         {
            if (target == null) return false;
-           if (R.IsReady() && canCastR(target))
+           if (R.IsReady() && WillHitEnemys(enemysOnAir))
            {
                R.Cast();
                return true;

@@ -13,7 +13,7 @@ namespace MasterOfInsec
     {
         public static int SecondQTime = new int();
         private static bool da;
-        private static bool beforeall;
+        private static bool beforeall=true;
         public static string InsecMode = "Normal";
         public static string Steps = "One";
         public static Obj_AI_Hero insecAlly;
@@ -48,17 +48,28 @@ namespace MasterOfInsec
                 {
                     Steps = "Two";
                 }
+                else
+                {
+                    Steps = "Three";
+                }
                 beforeall = true;
             }
+
             if (target.IsValidTarget(Program.Q.Range))
             {
-                if (Steps == "One") //First hit q
+                if (Steps == "One" ) //First hit q
                 {
+                 if(   Program.W.IsInRange(target.Position+50))
+                 {
+                     Steps = "Three";
+                 }
+                 else{
                     if (Program.Q.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "BlindMonkQOne")
                     {
                         if(Program.Q.CastIfHitchanceEquals(target, Program.HitchanceCheck(Program.menu.Item("seth").GetValue<Slider>().Value))) 
                         Steps = "Two";
                     }
+                 }
                 }
                 else if (Steps == "Two") // hit second q
                 {
@@ -80,7 +91,9 @@ namespace MasterOfInsec
                         }
 
                     }
-                    else { }
+                    else {
+                     //   Steps = "One";
+                    }
                 }
                 else if (Steps == "Three") // put ward
                 {
@@ -121,12 +134,25 @@ namespace MasterOfInsec
                         Steps = "One";
                     }
                 }
-                else if (Steps == "Five") // and hit the kick
+                else if (Steps == "Five" &&  !Program.W.Cast()) // and hit the kick
                 {
                     Utility.DelayAction.Add(Convert.ToInt32(Math.Round(Game.Ping + Program.W.Instance.SData.SpellTotalTime, MidpointRounding.AwayFromZero)), () => Program.R.CastOnUnit(target));// it dont hit anything
                     Steps = "One";
                 }
-                else { Steps = "One"; }
+                else {
+                  /*  if (Program.Q.IsReady())
+                    {
+                     //   Steps = "One";
+                    }
+                    else if(Program.W.IsReady())
+                    {
+                      //  Steps = "Three";
+                    }
+                    else
+                    {*/
+                        Steps = "One";
+                 //   }
+                }
             }
         }
 
@@ -161,7 +187,7 @@ namespace MasterOfInsec
         }
         public static void ResetInsecStats()
         {
-            beforeall = false;
+       //     beforeall = false;
             Steps = "One";
         }
     }
