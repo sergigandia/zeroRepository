@@ -32,7 +32,7 @@ namespace MasterOfJumps
         private static void OnGameLoad(EventArgs args)
         {
              Player = ObjectManager.Player;
-            if (Player.ChampionName == "Lee Sin")
+             if (Player.ChampionName == "LeeSin")
             {
                 WLee = new Spell(SpellSlot.W, 700);
                 name = ChampName.LeeSin;
