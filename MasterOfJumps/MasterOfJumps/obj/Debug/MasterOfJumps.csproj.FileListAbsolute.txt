@@ -1,0 +1,13 @@
+c:\users\sergi\documents\visual studio 2013\Projects\MasterOfJumps\MasterOfJumps\bin\Debug\MasterOfJumps.exe.config
+c:\users\sergi\documents\visual studio 2013\Projects\MasterOfJumps\MasterOfJumps\bin\Debug\MasterOfJumps.exe
+c:\users\sergi\documents\visual studio 2013\Projects\MasterOfJumps\MasterOfJumps\bin\Debug\MasterOfJumps.pdb
+c:\users\sergi\documents\visual studio 2013\Projects\MasterOfJumps\MasterOfJumps\bin\Debug\LeagueSharp.Common.dll
+c:\users\sergi\documents\visual studio 2013\Projects\MasterOfJumps\MasterOfJumps\bin\Debug\LeagueSharp.dll
+c:\users\sergi\documents\visual studio 2013\Projects\MasterOfJumps\MasterOfJumps\bin\Debug\SharpDX.dll
+c:\users\sergi\documents\visual studio 2013\Projects\MasterOfJumps\MasterOfJumps\bin\Debug\SharpDX.Direct3D9.dll
+c:\users\sergi\documents\visual studio 2013\Projects\MasterOfJumps\MasterOfJumps\bin\Debug\clipper_library.dll
+c:\users\sergi\documents\visual studio 2013\Projects\MasterOfJumps\MasterOfJumps\bin\Debug\LeagueSharp.Sandbox.dll
+c:\users\sergi\documents\visual studio 2013\Projects\MasterOfJumps\MasterOfJumps\bin\Debug\LeagueSharp.xml
+c:\users\sergi\documents\visual studio 2013\Projects\MasterOfJumps\MasterOfJumps\obj\Debug\MasterOfJumps.exe
+c:\users\sergi\documents\visual studio 2013\Projects\MasterOfJumps\MasterOfJumps\obj\Debug\MasterOfJumps.pdb
+c:\users\sergi\documents\visual studio 2013\Projects\MasterOfJumps\MasterOfJumps\obj\Debug\MasterOfJumps.csprojResolveAssemblyReference.cache
