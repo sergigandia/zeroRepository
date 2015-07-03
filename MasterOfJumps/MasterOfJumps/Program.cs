@@ -8,6 +8,7 @@ using SharpDX;
 
 namespace MasterOfJumps
 {
+    // Master of Jumps
     enum ChampName
     {
         LeeSin = 0,
@@ -44,7 +45,7 @@ namespace MasterOfJumps
             }
             else if (Player.ChampionName == "Katarina")
             {
-                EKata = new Spell(SpellSlot.W, 700);
+                EKata = new Spell(SpellSlot.E, 700);
                 name = ChampName.Katarina;
             }
             Menu();
