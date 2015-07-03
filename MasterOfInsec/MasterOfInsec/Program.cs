@@ -103,7 +103,11 @@ namespace MasterOfInsec
                 DrawSettingsMenu.AddItem(new MenuItem("Draw E Range", "Draw E Range").SetValue(true));
                 DrawSettingsMenu.AddItem(new MenuItem("Draw R Range", "Draw R Range").SetValue(true));
             }
-
+            var WardJumpMenu = new Menu("WardJump", "WardJump");
+            {
+               WardJumpMenu.AddItem(new MenuItem("WardJump mode", "Mode").SetValue(new StringList(new[] { "Old WardJump", "New WardJump" }, 1))); 
+                WardJumpMenu.AddItem(new MenuItem("wardjump", "WardJump key").SetValue(new KeyBind('Z', KeyBindType.Press)));
+            }
             TargetSelector.AddToMenu(TargetSelectorMenu);
             menu.AddSubMenu(orbWalkerMenu);        //ORBWALKER
             menu.AddSubMenu(TargetSelectorMenu);   //TS
@@ -113,8 +117,8 @@ namespace MasterOfInsec
             menu.AddSubMenu(ItemMenu);
             menu.AddSubMenu(LaneclearMenu);        //LANECLEAR
             menu.AddSubMenu(JungleclearMenu);      //JUNGLECLEAR
-            menu.AddItem(new MenuItem("wardjump", "WardJump key").SetValue(new KeyBind('Z', KeyBindType.Press)));
             menu.AddSubMenu(DrawSettingsMenu);     //DRAWS
+            menu.AddSubMenu(WardJumpMenu);
             menu.AddToMainMenu();
         }
         static void OnGameLoad(EventArgs args)
@@ -197,7 +201,12 @@ if (args.SData.Name == R.ChargedSpellName && MasterOfInsec.Insec.Steps == "five"
             if(menu.Item("combokey").GetValue<KeyBind>().Active)
                 Combo();
             if (menu.Item("wardjump").GetValue<KeyBind>().Active)
-                WardJump.jump();
+            {
+                if (Program.menu.Item("WardJump mode").GetValue<StringList>().SelectedIndex == 0)
+                WardJump.Oldjump();
+                else if (Program.menu.Item("WardJump mode").GetValue<StringList>().SelectedIndex == 1)
+                WardJump.Newjump();
+            }
            if (menu.Item("jungleclearkey").GetValue<KeyBind>().Active)
                 JungleClear();
             if (menu.Item("Harrash key").GetValue<KeyBind>().Active)
@@ -688,7 +697,8 @@ return  ObjectManager.Get<Obj_AI_Hero>()
                             Render.Circle.DrawCircle(WardJump.Insecpos(target), 110, System.Drawing.Color.Blue, 5);
                         }
                   }
-               //   var wtsss = Drawing.WorldToScreen(Player.Position);
+                  var wtsxx = Drawing.WorldToScreen(Player.Position);
+          //        Drawing.DrawText(wtsxx[0] - 35, wtsxx[1] + 10, System.Drawing.Color.Yellow, "mode :" +);  
               //    Drawing.DrawText(wtsss[0] - 35, wtsss[1] + 10, System.Drawing.Color.Yellow, "step : " + Insec.Steps);
         }
         public static T GetValue<T>(string name)

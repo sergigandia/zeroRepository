@@ -87,8 +87,48 @@ namespace MasterOfInsec
 //------------------------------------------------JUMP--------------------------------------------------------------------------------
        public static int LastPlaced = new int();
        public static Vector3 wardPosition = new Vector3();
-       public static int SecondWTime = new int();//Ok, now we can go in game. yeah
-       public static bool jump()
+       public static int SecondWTime = new int();
+       static bool jumped;
+       public static bool Newjump()
+       {
+                          Player.IssueOrder(GameObjectOrder.MoveTo, Player.Position.Extend(Game.CursorPos, 150));
+
+                          if (Program.W.IsReady()&&ObjectManager.Player.Spellbook.GetSpell(SpellSlot.W).Name=="BlindMonkWOne")
+                          {
+                              wardPosition = Game.CursorPos;
+                              Obj_AI_Minion Wards;
+                              if (Game.CursorPos.Distance(Program.Player.Position) <= 700)
+                              {
+                                  Wards = ObjectManager.Get<Obj_AI_Minion>().Where(ward => ward.Distance(Game.CursorPos) < 150 && !ward.IsDead).FirstOrDefault();
+                              }
+                              else
+                              {
+                                  Vector3 cursorPos = Game.CursorPos;
+                                  Vector3 myPos = Player.ServerPosition;
+                                  Vector3 delta = cursorPos - myPos;
+                                  delta.Normalize();
+                                  wardPosition = myPos + delta * (600 - 5);
+                                  Wards = ObjectManager.Get<Obj_AI_Minion>().Where(ward => ward.Distance(wardPosition) < 150 && !ward.IsDead).FirstOrDefault();
+                              }
+                      if(Wards== null)
+                      {
+                          if (!wardPosition.IsWall()) { 
+                                  InventorySlot invSlot = Items.GetWardSlot();
+                                  Items.UseItem((int)invSlot.Id, wardPosition);
+                                  jumped = true;
+                      }
+                      }
+                              
+                              else
+                                  if (Program.W.CastOnUnit(Wards))
+                                  {
+                                      jumped = false;
+                                  }
+                          }
+           
+           return false;
+       }
+       public static bool Oldjump()
        {
            Player.IssueOrder(GameObjectOrder.MoveTo, Player.Position.Extend(Game.CursorPos, 150));
 

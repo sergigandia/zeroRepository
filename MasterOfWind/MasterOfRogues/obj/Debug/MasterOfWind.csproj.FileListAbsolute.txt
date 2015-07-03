@@ -11,3 +11,6 @@ C:\Users\sergi\Documents\Visual Studio 2013\Projects\MasterOfWind\MasterOfRogues
 C:\Users\sergi\Documents\Visual Studio 2013\Projects\MasterOfWind\MasterOfRogues\obj\Debug\MasterOfWind.csprojResolveAssemblyReference.cache
 C:\Users\sergi\Documents\Visual Studio 2013\Projects\MasterOfWind\MasterOfRogues\obj\Debug\MasterOfWind.exe
 C:\Users\sergi\Documents\Visual Studio 2013\Projects\MasterOfWind\MasterOfRogues\obj\Debug\MasterOfWind.pdb
+D:\Github\zeroRepository\MasterOfWind\MasterOfRogues\bin\Release\MasterOfWind.exe.config
+D:\Github\zeroRepository\MasterOfWind\MasterOfRogues\obj\Debug\MasterOfWind.exe
+D:\Github\zeroRepository\MasterOfWind\MasterOfRogues\obj\Debug\MasterOfWind.pdb
