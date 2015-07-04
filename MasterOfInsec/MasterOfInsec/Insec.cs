@@ -106,7 +106,7 @@ namespace MasterOfInsec
                 else if (Steps == "Four")  //go to the ward
                 {
                     Utility.DelayAction.Add(Game.Ping + 100, () => WardJump.InsecJump(GetInsecPos(target).To2D()));
-                    Utility.DelayAction.Add(Game.Ping + 110, () => fiveornot());
+                    Utility.DelayAction.Add(Game.Ping + 110, () => Steps = "Five");
                 }
                 else if (Steps == "Flash") // hit w
                 {
