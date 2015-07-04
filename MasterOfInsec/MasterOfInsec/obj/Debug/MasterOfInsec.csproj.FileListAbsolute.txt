@@ -8,6 +8,5 @@ D:\Github\zeroRepository\MasterOfInsec\MasterOfInsec\bin\Release\SharpDX.Direct3
 D:\Github\zeroRepository\MasterOfInsec\MasterOfInsec\bin\Release\clipper_library.dll
 D:\Github\zeroRepository\MasterOfInsec\MasterOfInsec\bin\Release\LeagueSharp.Sandbox.dll
 D:\Github\zeroRepository\MasterOfInsec\MasterOfInsec\bin\Release\LeagueSharp.xml
-D:\Github\zeroRepository\MasterOfInsec\MasterOfInsec\obj\Debug\MasterOfInsec.csprojResolveAssemblyReference.cache
 D:\Github\zeroRepository\MasterOfInsec\MasterOfInsec\obj\Debug\MasterOfInsec.exe
 D:\Github\zeroRepository\MasterOfInsec\MasterOfInsec\obj\Debug\MasterOfInsec.pdb
