@@ -148,7 +148,7 @@ namespace MasterOfThorns
         public void load(EventArgs args)
         {
             player = ObjectManager.Player;
-            if (player.Name != "Zyra") return;
+            if (player.ChampionName != "Zyra") return;
             Game.PrintChat(getName()+" load good luck ;) " + getVersion());
             loadMenu();
             Drawing.OnDraw += draw;
