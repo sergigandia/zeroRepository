@@ -38,38 +38,19 @@ namespace MasterOfInsec
 
         public static void InsecQMode(Obj_AI_Hero target)
         {
-            if(beforeall==false)
-            {
-                if (Program.Q.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "BlindMonkQOne")
-                {
-                    Steps = "One";
-                }
-                else if (Program.Q.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "blindmonkqtwo")
-                {
-                    Steps = "Two";
-                }
-                else
-                {
-                    Steps = "Three";
-                }
-                beforeall = true;
-            }
+
 
             if (target.IsValidTarget(Program.Q.Range))
             {
                 if (Steps == "One" ) //First hit q
                 {
-                 if(   Program.W.IsInRange(target.Position+50))
-                 {
-                     Steps = "Three";
-                 }
-                 else{
+
                     if (Program.Q.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "BlindMonkQOne")
                     {
                         if(Program.Q.CastIfHitchanceEquals(target, Program.HitchanceCheck(Program.menu.Item("seth").GetValue<Slider>().Value))) 
                         Steps = "Two";
                     }
-                 }
+                 
                 }
                 else if (Steps == "Two") // hit second q
                 {
@@ -99,14 +80,14 @@ namespace MasterOfInsec
                 {
                     if (Program.Player.Distance(WardJump.getward(target)) <= 600 && Program.W.IsReady())
                     {
-                        Utility.DelayAction.Add(SecondQTime, () => WardJump.InsecJump(GetInsecPos(target).To2D()));
-                        Steps = "Four";
+                        WardJump.InsecJump(GetInsecPos(target).To2D());
+                        Utility.DelayAction.Add(50, () =>  Steps = "Four");
+                
                     }
                 }
                 else if (Steps == "Four")  //go to the ward
                 {
-                    Utility.DelayAction.Add(Game.Ping + 100, () => WardJump.InsecJump(GetInsecPos(target).To2D()));
-                    Utility.DelayAction.Add(Game.Ping + 110, () => Steps = "Five");
+                  WardJump.InsecJump(GetInsecPos(target).To2D());
                 }
                 else if (Steps == "Flash") // hit w
                 {
@@ -120,7 +101,7 @@ namespace MasterOfInsec
                 {
                     if (WardJump.Insecpos(target).Distance(Program.Player.Position) < 375)
                     {
-                        if (Program.R.CastOnUnit(target))
+                      if (Program.R.CastOnUnit(target))
                         {
                             Steps = "TrickFlash";
                         }
@@ -136,22 +117,11 @@ namespace MasterOfInsec
                 }
                 else if (Steps == "Five" &&  !Program.W.Cast()) // and hit the kick
                 {
-                    Utility.DelayAction.Add(Convert.ToInt32(Math.Round(Game.Ping + Program.W.Instance.SData.SpellTotalTime, MidpointRounding.AwayFromZero)), () => Program.R.CastOnUnit(target));// it dont hit anything
-                    Steps = "One";
+                    Utility.DelayAction.Add(Convert.ToInt32(Math.Round(Game.Ping + Program.W.Instance.SData.SpellTotalTime, MidpointRounding.AwayFromZero)), () => RCast(target));// it dont hit anything
+          
                 }
                 else {
-                  /*  if (Program.Q.IsReady())
-                    {
-                     //   Steps = "One";
-                    }
-                    else if(Program.W.IsReady())
-                    {
-                      //  Steps = "Three";
-                    }
-                    else
-                    {*/
                         Steps = "One";
-                 //   }
                 }
             }
         }
@@ -182,8 +152,22 @@ namespace MasterOfInsec
             {
                 Program.R.CastOnUnit(target);
                 Utility.DelayAction.Add(Game.Ping + 125, () => ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), WardJump.Insecpos(target)));
+          Utility.DelayAction.Add(Game.Ping + 150, () =>qCast(target));
             }
 
+        }
+        public static void RCast(Obj_AI_Hero target)
+        {
+            Program.R.CastOnUnit(target);
+            Steps = "One"; 
+        }
+        public static void qCast(Obj_AI_Hero target)
+        {
+            if (Program.Q.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "BlindMonkQOne")
+            {
+                Program.Q.CastIfHitchanceEquals(target, Program.HitchanceCheck(Program.menu.Item("seth").GetValue<Slider>().Value));
+            }
+                        
         }
         public static void ResetInsecStats()
         {
