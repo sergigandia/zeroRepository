@@ -74,7 +74,7 @@ namespace MasterOfInsec
 
                     }
                     else {
-                      Steps = steps.Q1;
+                  //    Steps = steps.Q1;
                     }
                 }
                 else if (Steps == steps.WardJump) // put ward
@@ -93,7 +93,7 @@ namespace MasterOfInsec
                         Steps = steps.R;
                     }
                 }
-                else if (Steps == steps.R &&  !Program.W.Cast()) // and hit the kick
+                else if (Steps == steps.R ) // and hit the kick
                 {
                     if (!ObjectManager.Player.IsDashing())
                     {
@@ -139,9 +139,9 @@ namespace MasterOfInsec
         }
         public static void RCast(Obj_AI_Hero target)
         {
-            if (Program.R.CastOnUnit(target)) { 
+         Program.R.Cast(target);
             Steps = steps.Q1; 
-        }
+        
         }
         public static void qCast(Obj_AI_Hero target)
         {
