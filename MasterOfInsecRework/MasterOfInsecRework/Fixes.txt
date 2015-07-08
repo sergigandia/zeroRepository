@@ -1,0 +1,3 @@
+﻿La W en los minions falla casi siempre cuando estas fuera de rango.
+La W si la utilizas en un minion que es tu enemigo falla.
+Reorganizar el codigo de killeable hay mucho popurri.

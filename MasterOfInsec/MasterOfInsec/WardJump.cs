@@ -328,9 +328,10 @@ namespace MasterOfInsec
                moveTo(pos);
                if (inDistance(Player.ServerPosition.To2D(), ally.ServerPosition.To2D(), Program.W.Range + ally.BoundingRadius))
                {
-                   Program.W.Cast(ally);
-                   Insec.Steps = "Five";
-
+                   if (Program.W.CastOnUnit(ally))
+                   {
+                       Insec.Steps = Insec.steps.R;
+                   }
                }
                return;
            }

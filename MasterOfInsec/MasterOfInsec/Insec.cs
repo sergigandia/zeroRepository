@@ -11,11 +11,20 @@ namespace MasterOfInsec
 {
     public static class Insec
     {
+       public   enum steps
+        {
+            Q1=0,
+            Q2=1,
+            WardJump=2,
+            Flash = 3,
+            R=4,
+           
+        }
         public static int SecondQTime = new int();
         private static bool da;
         private static bool beforeall=true;
         public static string InsecMode = "Normal";
-        public static string Steps = "One";
+        public static steps Steps;
         public static Obj_AI_Hero insecAlly;
         public static Obj_AI_Hero insecEnemy;
         public static void updateInsec()
@@ -31,10 +40,6 @@ namespace MasterOfInsec
             var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
             InsecFlashR(target);
         }
-        public static string fiveornot()
-        {
-            return !Program.Player.IsDashing() ? Steps = "Five" : Steps;
-        }
 
         public static void InsecQMode(Obj_AI_Hero target)
         {
@@ -42,17 +47,16 @@ namespace MasterOfInsec
 
             if (target.IsValidTarget(Program.Q.Range))
             {
-                if (Steps == "One" ) //First hit q
+                if (Steps==steps.Q1)
                 {
-
                     if (Program.Q.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "BlindMonkQOne")
                     {
                         if(Program.Q.CastIfHitchanceEquals(target, Program.HitchanceCheck(Program.menu.Item("seth").GetValue<Slider>().Value))) 
-                        Steps = "Two";
+                        Steps = steps.Q2;
                     }
                  
                 }
-                else if (Steps == "Two") // hit second q
+                else if (Steps == steps.Q2) // hit second q
                 {
                     if (ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "blindmonkqtwo")
                     {
@@ -60,20 +64,20 @@ namespace MasterOfInsec
                         {
                             if (!WardJump.getBestWardItem().IsValidSlot() && Program.menu.Item("useflash").GetValue<bool>())
                             {
-                                Steps = "Flash";
+                                Steps=steps.Flash;
                             }
                             else
                             {
-                                Steps = "Three";
+                                Steps = steps.WardJump;
                             }
                         }
 
                     }
                     else {
-                      Steps = "One";
+                      Steps = steps.Q1;
                     }
                 }
-                else if (Steps == "Three") // put ward
+                else if (Steps == steps.WardJump) // put ward
                 {
                     if (Program.Player.Distance(WardJump.getward(target)) <= 600 && Program.W.IsReady())
                     {
@@ -81,15 +85,15 @@ namespace MasterOfInsec
                 
                     }
                 }
-                else if (Steps == "Flash") // hit w
+                else if (Steps == steps.Flash) // hit w
                 {
                     if (WardJump.Insecpos(target).Distance(Program.Player.Position) < 400)
                     {
                         ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), GetInsecPos(target));
-                        Steps = "Five";
+                        Steps = steps.R;
                     }
                 }
-                else if (Steps == "Five" &&  !Program.W.Cast()) // and hit the kick
+                else if (Steps == steps.R &&  !Program.W.Cast()) // and hit the kick
                 {
                     if (!ObjectManager.Player.IsDashing())
                     {
@@ -98,7 +102,7 @@ namespace MasterOfInsec
           
                 }
                 else {
-                        Steps = "One";
+                        Steps = steps.Q1;
                 }
             }
         }
@@ -135,8 +139,9 @@ namespace MasterOfInsec
         }
         public static void RCast(Obj_AI_Hero target)
         {
-            Program.R.CastOnUnit(target);
-            Steps = "One"; 
+            if (Program.R.CastOnUnit(target)) { 
+            Steps = steps.Q1; 
+        }
         }
         public static void qCast(Obj_AI_Hero target)
         {
@@ -149,7 +154,7 @@ namespace MasterOfInsec
         public static void ResetInsecStats()
         {
        //     beforeall = false;
-            Steps = "One";
+            Steps = steps.Q1;
         }
     }
 }

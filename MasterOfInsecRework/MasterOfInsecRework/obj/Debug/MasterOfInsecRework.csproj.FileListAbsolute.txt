@@ -1,0 +1,12 @@
+D:\Github\zeroRepository\MasterOfInsecRework\MasterOfInsecRework\bin\Release\MasterOfInsecRework.exe.config
+D:\Github\zeroRepository\MasterOfInsecRework\MasterOfInsecRework\obj\Debug\MasterOfInsecRework.csprojResolveAssemblyReference.cache
+D:\Github\zeroRepository\MasterOfInsecRework\MasterOfInsecRework\bin\Release\MasterOfInsecRework.exe
+D:\Github\zeroRepository\MasterOfInsecRework\MasterOfInsecRework\bin\Release\MasterOfInsecRework.pdb
+D:\Github\zeroRepository\MasterOfInsecRework\MasterOfInsecRework\bin\Release\LeagueSharp.Common.dll
+D:\Github\zeroRepository\MasterOfInsecRework\MasterOfInsecRework\bin\Release\LeagueSharp.dll
+D:\Github\zeroRepository\MasterOfInsecRework\MasterOfInsecRework\bin\Release\SharpDX.Direct3D9.dll
+D:\Github\zeroRepository\MasterOfInsecRework\MasterOfInsecRework\bin\Release\clipper_library.dll
+D:\Github\zeroRepository\MasterOfInsecRework\MasterOfInsecRework\bin\Release\LeagueSharp.Sandbox.dll
+D:\Github\zeroRepository\MasterOfInsecRework\MasterOfInsecRework\bin\Release\LeagueSharp.xml
+D:\Github\zeroRepository\MasterOfInsecRework\MasterOfInsecRework\obj\Debug\MasterOfInsecRework.exe
+D:\Github\zeroRepository\MasterOfInsecRework\MasterOfInsecRework\obj\Debug\MasterOfInsecRework.pdb

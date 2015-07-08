@@ -143,7 +143,6 @@ namespace MasterOfInsec
             Game.PrintChat("[LeeSin]Master Of Insec load good luck ;) ver 0.9.9.4");
             Drawing.OnDraw += Drawing_OnDraw;
             Game.OnWndProc += GameOnOnWndProc;
-            Obj_AI_Base.OnProcessSpellCast += Oncast;
             Orbwalking.AfterAttack += afterAttack; 
             Game.OnUpdate += Game_OnGameUpdate;
 
@@ -187,12 +186,6 @@ namespace MasterOfInsec
                 }
             }
         }
-        public static void Oncast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
-{
-if (!sender.IsMe) return;
-if (args.SData.Name == R.ChargedSpellName && MasterOfInsec.Insec.Steps == "five")
-    MasterOfInsec.Insec.Steps = "one";
-}
         private static void Game_OnGameUpdate(EventArgs args)
         {
             Q.MinHitChance = HitchanceCheck(menu.Item("seth").GetValue<Slider>().Value);
