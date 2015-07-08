@@ -139,8 +139,10 @@ namespace MasterOfInsec
         }
         public static void RCast(Obj_AI_Hero target)
         {
-         Program.R.Cast(target);
-            Steps = steps.Q1; 
+            if (Program.R.CastOnUnit(target))
+            {
+                Steps = steps.Q1;
+            }
         
         }
         public static void qCast(Obj_AI_Hero target)

@@ -133,12 +133,13 @@ namespace MasterOfInsec
             W = new Spell(SpellSlot.W, 700);
             E = new Spell(SpellSlot.E, 430);
             R = new Spell(SpellSlot.R, 375);
+            //R.SetTargetted();
             RInsec = new Spell(SpellSlot.R, 375);
             Smite = ObjectManager.Player.GetSpellSlot("SummonerDot");
             Ignite = ObjectManager.Player.GetSpellSlot("summonersmite");
             QHarrash.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth, Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
             Q.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth, Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
-            RInsec.SetSkillshot(Q.Instance.SData.SpellCastTime, Q.Instance.SData.LineWidth, Q.Instance.SData.MissileSpeed, true, SkillshotType.SkillshotLine);
+            RInsec.SetTargetted(R.Instance.SData.CastFrame / 30, R.Instance.SData.MissileSpeed);
             Menu();
             Game.PrintChat("[LeeSin]Master Of Insec load good luck ;) ver 0.9.9.4");
             Drawing.OnDraw += Drawing_OnDraw;
