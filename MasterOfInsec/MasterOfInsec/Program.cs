@@ -16,13 +16,14 @@ namespace MasterOfInsec
         //ignite working
         //ward jump x
         private static Obj_AI_Hero allytarget;
-        public  static Map map;
         public static Obj_AI_Hero Player;
         public static Menu menu;
         private static Orbwalking.Orbwalker orb;
         public static Spell Q, W, E, R,RInsec,QHarrash;
         public static SpellSlot Ignite;
         public static SpellSlot Smite;
+        public static int passive;
+        public static bool passiveActive;
         public static Orbwalking.Orbwalker Orbwalker { get; internal set; }
         public static Orbwalking.OrbwalkingMode OrbwalkerMode
         {
@@ -105,7 +106,6 @@ namespace MasterOfInsec
             }
             var WardJumpMenu = new Menu("WardJump", "WardJump");
             {
-               WardJumpMenu.AddItem(new MenuItem("WardJump mode", "Mode").SetValue(new StringList(new[] { "Old WardJump", "New WardJump" }, 1))); 
                 WardJumpMenu.AddItem(new MenuItem("wardjump", "WardJump key").SetValue(new KeyBind('Z', KeyBindType.Press)));
             }
             TargetSelector.AddToMenu(TargetSelectorMenu);
@@ -123,8 +123,7 @@ namespace MasterOfInsec
         }
         static void OnGameLoad(EventArgs args)
         {
-        //    Game.PrintChat(Player.ChampionName);
-            map = new Map();
+
             Player = ObjectManager.Player;
             if (Player.ChampionName != "LeeSin") return;
             //   Ignite = new Spell(SpellSlot.Summoner1, 1100);
@@ -144,9 +143,16 @@ namespace MasterOfInsec
             Game.PrintChat("[LeeSin]Master Of Insec load good luck ;) ver 0.9.9.4");
             Drawing.OnDraw += Drawing_OnDraw;
             Game.OnWndProc += GameOnOnWndProc;
+            Spellbook.OnCastSpell += OnCast;
             Orbwalking.AfterAttack += afterAttack; 
             Game.OnUpdate += Game_OnGameUpdate;
 
+        }
+
+        private static void OnCast(Spellbook sender, SpellbookCastSpellEventArgs args)
+        {
+            passiveActive = true;
+            passive = 0;
         }
         static int charges=0;
        static Obj_AI_Hero trys;
@@ -177,13 +183,14 @@ namespace MasterOfInsec
         }
         private static void afterAttack(AttackableUnit unit, AttackableUnit target)
         {
-            if(step=="AA")
+            if(passiveActive)
             {
-                charges+=1;
-                if(charges==2)
+                if(passive<2)
                 {
-                    charges = 0;
-                    step = step2;
+            passive++;
+                }
+                else{
+                    passiveActive=false;
                 }
             }
         }
@@ -196,13 +203,13 @@ namespace MasterOfInsec
                 Combo();
             if (menu.Item("wardjump").GetValue<KeyBind>().Active)
             {
-                if (Program.menu.Item("WardJump mode").GetValue<StringList>().SelectedIndex == 0)
-                WardJump.Oldjump();
-                else if (Program.menu.Item("WardJump mode").GetValue<StringList>().SelectedIndex == 1)
                 WardJump.Newjump();
             }
-           if (menu.Item("jungleclearkey").GetValue<KeyBind>().Active)
+            if (menu.Item("jungleclearkey").GetValue<KeyBind>().Active)
+            {
+                LaneClear();
                 JungleClear();
+            }
             if (menu.Item("Harrash key").GetValue<KeyBind>().Active)
             {
                 Harrash();
@@ -351,7 +358,7 @@ return  ObjectManager.Get<Obj_AI_Hero>()
 
             }
         }
-        static string step="WOne", step2;
+        static string step = "WOne";
         static bool hit=false;
         private static void JungleClear()
         {
@@ -377,7 +384,6 @@ return  ObjectManager.Get<Obj_AI_Hero>()
                  {
                      W.Cast(Player);
                      step = "AA";
-                     step2 = "WTwo";
                  }
                  else
                  {
@@ -390,7 +396,6 @@ return  ObjectManager.Get<Obj_AI_Hero>()
                      W.Cast(Player);
                      Player.Spellbook.CastSpell(Smite, minion);
                      step = "AA";
-                     step2 = "QOne";
                  }
                  else
                  {
@@ -404,7 +409,6 @@ return  ObjectManager.Get<Obj_AI_Hero>()
                      {
                          if (Program.Q.CastIfHitchanceEquals(minion,HitChance.High)) // Continue like that
                              step = "AA";
-                            step2 = "QTwo";
                      }
                  }
                  else
@@ -417,7 +421,6 @@ return  ObjectManager.Get<Obj_AI_Hero>()
                  {
                      Q.Cast();
                      step = "AA";
-                     step2 = "EOne";
                  }
                  else
                  {
@@ -433,7 +436,6 @@ return  ObjectManager.Get<Obj_AI_Hero>()
                      if (Items.CanUseItem(3074) && Player.Distance(minion.Position) < 350)
                          Items.UseItem(3074);
                      step = "AA";
-                     step2 = "WOne";
                  }
                  else
                  {
@@ -691,9 +693,9 @@ return  ObjectManager.Get<Obj_AI_Hero>()
                             Render.Circle.DrawCircle(WardJump.Insecpos(target), 110, System.Drawing.Color.Blue, 5);
                         }
                   }
-                  var wtsxx = Drawing.WorldToScreen(Player.Position);
+              //    var wtsxx = Drawing.WorldToScreen(Player.Position);
           //        Drawing.DrawText(wtsxx[0] - 35, wtsxx[1] + 10, System.Drawing.Color.Yellow, "mode :" +);  
-                  Drawing.DrawText(wtsxx[0] - 35, wtsxx[1] + 10, System.Drawing.Color.Yellow, "step : " + Insec.Steps);
+            //      Drawing.DrawText(wtsxx[0] - 35, wtsxx[1] + 10, System.Drawing.Color.Yellow, "step : " + Insec.Steps);
         }
         public static T GetValue<T>(string name)
         {

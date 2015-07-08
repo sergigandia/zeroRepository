@@ -27,6 +27,7 @@ namespace MasterOfInsec
         public static steps Steps;
         public static Obj_AI_Hero insecAlly;
         public static Obj_AI_Hero insecEnemy;
+    static bool insecActive;
         public static void updateInsec()
         {
             if(Program.menu.Item("OrbwalkInsec").GetValue<bool>())
@@ -43,8 +44,12 @@ namespace MasterOfInsec
 
         public static void InsecQMode(Obj_AI_Hero target)
         {
-
-
+            if (insecActive == false)
+            {
+                if (Program.Q.IsReady() && Program.W.IsReady() && Program.R.IsReady() && Program.Player.Mana >= 130)
+                    insecActive = true;
+            }
+            if (!insecActive) return;
             if (target.IsValidTarget(Program.Q.Range))
             {
                 if (Steps==steps.Q1)
@@ -73,15 +78,13 @@ namespace MasterOfInsec
                         }
 
                     }
-                    else {
-                  //    Steps = steps.Q1;
-                    }
                 }
                 else if (Steps == steps.WardJump) // put ward
                 {
                     if (Program.Player.Distance(WardJump.getward(target)) <= 600 && Program.W.IsReady())
-                    {
-                        WardJump.InsecJump(GetInsecPos(target).To2D());
+                    {   
+                        WardJump.JumpTo(GetInsecPos(target));
+
                 
                     }
                 }
@@ -95,14 +98,12 @@ namespace MasterOfInsec
                 }
                 else if (Steps == steps.R ) // and hit the kick
                 {
-                    if (!ObjectManager.Player.IsDashing())
-                    {
                         RCast(target);
-                    }
           
                 }
                 else {
-                        Steps = steps.Q1;
+                //    insecActive = false;
+               //         Steps = steps.Q1;
                 }
             }
         }
@@ -137,11 +138,13 @@ namespace MasterOfInsec
             }
 
         }
-        public static void RCast(Obj_AI_Hero target)
+        public static void RCast(Obj_AI_Hero target)        
         {
-            if (Program.R.CastOnUnit(target))
+        //    Program.R.Cast(target);
+            if (Program.R.Cast(target).IsCasted())
             {
-                Steps = steps.Q1;
+                        insecActive = false;
+                      Steps = steps.Q1;
             }
         
         }
@@ -156,6 +159,7 @@ namespace MasterOfInsec
         public static void ResetInsecStats()
         {
        //     beforeall = false;
+            insecActive = false;
             Steps = steps.Q1;
         }
     }
