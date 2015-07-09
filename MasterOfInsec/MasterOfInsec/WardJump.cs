@@ -129,18 +129,28 @@ namespace MasterOfInsec
            
            return false;
        }
+       public static Vector3 wardpos;
+       public static bool wardj;
        public static bool JumpTo(Vector3 position)
        {
+           if(wardj==false)
+           {
+               wardpos = position;
+               wardj = true;
+           }
            if (Program.W.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.W).Name == "BlindMonkWOne")
            {
-                     var Wards = ObjectManager.Get<Obj_AI_Minion>().Where(ward => ward.Distance(position) < 150 && !ward.IsDead).FirstOrDefault();
+               var Wards = ObjectManager.Get<Obj_AI_Minion>().Where(ward => ward.Distance(wardpos) < 150 && !ward.IsDead).FirstOrDefault();
                      if (Wards == null)
                      {
                          InventorySlot invSlot = Items.GetWardSlot();
-                         Items.UseItem((int)invSlot.Id, position);
+                         Items.UseItem((int)invSlot.Id, wardpos);
                      }
-               Wards = ObjectManager.Get<Obj_AI_Minion>().Where(ward => ward.Distance(position) < 150 && !ward.IsDead).FirstOrDefault();
-               Utility.DelayAction.Add(Game.Ping + 50, () => Wcast(Wards));
+                     Wards = ObjectManager.Get<Obj_AI_Minion>().Where(ward => ward.Distance(wardpos) < 150 && !ward.IsDead).FirstOrDefault();
+               if (Program.W.CastOnUnit(Wards))
+               {
+                   wardj = false;
+               }
            }
 
            return false;
@@ -149,7 +159,7 @@ namespace MasterOfInsec
        {
            if (Program.W.CastOnUnit(ward))
            {
-               Insec.Steps = Insec.steps.R;
+               MasterOfInsec.NormalInsec.Steps = MasterOfInsec.NormalInsec.steps.R;
            }
        }
 

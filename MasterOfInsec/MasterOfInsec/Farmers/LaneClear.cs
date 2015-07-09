@@ -22,27 +22,30 @@ namespace MasterOfInsec
             {
                 if (MinionN.Distance(ObjectManager.Player.Position) <= Program.Q.Range)
                 {
-                    Program.Q.Cast(MinionN);
+                    MasterOfInsec.Data.castSpell(Program.Q, "lpassive", MinionN);
                     if (Program.W.IsReady() && useW)
                     {
-                        Program.W.Cast(Program.Player);
+                        MasterOfInsec.Data.castSpell(Program.W, "lpassive", Program.Player);
                     }
                 }
             }
+            var MinionNe = MinionManager.GetMinions(Program.E.Range, MinionTypes.All, MinionTeam.Enemy, MinionOrderTypes.MaxHealth);
             if (Program.E.IsReady() && useE)
             {
-                if (MinionN.Distance(ObjectManager.Player.Position) < Program.E.Range)
+                if (MinionNe.Count >= Program.menu.Item("LMinE").GetValue<Slider>().Value)
                 {
-                    Program.E.Cast();
+                    MasterOfInsec.Data.castSpell(Program.E, "lpassive");
                     if (Items.CanUseItem(3077) && Program.Player.Distance(MinionN.Position) < 350)
                         Items.UseItem(3077);
                     if (Items.CanUseItem(3074) && Program.Player.Distance(MinionN.Position) < 350)
                         Items.UseItem(3074);
                 }
+                
             }
 
 
         
         }
+
     }
 }

@@ -54,8 +54,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Insec.cs" />
-    <Compile Include="LaneClear.cs" />
+    <Compile Include="Combos\Combo.cs" />
+    <Compile Include="Combos\Harrash.cs" />
+    <Compile Include="Combos\StarCombo.cs" />
+    <Compile Include="Data.cs" />
+    <Compile Include="Farmers\JungleClear.cs" />
+    <Compile Include="Farmers\LaneClear.cs" />
+    <Compile Include="Insec\NormalInsec.cs" />
+    <Compile Include="Insec\RFlashInsec.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WardJump.cs" />
