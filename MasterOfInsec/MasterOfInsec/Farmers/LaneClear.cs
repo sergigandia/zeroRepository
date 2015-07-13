@@ -17,7 +17,24 @@ namespace MasterOfInsec
             var useQ = Program.menu.Item("QL").GetValue<bool>();
             var useW = Program.menu.Item("WL").GetValue<bool>();
             var useE = Program.menu.Item("EL").GetValue<bool>();
-
+            Console.WriteLine(ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name.ToLower());
+            Console.WriteLine(ObjectManager.Player.Spellbook.GetSpell(SpellSlot.W).Name.ToLower());
+            Console.WriteLine(ObjectManager.Player.Spellbook.GetSpell(SpellSlot.E).Name.ToLower());
+            if (Program.Q.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name.ToLower() == "blindmonkqtwo")
+            {
+                if (Program.menu.Item("lpassive").GetValue<bool>())
+                    MasterOfInsec.Data.castSpell(Program.Q, "lpassive", Program.Player);
+            }
+            else if (Program.W.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.W).Name.ToLower() == "blindmonkwtwo")
+            {
+                if (Program.menu.Item("lpassive").GetValue<bool>())
+                    MasterOfInsec.Data.castSpell(Program.W, "lpassive", Program.Player);
+            }
+            else if (Program.E.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.W).Name.ToLower() == "blindmonketwo")
+            {
+                if (Program.menu.Item("lpassive").GetValue<bool>())
+                    MasterOfInsec.Data.castSpell(Program.W, "lpassive", Program.Player);
+            }
             if (Program.Q.IsReady() && useQ)
             {
                 if (MinionN.Distance(ObjectManager.Player.Position) <= Program.Q.Range)

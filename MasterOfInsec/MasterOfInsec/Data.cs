@@ -12,7 +12,11 @@ namespace MasterOfInsec
         public static void castSpell(Spell p, String menu)
         {
             var Passive = Program.menu.Item(menu).GetValue<bool>();
-            if (Passive == false)
+            if(!Program.Passive())
+            {
+                Program.passive = false;
+            }
+            if (Passive == false && Program.passive==true)
             {
 
                 p.Cast();
@@ -28,7 +32,11 @@ namespace MasterOfInsec
         public static void castSpell(Spell p, String menu, Obj_AI_Base target)
         {
             var Passive = Program.menu.Item(menu).GetValue<bool>();
-            if (Passive == false)
+            if (!Program.Passive())
+            {
+                Program.passive = false;
+            }
+            if (Passive == false && Program.passive == true)
             {
                 p.Cast(target);
             }

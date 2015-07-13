@@ -189,7 +189,13 @@ namespace MasterOfInsec
             Drawing.OnDraw += Drawing_OnDraw;
             Game.OnWndProc += GameOnOnWndProc;
             Game.OnUpdate += Game_OnGameUpdate;
+            Spellbook.OnCastSpell+=OnCast;
 
+        }
+        public static bool passive;
+        private static void OnCast(Spellbook sender, SpellbookCastSpellEventArgs args)
+        {
+            passive = false;
         }
 
 
