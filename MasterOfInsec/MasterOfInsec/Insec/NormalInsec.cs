@@ -73,7 +73,7 @@ namespace MasterOfInsec
         {
             if (insecActive == false)
             {
-                if (Program.Q.IsReady() && Program.W.IsReady() && Program.R.IsReady() && Program.Player.Mana >= 130)
+                if (Program.Q.IsReady() && (Program.W.IsReady() || (Program.menu.Item("useflash").GetValue<bool>() && ObjectManager.Player.Spellbook.GetSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash")).IsReady())) && Program.R.IsReady() && Program.Player.Mana >= 130)
                     insecActive = true;
             }
             if (!insecActive) return;
@@ -126,7 +126,6 @@ namespace MasterOfInsec
                 else if (Steps == steps.R) // and hit the kick
                 {
                     RCast(target);
-
                 }
                 else
                 {

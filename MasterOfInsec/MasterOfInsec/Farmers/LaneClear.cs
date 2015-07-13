@@ -23,11 +23,12 @@ namespace MasterOfInsec
                 if (MinionN.Distance(ObjectManager.Player.Position) <= Program.Q.Range)
                 {
                     MasterOfInsec.Data.castSpell(Program.Q, "lpassive", MinionN);
-                    if (Program.W.IsReady() && useW)
-                    {
-                        MasterOfInsec.Data.castSpell(Program.W, "lpassive", Program.Player);
-                    }
+
                 }
+            }
+            if (Program.E.IsInRange(MinionN)&&Program.W.IsReady() && useW)
+            {
+                MasterOfInsec.Data.castSpell(Program.W, "lpassive", Program.Player);
             }
             var MinionNe = MinionManager.GetMinions(Program.E.Range, MinionTypes.All, MinionTeam.Enemy, MinionOrderTypes.MaxHealth);
             if (Program.E.IsReady() && useE)

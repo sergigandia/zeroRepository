@@ -131,6 +131,8 @@ namespace MasterOfInsec
        }
        public static Vector3 wardpos;
        public static bool wardj;
+
+
        public static bool JumpTo(Vector3 position)
        {
            if(wardj==false)
@@ -149,6 +151,7 @@ namespace MasterOfInsec
                      Wards = ObjectManager.Get<Obj_AI_Minion>().Where(ward => ward.Distance(wardpos) < 150 && !ward.IsDead).FirstOrDefault();
                if (Program.W.CastOnUnit(Wards))
                {
+                   NormalInsec.Steps = NormalInsec.steps.R;
                    wardj = false;
                }
            }

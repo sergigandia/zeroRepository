@@ -9,21 +9,13 @@ namespace MasterOfInsec.Combos
 {
    static class StarCombo
     {
-       public static string steps = "FDDFF";
+       public static string steps = "One";
        static bool star;
 
        public static void CastQ()
        {
            Program.Q.Cast();
            steps = "One";
-       }
-       private static void UseWardJump(Obj_AI_Base target)
-       {
-           var ws = Program.menu.Item("swardjump").GetValue<bool>();
-           if(ws && Program.Player.Distance(target)>50)
-           {
-               WardJump.JumpTo(target.Position);
-           }
        }
        public static void Combo()
        {
@@ -35,11 +27,6 @@ namespace MasterOfInsec.Combos
                   star = true;
            }
            if (star == false) return;
-           if (steps == "Ward") //First hit q
-           {
-                   UseWardJump(target);
-                   steps = "One";
-           }
            else if (steps == "One") //First hit q
            {
                if (Program.E.IsInRange(target, Program.E.Range) && Program.E.CanCast(target))
