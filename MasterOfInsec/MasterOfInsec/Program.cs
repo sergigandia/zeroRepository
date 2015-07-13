@@ -116,6 +116,7 @@ namespace MasterOfInsec
                 JungleclearMenu.AddItem(new MenuItem("QJ", "Use Q in JungleClear").SetValue(true));
                 JungleclearMenu.AddItem(new MenuItem("WJ", "Use W in JungleClear").SetValue(true));
                 JungleclearMenu.AddItem(new MenuItem("EJ", "Use E in JungleClear").SetValue(true));
+               JungleclearMenu.AddItem(new MenuItem("JMinE", "Min. minion e")).SetValue(new Slider(1, 1, 4));
                 JungleclearMenu.AddItem(new MenuItem("jungleclearkey", "JungleClear key").SetValue(new KeyBind('V', KeyBindType.Press)));
             }
             var ItemMenu = new Menu("Item Menu", "itemmenu");
@@ -243,7 +244,6 @@ namespace MasterOfInsec
             if (menu.Item("jungleclearkey").GetValue<KeyBind>().Active)
             {
                 MasterOfInsec.LaneClear.Do();
-                MasterOfInsec.JungleClear.Do();
             }
             if (menu.Item("Harrash key").GetValue<KeyBind>().Active)
             {
@@ -418,7 +418,7 @@ return  ObjectManager.Get<Obj_AI_Hero>()
                   }
                   var wtsxx = Drawing.WorldToScreen(Player.Position);
             //      Drawing.DrawText(wtsxx[0] - 35, wtsxx[1] + 10, System.Drawing.Color.Yellow, "mode :" +);  
-                Drawing.DrawText(wtsxx[0] - 35, wtsxx[1] + 10, System.Drawing.Color.Yellow, "step : " +NormalInsec.Steps);
+          //      Drawing.DrawText(wtsxx[0] - 35, wtsxx[1] + 10, System.Drawing.Color.Yellow, "step : " +NormalInsec.Steps);
         }
         public static T GetValue<T>(string name)
         {
