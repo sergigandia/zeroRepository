@@ -12,13 +12,21 @@ namespace MasterOfInsec
     {
         public static void Combo(Obj_AI_Hero target)
         {
-            Program.Player.IssueOrder(GameObjectOrder.MoveTo, Program.Player.Position.Extend(Game.CursorPos, 150));
-            if (MasterOfInsec.Program.R.IsReady())
-                if (WardJump.Insecpos(target).Distance(Program.Player.Position) < 375)
+        //    Program.Player.IssueOrder(GameObjectOrder.MoveTo, Program.Player.Position.Extend(Game.CursorPos, 150));
+              var useW = Program.menu.Item("useWardHoop").GetValue<bool>();
+              if (MasterOfInsec.Program.R.IsReady())
+                  if (useW)
+                  {
+                      WardJump.wardj = false;
+                      WardJump.JumpToFlash(WardJump.InsecposN2(target));
+                  }
+                if (WardJump.InsecposN2(target).Distance(Program.Player.Position) < 375)
                 {
-                    Program.R.CastOnUnit(target);
-                    Utility.DelayAction.Add(Game.Ping + 125, () => ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), WardJump.Insecpos(target)));
-                    Utility.DelayAction.Add(Game.Ping + 150, () => qCast(target));
+                    if (Program.R.CastOnUnit(target))
+                    {
+                        Utility.DelayAction.Add(Game.Ping + 125, () => ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), WardJump.Insecpos(target)));
+                        Utility.DelayAction.Add(Game.Ping + 150, () => qCast(target));
+                    }
                 }
 
         }

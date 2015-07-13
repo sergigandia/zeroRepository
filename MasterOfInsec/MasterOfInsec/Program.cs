@@ -80,11 +80,11 @@ namespace MasterOfInsec
                 HarrashMenu.AddItem(new MenuItem("EH", "Use E in Harrash").SetValue(true));
                 HarrashMenu.AddItem(new MenuItem("Harrash key", "Harrash key").SetValue(new KeyBind('C', KeyBindType.Press)));
             }
-            var InsecFlashSettingsMenu = new Menu("FlashInsec", "R < Flash Insec");
+            var InsecFlashSettingsMenu = new Menu("R < Flash Insec", "R < Flash Insec");
             {
 
                 InsecFlashSettingsMenu.AddItem(new MenuItem("InstaFlashRkey", "InstaFlash R key").SetValue(new KeyBind('G', KeyBindType.Press)));
-                InsecFlashSettingsMenu.AddItem(new MenuItem("useflash", "Use flash if not ward").SetValue(true));
+                InsecFlashSettingsMenu.AddItem(new MenuItem("useWardHoop", "Use WardHoop for go near").SetValue(true));
             }
             var NormalInsecMenu = new Menu("NormalInsec", "Normal Insec");
             {
@@ -364,7 +364,8 @@ return  ObjectManager.Get<Obj_AI_Hero>()
                 var wts = Drawing.WorldToScreen(target.Position);
                 var wtssx = Drawing.WorldToScreen(target.Position);
                 Drawing.DrawLine(wts[0], wts[1], wtsx[0], wtsx[1], 5f, System.Drawing.Color.Red);
-                Render.Circle.DrawCircle(NormalInsec.Insecpos(target), 110, System.Drawing.Color.Blue, 5);
+                Render.Circle.DrawCircle(NormalInsec.Insecpos(target), 110, System.Drawing.Color.Yellow, 5);
+                Render.Circle.DrawCircle(WardJump.InsecposN2(target), 110, System.Drawing.Color.Blue, 5);
             }
                   if (menu.Item("inseckey").GetValue<KeyBind>().Active && menu.Item("DrawInsec").GetValue<bool>())
                   {

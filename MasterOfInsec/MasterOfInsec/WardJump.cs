@@ -131,7 +131,34 @@ namespace MasterOfInsec
        }
        public static Vector3 wardpos;
        public static bool wardj;
+       public static Vector3 InsecposN2(Obj_AI_Hero ts)
+       {
+           return Game.CursorPos.Extend(ts.Position, Game.CursorPos.Distance(ts.Position) - 125);
+       }
+       public static bool JumpToFlash(Vector3 position)
+       {
+           if (wardj == false)
+           {
+               wardpos = position;
+               wardj = true;
+           }
+           if (Program.W.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.W).Name == "BlindMonkWOne")
+           {
+               var Wards = ObjectManager.Get<Obj_AI_Minion>().Where(ward => ward.Distance(wardpos) < 150 && !ward.IsDead).FirstOrDefault();
+               if (Wards == null)
+               {
+                   InventorySlot invSlot = Items.GetWardSlot();
+                   Items.UseItem((int)invSlot.Id, wardpos);
+               }
+               Wards = ObjectManager.Get<Obj_AI_Minion>().Where(ward => ward.Distance(wardpos) < 150 && !ward.IsDead).FirstOrDefault();
+               if (Program.W.CastOnUnit(Wards))
+               {
+                   wardj = false;
+               }
+           }
 
+           return false;
+       }
 
        public static bool JumpTo(Vector3 position)
        {
