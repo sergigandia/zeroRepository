@@ -8,9 +8,12 @@ using SharpDX;
 
 namespace MasterOfInsec
 {
-    // LaneClear | jungleClear dont use skills
-    // StarCombo Totally broken
-    // insec didnt kick
+    // LaneClear fix passive
+    // jungleClear dont use skills
+    //Wardjump sometimes didnt work ? 
+    // -------------------
+    // insec engage minion
+
     static class Program
     {
         // Master Of Insec LEE

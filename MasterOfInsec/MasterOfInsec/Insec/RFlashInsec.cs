@@ -15,7 +15,7 @@ namespace MasterOfInsec
         //    Program.Player.IssueOrder(GameObjectOrder.MoveTo, Program.Player.Position.Extend(Game.CursorPos, 150));
               var useW = Program.menu.Item("useWardHoop").GetValue<bool>();
               if (MasterOfInsec.Program.R.IsReady())
-                  if (useW)
+                  if (useW && WardJump.Insecpos(target).Distance(Program.Player.Position) > 375)
                   {
                       WardJump.wardj = false;
                       WardJump.JumpToFlash(WardJump.InsecposN2(target));
