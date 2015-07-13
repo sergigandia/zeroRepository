@@ -73,8 +73,11 @@ namespace MasterOfInsec
         {
             if (insecActive == false)
             {
-                if (Program.Q.IsReady() && (Program.W.IsReady() || (Program.menu.Item("useflash").GetValue<bool>() && ObjectManager.Player.Spellbook.GetSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash")).IsReady())) && Program.R.IsReady() && Program.Player.Mana >= 130)
+                if (Program.Q.IsReady() && ((Program.W.IsReady() && WardJump.getBestWardItem().IsValidSlot()) || (Program.menu.Item("useflash").GetValue<bool>() && ObjectManager.Player.Spellbook.GetSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash")).IsReady())) && Program.R.IsReady() && Program.Player.Mana >= 130)
+                {
                     insecActive = true;
+                  WardJump.wardj = false;
+                }
             }
             if (!insecActive) return;
             if (target.IsValidTarget(Program.Q.Range))

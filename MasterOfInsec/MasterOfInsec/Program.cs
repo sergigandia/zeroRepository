@@ -407,7 +407,7 @@ return  ObjectManager.Get<Obj_AI_Hero>()
                   }
                   var wtsxx = Drawing.WorldToScreen(Player.Position);
             //      Drawing.DrawText(wtsxx[0] - 35, wtsxx[1] + 10, System.Drawing.Color.Yellow, "mode :" +);  
-            //     Drawing.DrawText(wtsxx[0] - 35, wtsxx[1] + 10, System.Drawing.Color.Yellow, "step : " +NormalInsec.Steps);
+            //    Drawing.DrawText(wtsxx[0] - 35, wtsxx[1] + 10, System.Drawing.Color.Yellow, "step : " +NormalInsec.Steps);
         }
         public static T GetValue<T>(string name)
         {
