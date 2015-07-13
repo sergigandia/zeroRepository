@@ -90,7 +90,7 @@ namespace MasterOfInsec
             {
                 NormalInsecMenu.AddItem(new MenuItem("Mode", "Mode").SetValue(new StringList(new[] { "Insec to Tower", "Insec to Ally", "Insec to Mouse" }, 1)));
                 NormalInsecMenu.AddItem(new MenuItem("inseckey", "Insec key").SetValue(new KeyBind('T', KeyBindType.Press)));
-                NormalInsecMenu.AddItem(new MenuItem("IQMinion", "Use q to minion").SetValue(true));
+                NormalInsecMenu.AddItem(new MenuItem("IQMinion", "Use q to minion").SetValue(false));
                 NormalInsecMenu.AddItem(new MenuItem("useflash", "Use flash if not ward").SetValue(true));
                 NormalInsecMenu.AddItem(new MenuItem("OrbwalkInsec", "orbwalk on insec mode").SetValue(true));
             }

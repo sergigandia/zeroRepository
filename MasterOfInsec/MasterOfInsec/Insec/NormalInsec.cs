@@ -71,7 +71,7 @@ namespace MasterOfInsec
         }
         public static bool ObjisInRange(Obj_AI_Base target , Obj_AI_Base target2 , float range)
     {
-            if (target.Distance(target2) < range)
+            if (target2.Distance(target) < range)
             {
                 return true;
             }        
@@ -100,7 +100,8 @@ namespace MasterOfInsec
                             Steps = steps.Q2;
                         else if (Program.Q.CanCast(minion) && useQMinion)
                         {
-                            if (ObjisInRange(minion, target, Program.W.Range))
+                            Console.WriteLine("llego");
+                            if (!Program.Q.IsKillable(minion)&&ObjisInRange(minion, target, Program.W.Range))
                             {
                             if(Program.Q.CastIfHitchanceEquals(minion, Combos.Combo.HitchanceCheck(Program.menu.Item("seth").GetValue<Slider>().Value)))
                                          Steps = steps.Q2;
