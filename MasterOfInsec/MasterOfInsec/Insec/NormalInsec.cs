@@ -69,18 +69,18 @@ namespace MasterOfInsec
             var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
             Do(target);
         }
-        public static bool ObjisInRange(Obj_AI_Base target , Obj_AI_Base target2 , float range)
+    /*    public static bool ObjisInRange(Obj_AI_Base target , Obj_AI_Base target2 , float range)
     {
             if (target2.Distance(target) < range)
             {
                 return true;
             }        
         return false;
-    }
+    }*/
         public static void Do(Obj_AI_Hero target)
         {
             Obj_AI_Base minion = ObjectManager.Get<Obj_AI_Base>().Where(x => x.IsEnemy && Program.Q.CanCast(x) &&  Program.Q.IsInRange(x)).FirstOrDefault<Obj_AI_Base>();
-            var useQMinion = Program.menu.Item("IQMinion").GetValue<bool>();
+      //      var useQMinion = Program.menu.Item("IQMinion").GetValue<bool>();
             if (insecActive == false)
             {
                 if (Program.Q.IsReady() && ((Program.W.IsReady() && WardJump.getBestWardItem().IsValidSlot()) || (Program.menu.Item("useflash").GetValue<bool>() && ObjectManager.Player.Spellbook.GetSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash")).IsReady())) && Program.R.IsReady() && Program.Player.Mana >= 130)
@@ -98,15 +98,14 @@ namespace MasterOfInsec
                     {
                         if (Program.Q.CastIfHitchanceEquals(target, Combos.Combo.HitchanceCheck(Program.menu.Item("seth").GetValue<Slider>().Value)))
                             Steps = steps.Q2;
-                        else if (Program.Q.CanCast(minion) && useQMinion)
+                    /*    else if (Program.Q.CanCast(minion) && useQMinion)
                         {
-                            Console.WriteLine("llego");
                             if (!Program.Q.IsKillable(minion)&&ObjisInRange(minion, target, Program.W.Range))
                             {
                             if(Program.Q.CastIfHitchanceEquals(minion, Combos.Combo.HitchanceCheck(Program.menu.Item("seth").GetValue<Slider>().Value)))
                                          Steps = steps.Q2;
                             }
-                        }
+                        }*/
                     }
 
 
