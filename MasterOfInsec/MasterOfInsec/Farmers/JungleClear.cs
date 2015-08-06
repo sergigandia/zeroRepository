@@ -13,12 +13,12 @@ namespace MasterOfInsec
     {
     public static void  Do()
         {
-
+       Console.WriteLine("hola : " +Program.menu.Item("jpassive").GetValue<bool>().ToString());
             var MinionN = MinionManager.GetMinions(Program.Q.Range, MinionTypes.All, MinionTeam.Neutral, MinionOrderTypes.MaxHealth).FirstOrDefault();
             var useQ = Program.menu.Item("QJ").GetValue<bool>();
             var useW = Program.menu.Item("WJ").GetValue<bool>();
             var useE = Program.menu.Item("EJ").GetValue<bool>();
-            Console.WriteLine("ye no me olviden");
+
             if (Program.Q.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name.ToLower() == "blindmonkqtwo")
             {
                 if (Program.menu.Item("jpassive").GetValue<bool>())
@@ -67,7 +67,6 @@ namespace MasterOfInsec
                 }
                 
             }
-
 
         
         }

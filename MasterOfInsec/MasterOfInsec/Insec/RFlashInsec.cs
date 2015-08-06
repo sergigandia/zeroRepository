@@ -12,7 +12,8 @@ namespace MasterOfInsec
     {
         public static void Combo(Obj_AI_Hero target)
         {
-        //    Program.Player.IssueOrder(GameObjectOrder.MoveTo, Program.Player.Position.Extend(Game.CursorPos, 150));
+            if (Program.menu.Item("OrbwalkFlashInsec").GetValue<bool>())
+                Program.Player.IssueOrder(GameObjectOrder.MoveTo, Program.Player.Position.Extend(Game.CursorPos, 150));
               var useW = Program.menu.Item("useWardHoop").GetValue<bool>();
               if (MasterOfInsec.Program.R.IsReady())
                   if (useW && WardJump.Insecpos(target).Distance(Program.Player.Position) > 375)

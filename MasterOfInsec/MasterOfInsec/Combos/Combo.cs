@@ -36,10 +36,36 @@ namespace MasterOfInsec.Combos
                 {
                     Program.Q.CastIfHitchanceEquals(target, HitchanceCheck(Program.menu.Item("seth").GetValue<Slider>().Value)); // Continue like that
                 }
-                if ( Program.GetBool("comboQ") && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "blindmonkqtwo" )
+                else if (Program.Q.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "BlindMonkQOne")
                 {
-                    Program.Q.Cast();
+                    if (Program.GetBool("csmiteq"))
+                    {
+
+                        List<Obj_AI_Base> minions = new List<Obj_AI_Base>();
+                        foreach (Obj_AI_Base m in ObjectManager.Get<Obj_AI_Base>())
+                        {
+                            if (Geometry.Intersection(Program.Player.Position.To2D(), target.Position.To2D(), m.Position.To2D(), m.Position.To2D()).Intersects)
+                            {
+                                minions.Add(m);
+                            }
+                        }
+                        if (minions.Count == 1)
+                        {
+                            if (Program.Smite.IsReady())
+                            {
+                                ObjectManager.Player.Spellbook.CastSpell(Program.Smite, minions[0]);
+                                
+                                Program.Q.Cast(target.Position);
+                            }
+
+                        }
+
+                    }
                 }
+             if (Program.GetBool("comboQ") && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "blindmonkqtwo")
+             {
+                 Program.Q.Cast();
+             }
                 //work 
                 #region work
                 if (Program.E.IsReady() && Program.GetBool("comboE") && Program.E.IsInRange(target))

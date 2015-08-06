@@ -80,7 +80,7 @@ namespace MasterOfInsec
         public static void Do(Obj_AI_Hero target)
         {
             Obj_AI_Base minion = ObjectManager.Get<Obj_AI_Base>().Where(x => x.IsEnemy && Program.Q.CanCast(x) && Program.Q.IsInRange(x)).FirstOrDefault<Obj_AI_Base>();
-            //      var useQMinion = Program.menu.Item("IQMinion").GetValue<bool>();
+         
             if (insecActive == false)
             {
                 if (Program.Q.IsReady() && ((Program.W.IsReady() && WardJump.getBestWardItem().IsValidSlot()) || (Program.menu.Item("useflash").GetValue<bool>() && ObjectManager.Player.Spellbook.GetSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash")).IsReady())) && Program.R.IsReady() && Program.Player.Mana >= 130)

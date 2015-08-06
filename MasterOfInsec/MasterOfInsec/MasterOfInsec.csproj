@@ -55,11 +55,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Combos\Combo.cs" />
+    <Compile Include="Combos\Flee.cs" />
     <Compile Include="Combos\Harrash.cs" />
     <Compile Include="Combos\StarCombo.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="Farmers\JungleClear.cs" />
     <Compile Include="Farmers\LaneClear.cs" />
+    <Compile Include="Farmers\LastHit.cs" />
     <Compile Include="Insec\NormalInsec.cs" />
     <Compile Include="Insec\RFlashInsec.cs" />
     <Compile Include="Program.cs" />
