@@ -97,7 +97,7 @@ namespace GodModeOn_Vayne
                 ComboMenu.AddItem(new MenuItem("EC", "AutoEWall").SetValue(true));
                 ComboMenu.AddItem(new MenuItem("ECT", "OnlyUse E to sel. target").SetValue(true));
                 ComboMenu.AddItem(new MenuItem("combokey", "Combo key").SetValue(new KeyBind(32, KeyBindType.Press)));
-                ComboMenu.AddItem(new MenuItem("RC", "Use R in combo"));
+                ComboMenu.AddItem(new MenuItem("RC", "Use R in combo").SetValue(true));
                 ComboMenu.AddItem(new MenuItem("CNr", "Num enemys for R")).SetValue(new Slider(2, 1, 5));
                 //        ComboMenu.AddItem(new MenuItem());
                 //        ComboMenu.AddItem(new MenuItem("EC", "Q+E").SetValue(true));
