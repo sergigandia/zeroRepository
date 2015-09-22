@@ -1,25 +1,11 @@
-C:\Users\sergi\documents\visual studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\bin\Release\GodModeOn Vayne.exe.config
-C:\Users\sergi\documents\visual studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\bin\Release\GodModeOn Vayne.exe
-C:\Users\sergi\documents\visual studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\bin\Release\GodModeOn Vayne.pdb
-C:\Users\sergi\documents\visual studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\bin\Release\LeagueSharp.Common.dll
-C:\Users\sergi\documents\visual studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\bin\Release\LeagueSharp.dll
-C:\Users\sergi\documents\visual studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\bin\Release\SharpDX.dll
-C:\Users\sergi\documents\visual studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\bin\Release\SharpDX.Direct3D9.dll
-C:\Users\sergi\documents\visual studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\bin\Release\clipper_library.dll
-C:\Users\sergi\documents\visual studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\bin\Release\LeagueSharp.Sandbox.dll
-C:\Users\sergi\documents\visual studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\bin\Release\LeagueSharp.xml
-C:\Users\sergi\documents\visual studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\obj\Debug\GodModeOn Vayne.exe
-C:\Users\sergi\documents\visual studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\obj\Debug\GodModeOn Vayne.pdb
-D:\Github\newGithub\zeroRepository\GodModeOn Vayne\GodModeOn Vayne\bin\Release\GodModeOn Vayne.exe.config
-D:\Github\newGithub\zeroRepository\GodModeOn Vayne\GodModeOn Vayne\obj\Debug\GodModeOn Vayne.exe
-D:\Github\newGithub\zeroRepository\GodModeOn Vayne\GodModeOn Vayne\obj\Debug\GodModeOn Vayne.pdb
-D:\Github\newGithub\zeroRepository\GodModeOn Vayne\GodModeOn Vayne\bin\Release\GodModeOn Vayne.exe
-D:\Github\newGithub\zeroRepository\GodModeOn Vayne\GodModeOn Vayne\bin\Release\GodModeOn Vayne.pdb
-D:\Github\newGithub\zeroRepository\GodModeOn Vayne\GodModeOn Vayne\bin\Release\LeagueSharp.Common.dll
-D:\Github\newGithub\zeroRepository\GodModeOn Vayne\GodModeOn Vayne\bin\Release\LeagueSharp.dll
-D:\Github\newGithub\zeroRepository\GodModeOn Vayne\GodModeOn Vayne\bin\Release\SharpDX.dll
-D:\Github\newGithub\zeroRepository\GodModeOn Vayne\GodModeOn Vayne\bin\Release\SharpDX.Direct3D9.dll
-D:\Github\newGithub\zeroRepository\GodModeOn Vayne\GodModeOn Vayne\bin\Release\clipper_library.dll
-D:\Github\newGithub\zeroRepository\GodModeOn Vayne\GodModeOn Vayne\bin\Release\LeagueSharp.Sandbox.dll
-D:\Github\newGithub\zeroRepository\GodModeOn Vayne\GodModeOn Vayne\bin\Release\LeagueSharp.xml
-D:\Github\newGithub\zeroRepository\GodModeOn Vayne\GodModeOn Vayne\obj\Debug\GodModeOn Vayne.csprojResolveAssemblyReference.cache
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\bin\Release\GodModeOn Vayne.exe.config
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\bin\Release\GodModeOn Vayne.exe
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\bin\Release\GodModeOn Vayne.pdb
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\bin\Release\LeagueSharp.Common.dll
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\bin\Release\LeagueSharp.dll
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\bin\Release\SharpDX.dll
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\bin\Release\SharpDX.Direct3D9.dll
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\bin\Release\clipper_library.dll
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\bin\Release\LeagueSharp.Sandbox.dll
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\obj\Debug\GodModeOn Vayne.exe
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\GodModeOn Vayne\GodModeOn Vayne\obj\Debug\GodModeOn Vayne.pdb

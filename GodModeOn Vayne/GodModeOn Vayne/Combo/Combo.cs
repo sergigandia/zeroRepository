@@ -4,6 +4,7 @@ using SharpDX;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,11 +15,12 @@ namespace GodModeOn_Vayne.Combo
         public static void Do()
             {
             // uso de la q
+         //       Game.PrintChat("no llego lol llego?");
                 var Qcombo = Program.menu.Item("QC").GetValue<bool>();
                 var Ecombo = Program.menu.Item("EC").GetValue<bool>();
                 var Etarcombo = Program.menu.Item("ECT").GetValue<bool>();
                 var Rcombo = Program.menu.Item("RC").GetValue<bool>();
-                var Rmincombo = Program.menu.Item("CNr").GetValue<Slider>().Value;
+               var Rmincombo = Program.menu.Item("CNr").GetValue<Slider>().Value;
            //     var Etarcombo = Program.menu.Item("RC").GetValue<bool>();
        //     TargetSelector.
                 var target = TargetSelector.GetTarget(800, TargetSelector.DamageType.Physical);
@@ -35,20 +37,20 @@ namespace GodModeOn_Vayne.Combo
                 {
                     if (!Etarcombo)
                     {
-                        if (treesCondemn(target.Position))
-                            Program.E.Cast(target);
+                        if (SergixCondemn())
+                            Program.E.Cast(Program.targetE());
                     }
                     else
                     {
                         if (target == TargetSelector.GetSelectedTarget())
                         {
-                            if (treesCondemn(target.Position))
-                                Program.E.Cast(target);
+                            if (SergixCondemn())
+                                Program.E.Cast(Program.targetE());
                         }
                     }
                 }
             }
-          if(Rcombo)
+         if(Rcombo)
            {
               if (WillHitEnemys(Program.Player,800,Rmincombo))
               {
@@ -59,7 +61,7 @@ namespace GodModeOn_Vayne.Combo
             }
         public static float CondemnRange = 550f;
         public static float CondemnKnockback = 490f;
-        private static bool treesCondemn(Vector3 position)
+        private static bool TreesCondemn(Vector3 position,Obj_AI_Base Hero)
         {
             var pointList = new List<Vector3>();
 
@@ -84,22 +86,33 @@ namespace GodModeOn_Vayne.Combo
 
             return false;
         }
-        public static bool MyCondemn(Vector3 fromPosition,Obj_AI_Hero target )
+        public static bool SergixCondemn()
         {
-     /*      var line = new Geometry.Polygon.Line(target.Position, Program.Efinishpos(target));
-            if (line.Points.Any(point => point.To3D().IsWall()))
-           {
-               return true;
-            }*/
-          var d = target.Position.Distance(Program.Efinishpos(target));
-for(var i = 0; i < d; i+=10){
- var dist = i > d ? d : i;
- var point = target.Position.Extend(Program.Efinishpos(target), dist);
- if (point.IsWall()) return true;
-}
-return false;
-        /*        if (Program.Efinishpos(target).IsWall())
-                    return true;*/
+            var pointwaswall = false;
+            var d = Program.targetE().Position.Distance(Program.Efinishpos(Program.targetE()));
+            for (var i = 0; i < d; i += 10)
+            {
+                var dist = i > d ? d : i;
+                var point = Program.targetE().Position.Extend(Program.Efinishpos(Program.targetE()), dist);
+                if (pointwaswall)
+                {
+                    if (point.IsWall())
+                    {
+                        Render.Circle.DrawCircle(point, 3, System.Drawing.Color.Red);
+                        return true;
+                    }
+                    else
+                    {
+
+                        Render.Circle.DrawCircle(point, 1, System.Drawing.Color.Yellow);
+                    }
+                }
+                if (point.IsWall())
+                {
+                    pointwaswall = true;
+                }
+            }
+            return false;
         }
         public static bool WillHitEnemys(Obj_AI_Base zone, int Range, int min)
         {
