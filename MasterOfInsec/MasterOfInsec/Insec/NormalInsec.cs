@@ -111,11 +111,11 @@ namespace MasterOfInsec
                                 ObjectManager.Player.GetSpellSlot("SummonerFlash")).IsReady())) && Program.R.IsReady()
                     && Program.Player.Mana >= 130)
                 {
-             //       if (Program.Player.Distance(target) <= 600)
-              //      {
-               //         Steps = steps.WardJump;
+                    if (Program.Player.Distance(target) <= 500)
+                    {
+                        Steps = steps.WardJump;
 
-                //    }
+                    }
                     insecActive = true;
                     WardJump.wardj = false;
                 }
