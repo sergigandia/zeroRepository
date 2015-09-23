@@ -17,7 +17,7 @@ namespace MasterOfInsec.Combos
             {
                 if (Program.QHarrash.IsReady() && Program.GetBool("QH") && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "BlindMonkQOne")
                 {
-                    Program.QHarrash.CastIfHitchanceEquals(target, Combos.Combo.HitchanceCheck(Program.menu.Item("seth").GetValue<Slider>().Value)); // Continue like that
+                    Program.cast(target, Program.QHarrash);
                 }
                 if (Program.GetBool("QH") && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "blindmonkqtwo")
                 {

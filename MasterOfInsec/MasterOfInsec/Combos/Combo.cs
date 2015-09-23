@@ -34,7 +34,7 @@ namespace MasterOfInsec.Combos
             {
                 if (Program.Q.IsReady() && Program.GetBool("comboQ") && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "BlindMonkQOne")
                 {
-                    Program.Q.CastIfHitchanceEquals(target, HitchanceCheck(Program.menu.Item("seth").GetValue<Slider>().Value)); // Continue like that
+                   Program.cast(target,Program.Q);
                 }
                 else if (Program.Q.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "BlindMonkQOne")
                 {

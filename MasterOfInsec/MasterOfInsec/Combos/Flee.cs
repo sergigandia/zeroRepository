@@ -24,7 +24,9 @@ namespace MasterOfInsec.Combos
         {
      try{
          Obj_AI_Base minion = ObjectManager.Get<Obj_AI_Base>().Where(x => (x.IsEnemy|| x.IsPacified) && Program.Q.GetDamage(x) < x.Health && Program.Q.IsInRange(x) && Program.Q.CanCast(x)).MinOrDefault(x => x.Distance(Game.CursorPos) < x.Distance(Program.Player));
-        Program.Q.CastIfHitchanceEquals(minion, HitChance.High);
+         Program.Q.CastIfHitchanceEquals(
+                minion,
+                 Combos.Combo.HitchanceCheck(Program.menu.Item("seth").GetValue<Slider>().Value));
         if (Program.Q.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "BlindMonkQOne")
         {
             Program.Q.Cast();

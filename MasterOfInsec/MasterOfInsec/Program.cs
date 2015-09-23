@@ -46,11 +46,7 @@ namespace MasterOfInsec
 
         public static bool Passive()
         {
-            if (Player.HasBuff("blindmonkpassive_cosmetic"))
-            {
-                return true;
-            }
-            return false;
+            return Player.HasBuff("blindmonkpassive_cosmetic");
         }
 
         private static void Menu()
@@ -63,6 +59,9 @@ namespace MasterOfInsec
             {
                 comboMenu.AddItem(new MenuItem("cpassive", "Use Passive").SetValue(true));
                 comboMenu.AddItem(new MenuItem("smiteq", "Smite q").SetValue(true));
+                comboMenu.AddItem(
+           new MenuItem("Prediction mode", "Prediction Mode").SetValue(
+               new StringList(new[] { "[alpha]My prediction", "Common pred"}, 1)));
                 comboMenu.AddItem(new MenuItem("seth", "Q Hitchance")).SetValue(new Slider(3, 1, 4));
                 comboMenu.AddItem(new MenuItem("comboQ", "Use Q in combo").SetValue(true));
                 comboMenu.AddItem(new MenuItem("comboW", "Use W in combo").SetValue(false));
@@ -257,7 +256,6 @@ namespace MasterOfInsec
         {
             Q.MinHitChance = Combo.HitchanceCheck(menu.Item("seth").GetValue<Slider>().Value);
             if (Player.IsDead) return;
-            //   KsIgnite();
             if(menu.Item("fleekey").GetValue<KeyBind>().Active)
             {
                 Flee.Do();
@@ -464,6 +462,19 @@ namespace MasterOfInsec
              //     Drawing.DrawText(wtsxx[0] - 35, wtsxx[1] + 10, System.Drawing.Color.Yellow, "step : " +NormalInsec.Steps);
         }
 
+        public static void cast(Obj_AI_Hero target,Spell spell)
+        {
+            if (Program.menu.Item("Prediction mode").GetValue<StringList>().SelectedIndex == 1)
+            {
+                spell.CastIfHitchanceEquals(
+                    target,
+                    Combos.Combo.HitchanceCheck(Program.menu.Item("seth").GetValue<Slider>().Value));
+            }
+            else
+            {
+                AlphaPrediction.Prediction.SpellPrediction(spell, target);
+            }
+        }
         public static T GetValue<T>(string name)
         {
             return menu.Item(name).GetValue<T>();

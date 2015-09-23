@@ -41,7 +41,7 @@ namespace MasterOfInsec.Combos
            {
                if (Program.Q.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "BlindMonkQOne")
                {
-                   Program.Q.CastIfHitchanceEquals(target, Combos.Combo.HitchanceCheck(Program.menu.Item("seth").GetValue<Slider>().Value)); // Continue like that
+                   Program.cast(target, Program.Q);
                    steps = "Three";
                }
            }

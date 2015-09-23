@@ -14,6 +14,9 @@ namespace MasterOfInsec
 
     internal static class NormalInsec
     {
+        /// <summary>
+        /// The steps.
+        /// </summary>
         public enum steps
         {
             Q1 = 0,
@@ -67,21 +70,32 @@ namespace MasterOfInsec
             return WardJump.Insecpos(target);
         }
 
+        /// <summary>
+        /// The r cast.
+        /// </summary>
+        /// <param name="target">
+        /// The target.
+        /// </param>
         public static void RCast(Obj_AI_Hero target)
         {
-            //    Program.R.Cast(target);
-            if (Program.R.CastOnUnit(target))
-            {
-                //     insecActive = false;
-                //   Steps = steps.Q1;
-            }
+
+            Program.R.CastOnUnit(target);
 
         }
 
+        /// <summary>
+        /// The combo where we select target
+        /// </summary>
         public static void Combo()
         {
-            if (Program.menu.Item("OrbwalkInsec").GetValue<bool>()) Program.Player.IssueOrder(GameObjectOrder.MoveTo, Program.Player.Position.Extend(Game.CursorPos, 150));
-            if (!Program.R.IsReady()) return;
+            if (Program.menu.Item("OrbwalkInsec").GetValue<bool>())
+            {
+                Program.Player.IssueOrder(GameObjectOrder.MoveTo, Program.Player.Position.Extend(Game.CursorPos, 150));
+            }
+            if (!Program.R.IsReady())
+            {
+                return;
+            }
             var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
             Do(target);
         }
@@ -97,7 +111,7 @@ namespace MasterOfInsec
 
         public static void Do(Obj_AI_Hero target)
         {
-            Obj_AI_Base minion =
+            var minion =
                 ObjectManager.Get<Obj_AI_Base>()
                     .Where(x => x.IsEnemy && Program.Q.CanCast(x) && Program.Q.IsInRange(x))
                     .FirstOrDefault<Obj_AI_Base>();
@@ -128,13 +142,7 @@ namespace MasterOfInsec
                     if (Program.Q.IsReady()
                         && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "BlindMonkQOne")
                     {
-                        if (Program.Q.CastIfHitchanceEquals(
-                            target,
-                            Combos.Combo.HitchanceCheck(Program.menu.Item("seth").GetValue<Slider>().Value)))
-                        {
-                            Steps = steps.Q2;
-                            
-                        }
+                       Program.cast(target,Program.Q);
 
                     }
 
