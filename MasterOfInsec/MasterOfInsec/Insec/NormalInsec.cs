@@ -158,11 +158,9 @@ namespace MasterOfInsec
             }
              if (Steps == steps.WardJump) // put ward
             {
-                Game.PrintChat("Aqui  llego");
                 if (Program.W.IsReady())
                 {
 
-                    Game.PrintChat("Aqui no llego");
                     WardJump.JumpTo(GetInsecPos(target));
 
 
