@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,120 +14,66 @@ namespace MasterOfInsec
     {
        public static Vector3 posforward;
        public static float lastwardjump = 0;
-       private static Obj_AI_Hero Player { get { return ObjectManager.Player; } }
+
+       private static Obj_AI_Hero Player
+       {
+           get { return ObjectManager.Player; }
+       }
+
        public static InventorySlot getBestWardItem()
        {
-           InventorySlot ward = Items.GetWardSlot();
-           if (ward == default(InventorySlot)) return null;
-           return ward;
-       }
-
-       public static bool Harrasjump(Vector3 position)
-       {
-           #region ward ya existe
-           if (Program.W.IsReady())
-           {
-               foreach (Obj_AI_Minion ward in ObjectManager.Get<Obj_AI_Minion>().Where(ward =>
-                    ward.Name.ToLower().Contains("ward") && ward.Distance(Game.CursorPos) < 250))
-               {
-                   if (ward != null)
-                   {
-                       Program.W.CastOnUnit(ward);
-                       Program.W.Cast();
-                       return true;
-
-                   }
-
-               }
-
-               foreach (
-                   Obj_AI_Hero hero in ObjectManager.Get<Obj_AI_Hero>().Where(hero => hero.Distance(Game.CursorPos) < 250 && !hero.IsDead))
-               {
-                   if (hero != null)
-                   {
-                       Program.W.CastOnUnit(hero);
-                       Program.W.Cast();
-                       return true;
-
-                   }
-
-               }
-
-               foreach (Obj_AI_Minion minion in ObjectManager.Get<Obj_AI_Minion>().Where(minion =>
-                   minion.Distance(Game.CursorPos) < 250))
-               {
-                   if (minion != null)
-                   {
-                       Program.W.CastOnUnit(minion);
-                       Program.W.Cast();
-                       return true;
-                   }
-
-               }
-           }
-           #endregion
-           if (Program.W.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.W).Name == "BlindMonkWOne")
-           {
-               InventorySlot invSlot = getBestWardItem();
-               Items.UseItem((int)invSlot.Id, position );
-               foreach (Obj_AI_Minion ward in ObjectManager.Get<Obj_AI_Minion>().Where(ward =>
-           ward.Name.ToLower().Contains("ward") && ward.Distance(Game.CursorPos) < 250))
-               {
-                   if (ward != null)
-                   {
-                       Program.W.CastOnUnit(ward);
-                       Program.W.Cast();
-                       return true;
-
-                   }
-
-               }
-           }
-           return false;
+         var ward = Items.GetWardSlot();
+           return ward == default(InventorySlot) ? null : ward;
        }
 //------------------------------------------------JUMP--------------------------------------------------------------------------------
+
        public static int LastPlaced = new int();
        public static Vector3 wardPosition = new Vector3();
        public static int SecondWTime = new int();
-       static bool jumped;
+
+       public static bool jumped;
+      static bool dontread=false;
+
        public static bool Newjump()
        {
-                          Player.IssueOrder(GameObjectOrder.MoveTo, Player.Position.Extend(Game.CursorPos,150));
+           Player.IssueOrder(GameObjectOrder.MoveTo, Player.Position.Extend(Game.CursorPos, 150));
 
-                          if (Program.W.IsReady()&&ObjectManager.Player.Spellbook.GetSpell(SpellSlot.W).Name=="BlindMonkWOne")
-                          {
-                              wardPosition = Game.CursorPos;
-                              Obj_AI_Minion Wards;
-                              if (Game.CursorPos.Distance(Program.Player.Position) <= 700)
-                              {
-                                  Wards = ObjectManager.Get<Obj_AI_Minion>().Where(ward => ward.Distance(Game.CursorPos) < 150 && !ward.IsDead).FirstOrDefault();
-                              }
-                              else
-                              {
-                                  Vector3 cursorPos = Game.CursorPos;
-                                  Vector3 myPos = Player.ServerPosition;
-                                  Vector3 delta = cursorPos - myPos;
-                                  delta.Normalize();
-                                  wardPosition = myPos + delta * (600 - 5);
-                                  Wards = ObjectManager.Get<Obj_AI_Minion>().Where(ward => ward.Distance(wardPosition) < 150 && !ward.IsDead).FirstOrDefault();
-                              }
-                      if(Wards== null)
-                      {
-                          if (jumped==false)
-                          if (!wardPosition.IsWall()) { 
-                                  InventorySlot invSlot = Items.GetWardSlot();
-                                  Items.UseItem((int)invSlot.Id, wardPosition);
-                                  jumped = true;
-                      }
-                      }
-                              
-                              else
-                                  if (Program.W.CastOnUnit(Wards))
-                                  {
-                                      jumped = false;
-                                  }
-                          }
-           
+
+           if (Program.W.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.W).Name == "BlindMonkWOne")
+           {
+               wardPosition = Game.CursorPos;
+               Obj_AI_Minion Wards;
+               if (Game.CursorPos.Distance(Program.Player.Position) <= 700)
+               {
+                   Wards = ObjectManager.Get<Obj_AI_Minion>().Where(ward => ward.Distance(Game.CursorPos) < 150 && !ward.IsDead).FirstOrDefault();
+               }
+               else
+               {
+                   Vector3 cursorPos = Game.CursorPos;
+                   Vector3 myPos = Player.ServerPosition;
+                   Vector3 delta = cursorPos - myPos;
+                   delta.Normalize();
+                   wardPosition = myPos + delta * (600 - 5);
+                   Wards = ObjectManager.Get<Obj_AI_Minion>().Where(ward => ward.Distance(wardPosition) < 150 && !ward.IsDead).FirstOrDefault();
+               }
+               if (Wards == null && Items.GetWardSlot() != null)
+               {
+                   if (jumped == false)
+                       if (!wardPosition.IsWall())
+                       {
+                           InventorySlot invSlot = Items.GetWardSlot();
+                           Items.UseItem((int)invSlot.Id, wardPosition);
+                           jumped = true;
+                       }
+               }
+
+               else
+                   if (Program.W.CastOnUnit(Wards))
+                   {
+                       jumped = false;
+                   }
+           }
+
            return false;
        }
        public static Vector3 wardpos;

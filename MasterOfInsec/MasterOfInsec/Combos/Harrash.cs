@@ -10,6 +10,7 @@ namespace MasterOfInsec.Combos
 {
     static class Harrash
     {
+        //Working progress
         public static void Combo()
         {
             var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);

@@ -64,7 +64,7 @@ namespace AlphaPrediction
             }
             foreach (var poss in positions)
             {
-              //  Game.PrintChat(poss.Count + "");
+                Game.PrintChat(poss.Count + "");
             }
            var posfint = positions.Max(t => t.Count);
             var posin = positions.Where(t => t.Count == posfint).FirstOrDefault();
@@ -89,11 +89,11 @@ namespace AlphaPrediction
                 pos.Y = (firstdis.pos1.Y + firstdis.pos2.Y) / 2;
                 pos.Z = (firstdis.pos1.Z + firstdis.pos2.Z) / 2;
                 spell.Cast(pos);
-               // Game.PrintChat("Golpeo ha : " + posfint);
+                Game.PrintChat("Golpeo ha : " + posfint);
                 Render.Circle.DrawCircle(pos, 10, System.Drawing.Color.Red, 2);
                 return true;
             }
-     //       Game.PrintChat("Golpeara  : " + posfint);
+            Game.PrintChat("Golpeara  : " + posfint);
             //     Render.Circle.DrawCircle(line_finish, 10, System.Drawing.Color.Red, 2);
             return false;
 
@@ -123,7 +123,7 @@ namespace AlphaPrediction
                 var range = spell.Range;
                 if (target.Position.Distance(ObjectManager.Player.Position) < target.GetWaypoints()[0].Distance(ObjectManager.Player.Position))
                 {
-                    range -= 150;
+                    range -= 100;
                 }
                 if (!spell.IsInRange(target, range)) return false;
 
@@ -148,16 +148,29 @@ namespace AlphaPrediction
             }
             return false;
         }
+
+        private static bool PlayerIsStop(Vector3 pos, Obj_AI_Base target,Spell spell)
+        {
+            Game.PrintChat("arrive");
+            if (pos == target.Position)
+            {
+                if (MinionCollideLine(ObjectManager.Player.Position, target.Position, spell)) return false;
+                spell.Cast(target.Position);
+                return true;
+            }
+            return false;
+        }
+
         private static bool Next(Obj_AI_Base target, Vector3 oldpos, Spell spell)
         {
             if (oldpos != target.GetWaypoints()[1].To3D())
             {
+           //     Utility.DelayAction.Add(1500, () => PlayerIsStop(target.Position, target, spell));
                 Utility.DelayAction.Add(1000, () => Next(target, target.GetWaypoints()[1].To3D(), spell));
                 return false;
             }
             else
             {
-          //      Game.PrintChat("casteando por aqui ahah");
                 CastToDirection( target, spell);
                 return true;
             }
@@ -178,6 +191,9 @@ namespace AlphaPrediction
 
             pos1.Extend(target.GetWaypoints()[1].To3D(), +e);
             Render.Circle.DrawCircle(pos1, 10, System.Drawing.Color.BlueViolet, 2);
+            var wts = Drawing.WorldToScreen(target.Position);
+            var wtsx = target.GetWaypoints()[1];
+            Drawing.DrawLine(wts[0], wts[1], wtsx[0], wtsx[1], 2f, System.Drawing.Color.Red);
             if (MinionCollideLine(ObjectManager.Player.Position, pos1,spell)) return false;
             spell.Cast(pos1);
             return true;

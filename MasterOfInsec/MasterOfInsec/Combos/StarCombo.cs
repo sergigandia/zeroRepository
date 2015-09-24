@@ -5,84 +5,47 @@ using System.Text;
 using LeagueSharp;
 using LeagueSharp.Common;
 using SharpDX;
+
 namespace MasterOfInsec.Combos
 {
-   static class StarCombo
+    internal static class StarCombo
     {
-       public static string steps = "One";
-       static bool star;
+        public static string steps = "One";
 
-       public static void CastQ()
-       {
-           Program.Q.Cast();
-           steps = "One";
-       }
-       public static void Combo()
-       {
-           Program.Player.IssueOrder(GameObjectOrder.MoveTo, Program.Player.Position.Extend(Game.CursorPos, 150));
-           var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
-           if (star == false)
-           {
-               if (Program.Q.IsReady() && Program.W.IsReady() && Program.R.IsReady() && Program.Player.Mana >= 150)
-                  star = true;
-           }
-           if (star == false) return;
-           else if (steps == "One") //First hit q
-           {
-               if (Program.E.IsInRange(target, Program.E.Range) && Program.E.CanCast(target))
-               {
+        private static bool star;
 
-                   Program.E.Cast();
-                   steps = "Two";
-               }
+        public static void CastQ()
+        {
+            Program.Q.Cast();
+            steps = "One";
+        }
 
-           }
-           else if (steps == "Two") // hit second q
-           {
-               if (Program.Q.IsReady() && ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Q).Name == "BlindMonkQOne")
-               {
-                   Program.cast(target, Program.Q);
-                   steps = "Three";
-               }
-           }
-           else if (steps == "Three") // hit second q
-           {
-               //
-               if (Program.R.CanCast(target))
-               {
-                   Program.R.CastOnUnit(target);
-                   steps = "Four";
-               }
-           }
-           else if (steps == "Four") // hit second q
-           {
-               if (Program.Q.CanCast(target))
-               {
+        public static void Combo()
+        {
+            Program.Player.IssueOrder(GameObjectOrder.MoveTo, Program.Player.Position.Extend(Game.CursorPos, 150));
+            var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
+            if (star == false)
+            {
+                if (Program.Q.IsReady() && Program.R.IsReady() && Program.Player.Mana >= 150)
+                {
+                    star = true;
+                    if (!Program.E.IsInRange(target) && Program.W.IsReady())
+                    {
+                        WardJump.JumpTo(target.Position);
 
-                   Utility.DelayAction.Add(1250, () => Program.Q.Cast());
-                   if (Program.menu.Item("swardjump").GetValue<bool>())
-                   {
-                       steps = "WardJump";
-                   }
-                   else
-                   {
-                       steps = "One";
-                   }
-                   star = false;
-               }
-           }
-           else
-           {
-               if (Program.menu.Item("swardjump").GetValue<bool>())
-               {
-                   steps = "WardJump";
-               }
-               else { 
-               steps = "One";
+                    }
+                    else
+                    {
+
+                        star = false;
+
+                    }
+                }
             }
-               star = false;
-           }
+            if (star == false) return;
 
-       }
+
+
+        }
     }
 }

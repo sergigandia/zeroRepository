@@ -1,0 +1,11 @@
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\AlphaPrediction\AlphaPrediction\bin\Release\AlphaPrediction.exe.config
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\AlphaPrediction\AlphaPrediction\bin\Release\AlphaPrediction.exe
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\AlphaPrediction\AlphaPrediction\bin\Release\AlphaPrediction.pdb
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\AlphaPrediction\AlphaPrediction\bin\Release\LeagueSharp.Common.dll
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\AlphaPrediction\AlphaPrediction\bin\Release\LeagueSharp.dll
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\AlphaPrediction\AlphaPrediction\bin\Release\SharpDX.dll
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\AlphaPrediction\AlphaPrediction\bin\Release\SharpDX.Direct3D9.dll
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\AlphaPrediction\AlphaPrediction\bin\Release\clipper_library.dll
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\AlphaPrediction\AlphaPrediction\bin\Release\LeagueSharp.Sandbox.dll
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\AlphaPrediction\AlphaPrediction\obj\Debug\AlphaPrediction.exe
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\AlphaPrediction\AlphaPrediction\obj\Debug\AlphaPrediction.pdb
