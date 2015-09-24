@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlphaPrediction
+namespace AwesomePrediction
 {
-    static class Prediction
+   public static class Awesome
     {
         enum Direction
         {
@@ -62,10 +62,7 @@ namespace AlphaPrediction
                 }
                 positions.Add(posn);
             }
-            foreach (var poss in positions)
-            {
-                Game.PrintChat(poss.Count + "");
-            }
+
            var posfint = positions.Max(t => t.Count);
             var posin = positions.Where(t => t.Count == posfint).FirstOrDefault();
             if (posfint >= 2)
@@ -89,11 +86,9 @@ namespace AlphaPrediction
                 pos.Y = (firstdis.pos1.Y + firstdis.pos2.Y) / 2;
                 pos.Z = (firstdis.pos1.Z + firstdis.pos2.Z) / 2;
                 spell.Cast(pos);
-                Game.PrintChat("Golpeo ha : " + posfint);
                 Render.Circle.DrawCircle(pos, 10, System.Drawing.Color.Red, 2);
                 return true;
             }
-            Game.PrintChat("Golpeara  : " + posfint);
             //     Render.Circle.DrawCircle(line_finish, 10, System.Drawing.Color.Red, 2);
             return false;
 
@@ -121,12 +116,13 @@ namespace AlphaPrediction
             else
             {
                 var range = spell.Range;
-                if (target.Position.Distance(ObjectManager.Player.Position) < target.GetWaypoints()[0].Distance(ObjectManager.Player.Position))
+                if (target.Position.Distance(ObjectManager.Player.Position) < target.GetWaypoints()[1].Distance(ObjectManager.Player.Position))
                 {
                     range -= 100;
                 }
-                if (!spell.IsInRange(target, range)) return false;
 
+                if (!spell.IsInRange(target, range)) return false;
+                
                 if (target.IsFacing(ObjectManager.Player) && target.Position.Distance(ObjectManager.Player.Position) > target.GetWaypoints()[1].Distance(ObjectManager.Player.Position))
                 {
                   if (MinionCollideLine(ObjectManager.Player.Position, target.Position, spell)) return false;
@@ -151,7 +147,6 @@ namespace AlphaPrediction
 
         private static bool PlayerIsStop(Vector3 pos, Obj_AI_Base target,Spell spell)
         {
-            Game.PrintChat("arrive");
             if (pos == target.Position)
             {
                 if (MinionCollideLine(ObjectManager.Player.Position, target.Position, spell)) return false;
@@ -165,7 +160,7 @@ namespace AlphaPrediction
         {
             if (oldpos != target.GetWaypoints()[1].To3D())
             {
-           //     Utility.DelayAction.Add(1500, () => PlayerIsStop(target.Position, target, spell));
+          //      Utility.DelayAction.Add(1500, () => PlayerIsStop(target.Position, target, spell));
                 Utility.DelayAction.Add(1000, () => Next(target, target.GetWaypoints()[1].To3D(), spell));
                 return false;
             }
@@ -198,7 +193,7 @@ namespace AlphaPrediction
             spell.Cast(pos1);
             return true;
         }
-     public static bool MinionCollideLine(Vector3 lineStart, Vector3 lineFinish, Spell spell)
+     private static bool MinionCollideLine(Vector3 lineStart, Vector3 lineFinish, Spell spell)
         {
                var minion =
                                 MinionManager.GetMinions(spell.Range, MinionTypes.All, MinionTeam.NotAlly, MinionOrderTypes.Health);

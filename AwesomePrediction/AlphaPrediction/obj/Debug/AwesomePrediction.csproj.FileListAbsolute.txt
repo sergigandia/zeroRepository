@@ -9,3 +9,4 @@ C:\Users\sergi\Documents\Visual Studio 2013\Projects\AlphaPrediction\AlphaPredic
 C:\Users\sergi\Documents\Visual Studio 2013\Projects\AlphaPrediction\AlphaPrediction\bin\Release\LeagueSharp.Sandbox.dll
 C:\Users\sergi\Documents\Visual Studio 2013\Projects\AlphaPrediction\AlphaPrediction\obj\Debug\AwesomePrediction.dll
 C:\Users\sergi\Documents\Visual Studio 2013\Projects\AlphaPrediction\AlphaPrediction\obj\Debug\AwesomePrediction.pdb
+C:\Users\sergi\Documents\Visual Studio 2013\Projects\AlphaPrediction\AlphaPrediction\obj\Debug\AwesomePrediction.csprojResolveAssemblyReference.cache
