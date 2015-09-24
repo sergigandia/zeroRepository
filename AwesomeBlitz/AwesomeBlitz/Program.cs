@@ -23,7 +23,7 @@ namespace PerfectBlitzcranck
 
         public static void loadMenu()
         {
-                       menu = new Menu("Lee Is Back", "Lee Is Back", true);
+                       menu = new Menu("AwesomeBlitz", "AwesomeBlitz", true);
                   var orbWalkerMenu = new Menu("Orbwalker", "Orbwalker");
             orb = new Orbwalking.Orbwalker(orbWalkerMenu);
             var TargetSelectorMenu = new Menu("TargetSelector", "TargetSelector");
@@ -36,8 +36,8 @@ namespace PerfectBlitzcranck
             }
                    var DrawMenu = new Menu("Combo", "Combo");
             {
-                 comboMenu.AddItem(new MenuItem("QD", "Q draw").SetValue(true));
-                   comboMenu.AddItem(new MenuItem("RD", "R draw").SetValue(true));
+                DrawMenu.AddItem(new MenuItem("QD", "Q draw").SetValue(true));
+               DrawMenu.AddItem(new MenuItem("RD", "R draw").SetValue(true));
             }
             TargetSelector.AddToMenu(TargetSelectorMenu);
             menu.AddSubMenu(orbWalkerMenu); //ORBWALKER
@@ -97,11 +97,11 @@ namespace PerfectBlitzcranck
         private static void Drawing_OnDraw(EventArgs args)
         {
             if (Player.IsDead) return;
-            if (menu.Item("Draw Q Range").GetValue<bool>())
+            if (menu.Item("QD").GetValue<bool>())
             {
                 Drawing.DrawCircle(Player.Position, Q.Range, System.Drawing.Color.YellowGreen);
             }
-            if (menu.Item("Draw R Range").GetValue<bool>())
+            if (menu.Item("RD").GetValue<bool>())
             {
                 Drawing.DrawCircle(Player.Position, R.Range, System.Drawing.Color.YellowGreen);
             }
