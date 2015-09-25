@@ -39,9 +39,7 @@ namespace MasterOfInsec.Combos
         {
 
             var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
-            var MinionN =
-    MinionManager.GetMinions(Program.Q.Range/2, MinionTypes.All, MinionTeam.Enemy, MinionOrderTypes.MaxHealth)
-        .FirstOrDefault();
+            var MinionN = ObjectManager.Get < Obj_AI_Base>().Where(t=> !t.IsAlly &&(t.IsMinion|| t.IsChampion())&&t!=target&&t.Distance(ObjectManager.Player)<Program.Q.Range/2);
             if (target != null)
             {
 

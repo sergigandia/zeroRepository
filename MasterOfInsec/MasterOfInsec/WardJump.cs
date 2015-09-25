@@ -71,6 +71,7 @@ namespace MasterOfInsec
                    if (Program.W.CastOnUnit(Wards))
                    {
                        jumped = false;
+
                    }
            }
 
