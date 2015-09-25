@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AwesomePrediction">
-      <HintPath>..\..\..\..\..\Desktop\LeagueSharp\System\AwesomePrediction.dll</HintPath>
+      <HintPath>C:\Users\sergi\Desktop\LeagueSharp\System\AwesomePrediction.dll</HintPath>
     </Reference>
     <Reference Include="LeagueSharp">
       <HintPath>C:\Users\sergi\Desktop\LeagueSharp\System\LeagueSharp.dll</HintPath>
