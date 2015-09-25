@@ -7,7 +7,7 @@ using LeagueSharp;
 using LeagueSharp.Common;
 using SharpDX;
 using System.Drawing;
-
+using AwesomePrediction;
 namespace MasterOfThorns
 {
     class Program : Modes
@@ -48,7 +48,7 @@ namespace MasterOfThorns
             var TargetSelectorMenu = new Menu("TargetSelector", "TargetSelector");
             var comboMenu = new Menu("Combo", "Combo");
             {
-                
+               comboMenu.AddItem(new MenuItem("Prediction mode", "Prediction Mode").SetValue(new StringList(new[] { "[alpha]Awesome prediction", "Common pred" }, 1)));
                 comboMenu.AddItem(new MenuItem("QC", "Use Q in combo").SetValue(true));
                 comboMenu.AddItem(new MenuItem("WC", "Use W in combo").SetValue(true));
                 comboMenu.AddItem(new MenuItem("EC", "Use E in combo").SetValue(true));
@@ -162,6 +162,19 @@ namespace MasterOfThorns
             updateModes();
         }
 
+        public  void cast(Obj_AI_Hero target, Spell spell, int h)
+        {
+            if (menu.Item("Prediction mode").GetValue<StringList>().SelectedIndex == 1)
+            {
+                spell.CastIfHitchanceEquals(
+                    target,
+                    base.getSkills().hitchanceCheck(h));
+            }
+            else
+            {
+                AwesomePrediction.Awesome.SpellPrediction(spell, target,false);
+            }
+        }
         public void updateModes()
         {
             if (getMenu().Item("combokey").GetValue<KeyBind>().Active)  base.combo(base.getTarget());

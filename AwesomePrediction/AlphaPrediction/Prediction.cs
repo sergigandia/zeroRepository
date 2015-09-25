@@ -94,7 +94,7 @@ namespace AwesomePrediction
 
         }
 
-        public static bool SpellPrediction(Spell spell, Obj_AI_Hero target)
+        public static bool SpellPrediction(Spell spell, Obj_AI_Hero target,bool collisionable)
         {
   //
             var dist = ObjectManager.Player.Distance(target.Position);
@@ -107,7 +107,7 @@ namespace AwesomePrediction
             var point = PointsAroundTheTarget(target.Position, target.BoundingRadius + 50).FirstOrDefault(t => t.IsWall());
             if (point.X != 0 && point.Y != 0 && point.Z != 0)
             {
-                if (MinionCollideLine(ObjectManager.Player.Position, ExtendWallpos(target, point), spell)) return false;
+                if (MinionCollideLine(ObjectManager.Player.Position, ExtendWallpos(target, point), spell,collisionable)) return false;
 
                 Render.Circle.DrawCircle(ExtendWallpos(target, point), 10, System.Drawing.Color.Brown, 2);
                 spell.Cast(ExtendWallpos(target, point));
@@ -125,49 +125,71 @@ namespace AwesomePrediction
                 
                 if (target.IsFacing(ObjectManager.Player) && target.Position.Distance(ObjectManager.Player.Position) > target.GetWaypoints()[1].Distance(ObjectManager.Player.Position))
                 {
-                  if (MinionCollideLine(ObjectManager.Player.Position, target.Position, spell)) return false;
+                  if (MinionCollideLine(ObjectManager.Player.Position, target.Position, spell,collisionable)) return false;
                         spell.Cast(target.Position);
                         return true;
                     
                 }
+               // float speed =   
+                if (target.IsImmovable) // check for cc guys
+                {
+                    if (MinionCollideLine(ObjectManager.Player.Position, target.Position, spell,collisionable)) return false;
+                    spell.Cast(target.Position);
+                    return true;
+                }
+
+              //  if(target.IsChannelingImportantSpell())
+                if (target.IsWindingUp && !target.IsMelee())
+                {
+                    if (MinionCollideLine(ObjectManager.Player.Position, target.Position, spell,collisionable)) return false;
+                    spell.Cast(target.Position);
+                    return true;
+                }
+
                 if (target.Position.Distance(ObjectManager.Player.Position) <= 300)
                 {
-                    CastToDirection( target, spell);
+                    CastToDirection( target, spell,collisionable);
                 }
                 else
                 {
                     var oldPos = target.GetWaypoints()[0].To3D();
                    var h = false;
-                    Utility.DelayAction.Add(Game.Ping + 1000, () => h = Next(target, oldPos, spell));
+                    Utility.DelayAction.Add(Game.Ping + 1000, () => h = Next(target, oldPos, spell,collisionable));
                     return h;
                 }
             }
             return false;
         }
 
-        private static bool PlayerIsStop(Vector3 pos, Obj_AI_Base target,Spell spell)
+        private static bool PlayerIsStop(Vector3 pos, Obj_AI_Base target,Spell spell,bool collisionable)
         {
             if (pos == target.Position)
             {
-                if (MinionCollideLine(ObjectManager.Player.Position, target.Position, spell)) return false;
+                if (MinionCollideLine(ObjectManager.Player.Position, target.Position, spell,collisionable)) return false;
                 spell.Cast(target.Position);
                 return true;
             }
             return false;
         }
 
-        private static bool Next(Obj_AI_Base target, Vector3 oldpos, Spell spell)
+        private static bool Next(Obj_AI_Base target, Vector3 oldpos, Spell spell, bool collisionable)
         {
             if (oldpos != target.GetWaypoints()[1].To3D())
             {
           //      Utility.DelayAction.Add(1500, () => PlayerIsStop(target.Position, target, spell));
-                Utility.DelayAction.Add(1000, () => Next(target, target.GetWaypoints()[1].To3D(), spell));
+                Utility.DelayAction.Add(1000, () => Next(target, target.GetWaypoints()[1].To3D(), spell, collisionable));
                 return false;
             }
             else
             {
-                CastToDirection( target, spell);
-                return true;
+                if (CastToDirection(target, spell,collisionable))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 
@@ -177,7 +199,7 @@ namespace AwesomePrediction
             return point.Extend(ts.Position, point.Distance(ts.Position) + 25);
         }
 
-        private static bool CastToDirection( Obj_AI_Base target, Spell spell)
+        private static bool CastToDirection( Obj_AI_Base target, Spell spell,bool collisionable)
         {
          // punto trasero a la posicion q va estar el personage cuando se lance el gancho
             var dist = ObjectManager.Player.Distance(target.Position);
@@ -189,12 +211,13 @@ namespace AwesomePrediction
             var wts = Drawing.WorldToScreen(target.Position);
             var wtsx = target.GetWaypoints()[1];
             Drawing.DrawLine(wts[0], wts[1], wtsx[0], wtsx[1], 2f, System.Drawing.Color.Red);
-            if (MinionCollideLine(ObjectManager.Player.Position, pos1,spell)) return false;
+            if (MinionCollideLine(ObjectManager.Player.Position, pos1,spell,collisionable)) return false;
             spell.Cast(pos1);
             return true;
         }
-     private static bool MinionCollideLine(Vector3 lineStart, Vector3 lineFinish, Spell spell)
-        {
+     private static bool MinionCollideLine(Vector3 lineStart, Vector3 lineFinish, Spell spell,bool check)
+     {
+         if (check == false) return false;
                var minion =
                                 MinionManager.GetMinions(spell.Range, MinionTypes.All, MinionTeam.NotAlly, MinionOrderTypes.Health);
           //  Render.Circle.DrawCircle(ObjectManager.Player.Position, 100, System.Drawing.Color.Brown, 2);

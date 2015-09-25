@@ -185,7 +185,7 @@ namespace MasterOfThorns
             {
                 int min = p.getMenu().Item("seth").GetValue<Slider>().Value;
                 p.getPlayer().IssueOrder(GameObjectOrder.MoveTo, p.getPlayer().Position.Extend(Game.CursorPos, 150));
-                skills.eCast(target, min);
+              p.cast(target,skills.getE(),min);
             }
             else
                 return;
@@ -202,9 +202,9 @@ namespace MasterOfThorns
         }
         public void Eplant(int min , int w)
         {
-            skills.eCast(getTarget(), min);
-            if (skills.getE().IsReady())
-                skills.wCast(target, w);
+            p.cast(this.getTarget(), this.skills.getE(), min);
+            if (this.skills.getE().IsReady())
+                this.skills.wCast(target, w);
         }
         public void Qplant(int q , int w)
         {
@@ -224,13 +224,13 @@ namespace MasterOfThorns
             else if (!useQ && !useW && useE) skills.eCast(getTarget(), min);
             else if (!useQ && useW && useE)
             {                
-                skills.eCast(getTarget(), min);
+        p.cast(this.getTarget(), this.skills.getE(), min);
                 if (skills.getE().IsReady() && skills.getE().IsInRange(getTarget()))
                     skills.wCast(getTarget(),w); 
             }
             else if (useQ && !useW && useE) 
-            {               
-                skills.eCast(getTarget(), min);
+            {
+                p.cast(this.getTarget(), this.skills.getE(), min);
                 skills.qCast(getTarget(),q);
             }
             else if (useQ && useW && !useE) 
@@ -241,7 +241,7 @@ namespace MasterOfThorns
             }
             else if (useQ && useW && useE)
             {
-                    skills.eCast(target,min);
+                p.cast(this.getTarget(), this.skills.getE(), min);
             if (skills.getE().IsReady())
             skills.wCast(target,w);
             skills.qCast(target,q);
@@ -279,21 +279,21 @@ namespace MasterOfThorns
             //    if (!useQ && !useW && !useE) return;
             if (useQ && !useE) 
             {
-                skills.eCast(getTarget(),min);
+                p.cast(this.getTarget(), this.skills.getE(), min);
                 skills.rCast(getTarget(),r);
                 skills.qCast(getTarget(),q);
             }
             else if (!useQ && useE)
             {
                 skills.rCast(getTarget(),r);
-                skills.eCast(getTarget(), min);
+                p.cast(this.getTarget(), this.skills.getE(), min);
                 if (skills.getE().IsReady() && skills.getE().IsInRange(getTarget()))
                     skills.wCast(getTarget(),w);                 
             }
             else if (useQ && useE)
             {
 
-                skills.eCast(getTarget(), min);
+                p.cast(this.getTarget(), this.skills.getE(), min);
                 if (skills.getE().IsReady() && skills.getE().IsInRange(getTarget()))
                 {
                     skills.wCast(getTarget(),w);
