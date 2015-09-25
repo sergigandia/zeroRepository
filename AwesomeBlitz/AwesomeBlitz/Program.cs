@@ -70,7 +70,7 @@ namespace PerfectBlitzcranck
             var target = TargetSelector.GetTarget(1300, TargetSelector.DamageType.Physical);
             if (Q.IsInRange(target) && menu.Item("useQ").GetValue<bool>())
                 {
-                    AwesomePrediction.Awesome.SpellPrediction(Q, target);
+                    AwesomePrediction.Awesome.SpellPrediction(Q, target,true);
                 }
             if (E.IsInRange(target) && menu.Item("useE").GetValue<bool>())
                 {

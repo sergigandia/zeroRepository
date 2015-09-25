@@ -10,3 +10,6 @@ C:\Users\sergi\documents\visual studio 2013\Projects\PerfectBlitzcranck\PerfectB
 C:\Users\sergi\documents\visual studio 2013\Projects\PerfectBlitzcranck\PerfectBlitzcranck\bin\Release\LeagueSharp.Sandbox.dll
 C:\Users\sergi\documents\visual studio 2013\Projects\PerfectBlitzcranck\PerfectBlitzcranck\obj\Debug\PerfectBlitzcranck.exe
 C:\Users\sergi\documents\visual studio 2013\Projects\PerfectBlitzcranck\PerfectBlitzcranck\obj\Debug\PerfectBlitzcranck.pdb
+C:\Users\sergi\Documents\GitHub\zeroRepository\AwesomeBlitz\AwesomeBlitz\bin\Release\PerfectBlitzcranck.exe.config
+C:\Users\sergi\Documents\GitHub\zeroRepository\AwesomeBlitz\AwesomeBlitz\obj\Debug\PerfectBlitzcranck.exe
+C:\Users\sergi\Documents\GitHub\zeroRepository\AwesomeBlitz\AwesomeBlitz\obj\Debug\PerfectBlitzcranck.pdb
