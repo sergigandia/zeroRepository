@@ -18,8 +18,9 @@ namespace MasterOfInsec
     internal static class Program
     {
         // Master Of Insec LEE
-
-
+        public static bool checkpred;
+        public static int QTotal;
+        public static int GoodQ;
         private static Obj_AI_Hero allytarget;
         public static Obj_AI_Hero Player;
         public static Menu menu;
@@ -63,7 +64,7 @@ namespace MasterOfInsec
                                     }
             var QMenu = new Menu("Q","Q conf");
             {
-                   QMenu.AddItem(  new MenuItem("Prediction mode", "Prediction Mode").SetValue(new StringList(new[] { "[alpha]My prediction", "Common pred"}, 1)));
+                   QMenu.AddItem(  new MenuItem("Prediction mode", "Prediction Mode").SetValue(new StringList(new[] { "Awesome prediction", "Common pred"}, 1)));
                QMenu .AddItem(new MenuItem("seth", "Q Hitchance")).SetValue(new Slider(3, 1, 4));
                 QMenu .AddItem(new MenuItem("comboQ", "Use Q in combo").SetValue(true));
                 QMenu .AddItem(new MenuItem("comboQ2", "Use Q2 in combo").SetValue(true));
@@ -173,6 +174,7 @@ namespace MasterOfInsec
             var DrawSettingsMenu = new Menu("Draw Settings", "Draw Settings");
             {
                 DrawSettingsMenu.AddItem(new MenuItem("DrawInsec", "Draw Insec Line").SetValue(true));
+                DrawSettingsMenu.AddItem(new MenuItem("Draw Q%hit", "Draw Q %hit").SetValue(true));
                 DrawSettingsMenu.AddItem(new MenuItem("Draw Q Range", "Draw Q Range").SetValue(true));
                 DrawSettingsMenu.AddItem(new MenuItem("Draw W Range", "Draw W Range").SetValue(true));
                 DrawSettingsMenu.AddItem(new MenuItem("Draw E Range", "Draw E Range").SetValue(true));
@@ -236,13 +238,35 @@ namespace MasterOfInsec
                 true, SkillshotType.SkillshotLine);
             RInsec.SetTargetted(R.Instance.SData.CastFrame/30, R.Instance.SData.MissileSpeed);
             Menu();
+            AwesomePrediction.main.Initialize();
             Game.PrintChat("[LeeSin]Master Of Insec load good luck ;) ver 0.9.9.7");
             Drawing.OnDraw += Drawing_OnDraw;
             Game.OnWndProc += GameOnOnWndProc;
             Game.OnUpdate += Game_OnGameUpdate;
+            Obj_AI_Base.OnProcessSpellCast += Obj_AI_Base_OnProcessSpellCast;
+            Obj_AI_Base.OnBuffAdd += OnBuffAd;
             Spellbook.OnCastSpell += OnCast;
         }
 
+        private static void OnBuffAd(Obj_AI_Base sender, Obj_AI_BaseBuffAddEventArgs args)
+        {
+            if (args.Buff.Name == "BlindMonkQOne")
+            {
+                GoodQ++;
+            }
+        }
+
+        private static void Obj_AI_Base_OnProcessSpellCast(Obj_AI_Base unit, GameObjectProcessSpellCastEventArgs args)
+        {
+            var s = args.SData.Name;
+
+            if (unit.IsMe&&args.SData.Name == "BlindMonkQOne")
+            {
+                //if(args.)
+                QTotal++;
+            }
+
+        }
         private static void OnCast(Spellbook sender, SpellbookCastSpellEventArgs args)
         {
             passive = false;
@@ -327,8 +351,17 @@ namespace MasterOfInsec
             {
                 NormalInsec.ResetInsecStats();
             }
+            checkBuffs();
         }
 
+        public static void checkBuffs()
+        {
+            if (checkpred == true)
+            {
+
+                checkpred = false;
+            }
+        }
         public static Obj_AI_Hero GetWInsecTarget()
         {
             return ObjectManager.Get<Obj_AI_Hero>()
@@ -392,6 +425,13 @@ namespace MasterOfInsec
         private static void Drawing_OnDraw(EventArgs args)
         {
             if (Player.IsDead) return;
+            if (menu.Item("Draw Q%hit").GetValue<bool>())
+            {
+              Drawing.DrawText(10, 150, System.Drawing.Color.Yellow, "Total Q : " +QTotal );
+              Drawing.DrawText(10, 175, System.Drawing.Color.Yellow, "Total Good Q : " + GoodQ);
+              var percent = ((float)GoodQ / (float)QTotal) * 100f;
+            Drawing.DrawText(10, 200, System.Drawing.Color.Yellow,  "Q successful % : " + percent + "%");
+            }
             if (menu.Item("Draw Q Range").GetValue<bool>())
             {
                 Drawing.DrawCircle(Player.Position, Q.Range, Color.Green);
@@ -483,7 +523,7 @@ namespace MasterOfInsec
             }
             else
             {
-                AlphaPrediction.Prediction.SpellPrediction(spell, target);
+                AwesomePrediction.Awesome.SpellPrediction(spell, target,true);
             }
         }
         public static T GetValue<T>(string name)

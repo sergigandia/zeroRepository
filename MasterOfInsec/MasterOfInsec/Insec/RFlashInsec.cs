@@ -23,9 +23,13 @@ namespace MasterOfInsec
                   }
                 if (WardJump.InsecposN2(target).Distance(Program.Player.Position) < 375)
                 {
-                    if (Program.R.CastOnUnit(target))
+                    if (Program.R.Cast(target)==Spell.CastStates.SuccessfullyCasted)
                     {
-                        Utility.DelayAction.Add(Game.Ping + 125, () => ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), WardJump.Insecpos(target)));
+                   //     if (Program.R.IsCharging)
+                   //     {
+
+                     //   }
+Utility.DelayAction.Add(Game.Ping + 50, () => ObjectManager.Player.Spellbook.CastSpell(ObjectManager.Player.GetSpellSlot("SummonerFlash"), WardJump.Insecpos(target)));
                         Utility.DelayAction.Add(Game.Ping + 150, () => qCast(target));
                     }
                 }

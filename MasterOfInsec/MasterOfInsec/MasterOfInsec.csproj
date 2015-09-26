@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AwesomePrediction">
+      <HintPath>C:\Users\sergi\Desktop\LeagueSharp\System\AwesomePrediction.dll</HintPath>
+    </Reference>
     <Reference Include="LeagueSharp">
       <HintPath>C:\Users\sergi\Desktop\LeagueSharp\System\LeagueSharp.dll</HintPath>
     </Reference>
@@ -65,7 +68,6 @@
     <Compile Include="Farmers\LastHit.cs" />
     <Compile Include="Insec\NormalInsec.cs" />
     <Compile Include="Insec\RFlashInsec.cs" />
-    <Compile Include="MyPrediction\Prediction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WardJump.cs" />
