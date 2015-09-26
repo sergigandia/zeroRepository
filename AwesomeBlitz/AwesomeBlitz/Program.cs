@@ -94,6 +94,7 @@ namespace PerfectBlitzcranck
             menu.AddSubMenu(orbWalkerMenu); //ORBWALKER
             menu.AddSubMenu(TargetSelectorMenu);
             menu.AddSubMenu(comboMenu);
+            menu.AddSubMenu(interruptMenu);
                menu.AddSubMenu(DrawMenu);
               menu.AddToMainMenu();
         }
