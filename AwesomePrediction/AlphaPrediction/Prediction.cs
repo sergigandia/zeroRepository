@@ -98,10 +98,16 @@ namespace AwesomePrediction
         {
   //
             var dist = ObjectManager.Player.Distance(target.Position);
-            var pos1 = LeagueSharp.Common.Prediction.GetPrediction(target, dist / spell.Speed).UnitPosition;
+            var pos1 = LeagueSharp.Common.Prediction.GetPrediction(target, dist / spell.Speed).UnitPosition-40;
+            var dister = target.Position.Extend(target.GetWaypoints()[1].To3D(), target.GetWaypoints()[1].To3D().Distance(target.Position) + 50);
+          //  var pos1 = LeagueSharp.Common.Prediction.GetPrediction(target, dist / spell.Speed).UnitPosition - 40;
+            var wts = Drawing.WorldToScreen(target.Position);
+            var wtsx = target.GetWaypoints()[1];
+            Drawing.DrawLine(wts[0], wts[1], wtsx[0], wtsx[1], 2f, System.Drawing.Color.Red);
             var e = pos1.Distance(target.GetWaypoints()[1].To3D());
 
             pos1.Extend(target.GetWaypoints()[1].To3D(), -e);
+            Render.Circle.DrawCircle(dister, 10, System.Drawing.Color.GreenYellow, 2);
             Render.Circle.DrawCircle(pos1, 10, System.Drawing.Color.BlueViolet, 2);
 //
             var point = PointsAroundTheTarget(target.Position, target.BoundingRadius + 50).FirstOrDefault(t => t.IsWall());
@@ -123,20 +129,36 @@ namespace AwesomePrediction
 
                 if (!spell.IsInRange(target, range)) return false;
                 
-                if (target.IsFacing(ObjectManager.Player) && target.Position.Distance(ObjectManager.Player.Position) > target.GetWaypoints()[1].Distance(ObjectManager.Player.Position))
+                /*if (target.IsFacing(ObjectManager.Player) && target.Position.Distance(ObjectManager.Player.Position) > target.GetWaypoints()[1].Distance(ObjectManager.Player.Position))
                 {
                   if (MinionCollideLine(ObjectManager.Player.Position, target.Position, spell,collisionable)) return false;
-                        spell.Cast(target.Position);
+
+                    {
+                        Game.PrintChat("Casteando por inface");
+                       spell.Cast(target.Position);
+
                         return true;
-                    
+                    }
+
+                }*/
+                // code of dashes
+                if (target.IsDashing())
+                {
+                    float timeforArrive=(target.Position.Distance(target.GetDashInfo().EndPos.To3D()))/target.GetDashInfo().Speed;
+                    float grabtime =( ObjectManager.Player.Position.Distance(target.GetDashInfo().EndPos.To3D())
+                                     / spell.Speed)+spell.Delay;
+                    if (timeforArrive<grabtime)
+                    {
+                        spell.Cast(target.GetDashInfo().EndPos);
+                        return true;
+                    }
                 }
-               // float speed =   
-                if (target.IsImmovable) // check for cc guys
+               /* if (target.IsImmovable) // check for cc guys
                 {
                     if (MinionCollideLine(ObjectManager.Player.Position, target.Position, spell,collisionable)) return false;
                     spell.Cast(target.Position);
                     return true;
-                }
+                }*/
 
               //  if(target.IsChannelingImportantSpell())
                 if (target.IsWindingUp && !target.IsMelee())
@@ -193,17 +215,18 @@ namespace AwesomePrediction
             }
         }
 
-        private static Vector3 ExtendWallpos(Obj_AI_Base ts, Vector3 point)
+
+       private static Vector3 ExtendWallpos(Obj_AI_Base ts, Vector3 point)
         {
             if (ts == null) throw new ArgumentNullException("ts");
-            return point.Extend(ts.Position, point.Distance(ts.Position) + 25);
+            return point.Extend(ts.Position, point.Distance(ts.Position) +25);
         }
 
         private static bool CastToDirection( Obj_AI_Base target, Spell spell,bool collisionable)
         {
          // punto trasero a la posicion q va estar el personage cuando se lance el gancho
             var dist = ObjectManager.Player.Distance(target.Position);
-            var pos1 = LeagueSharp.Common.Prediction.GetPrediction(target, dist / spell.Speed).UnitPosition;
+            var pos1 = LeagueSharp.Common.Prediction.GetPrediction(target, dist / spell.Speed).UnitPosition-40;
             var e = pos1.Distance(target.GetWaypoints()[1].To3D());
 
             pos1.Extend(target.GetWaypoints()[1].To3D(), +e);
